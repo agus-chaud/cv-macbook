@@ -36,15 +36,15 @@
     "languages": [
       {
         "name": "TypeScript",
-        "bytes": 743814
+        "bytes": 742408
       },
       {
         "name": "Svelte",
-        "bytes": 232021
+        "bytes": 227327
       },
       {
         "name": "JavaScript",
-        "bytes": 34999
+        "bytes": 39426
       },
       {
         "name": "Astro",
@@ -52,7 +52,7 @@
       },
       {
         "name": "CSS",
-        "bytes": 21792
+        "bytes": 21857
       },
       {
         "name": "HTML",
