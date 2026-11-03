@@ -4,7 +4,7 @@
  *
  * Solo salen los repositorios públicos que Pol etiqueta con el topic `showcase`, y nunca los forks.
  */
-import { PERSONA } from '../content/persona';
+import { PERSONA } from '../content/persona.ts';
 
 export const SHOWCASE_TOPIC = 'showcase';
 export const OWNER = PERSONA.github;
