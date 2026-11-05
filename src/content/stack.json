@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-11-03",
+  "generatedAt": "2026-11-05",
   "repos": {
-    "total": 24,
+    "total": 25,
     "public": 21,
-    "private": 3,
+    "private": 4,
     "since": "2024-09"
   },
   "tools": [
@@ -11,7 +11,7 @@
       "id": "python",
       "name": "Python",
       "category": "lenguajes",
-      "repos": 19,
+      "repos": 20,
       "since": 2026
     },
     {
@@ -50,15 +50,15 @@
       "since": 2026
     },
     {
-      "id": "numpy",
-      "name": "NumPy",
+      "id": "pandas",
+      "name": "pandas",
       "category": "ml",
-      "repos": 14,
+      "repos": 15,
       "since": 2026
     },
     {
-      "id": "pandas",
-      "name": "pandas",
+      "id": "numpy",
+      "name": "NumPy",
       "category": "ml",
       "repos": 14,
       "since": 2026
@@ -232,17 +232,17 @@
       "since": 2026
     },
     {
-      "id": "sqlalchemy",
-      "name": "SQLAlchemy",
+      "id": "pyarrow",
+      "name": "PyArrow",
       "category": "datos",
       "repos": 3,
       "since": 2026
     },
     {
-      "id": "pyarrow",
-      "name": "PyArrow",
+      "id": "sqlalchemy",
+      "name": "SQLAlchemy",
       "category": "datos",
-      "repos": 2,
+      "repos": 3,
       "since": 2026
     },
     {
@@ -333,7 +333,7 @@
       "id": "claude-code",
       "name": "Claude Code",
       "category": "ia",
-      "repos": 22,
+      "repos": 23,
       "since": 2026
     },
     {
@@ -410,7 +410,7 @@
       "id": "github-actions",
       "name": "GitHub Actions",
       "category": "publicacion",
-      "repos": 3,
+      "repos": 4,
       "since": 2026
     },
     {
@@ -456,15 +456,15 @@
       "since": 2026
     },
     {
-      "id": "eslint",
-      "name": "ESLint",
+      "id": "ruff",
+      "name": "ruff",
       "category": "calidad",
-      "repos": 1,
+      "repos": 2,
       "since": 2026
     },
     {
-      "id": "ruff",
-      "name": "ruff",
+      "id": "eslint",
+      "name": "ESLint",
       "category": "calidad",
       "repos": 1,
       "since": 2026
