@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05",
+  "generatedAt": "2026-11-06",
   "repos": {
     "total": 25,
     "public": 21,
@@ -78,15 +78,15 @@
       "since": 2026
     },
     {
-      "id": "scikit-learn",
-      "name": "scikit-learn",
+      "id": "scipy",
+      "name": "SciPy",
       "category": "ml",
-      "repos": 7,
+      "repos": 8,
       "since": 2026
     },
     {
-      "id": "scipy",
-      "name": "SciPy",
+      "id": "scikit-learn",
+      "name": "scikit-learn",
       "category": "ml",
       "repos": 7,
       "since": 2026
