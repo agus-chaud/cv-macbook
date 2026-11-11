@@ -131,10 +131,12 @@ export function desktopItems(projects: ProjectData[]): Item[] {
     aboutItem,
     { id: 'notes', label: 'Notas', icon: { kind: 'art', art: 'folder' }, open: { app: 'notes' } },
     favoritesItem,
-    guestbookItem,
+    // El Libro de visitas no tiene icono en el escritorio (decisión del 2026-11-11): se abre desde la Terminal
+    // (`open guestbook`). LinkedIn ocupa su sitio, así quedan dos columnas de cuatro.
+    ...linkItems.filter((l) => l.id === 'linkedin'),
     stackItem,
     howtoItem,
-    ...linkItems,
+    ...linkItems.filter((l) => l.id !== 'linkedin'),
   ];
 }
 

@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { expect, test, type Page } from '@playwright/test';
-import { enter, loadNotes, loadProjects, stubExternalSites, stubGuestbookApi, stubTurnstile, stubYouTube } from '../e2e/helpers';
+import { enter, loadNotes, loadProjects, openGuestbookOnDesktop, stubExternalSites, stubGuestbookApi, stubTurnstile, stubYouTube } from '../e2e/helpers';
 
 type Violation = { directive: string; blocked: string; sample: string };
 
@@ -158,7 +158,7 @@ test.describe('M-11 Cabeceras de seguridad', () => {
     await page.getByTestId('window-projects').getByTestId('window-close').click();
 
     // Libro de visitas (S-09): la lista, el formulario con su widget (simulado) y el envío
-    await page.getByTestId('desktop-icon-guestbook').dblclick();
+    await openGuestbookOnDesktop(page);
     await expect(page.getByTestId('guestbook-list')).toBeVisible();
     await page.getByTestId('guestbook-write').click();
     await expect(page.getByTestId('guestbook-captcha')).toContainText('Verificación simulada');

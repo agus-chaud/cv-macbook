@@ -6,7 +6,8 @@
 
 ## Qué se construye
 
-Una app nueva, **Libro de visitas**, en el escritorio y en el móvil. Muestra las reseñas que Agus ha aprobado, de la
+Una app nueva, **Libro de visitas**, en el escritorio y en el móvil. Desde el 2026-11-11 no tiene icono en el escritorio: se abre
+desde la Terminal (`open guestbook`); en móvil conserva su icono. Muestra las reseñas que Agus ha aprobado, de la
 más reciente a la más antigua: nombre visible, cómo conoce a Agus (compañero/a, cliente, alumno/a u otro), la fecha, el
 texto y, si la persona las dio, sus redes. Si todavía no hay ninguna, lo dice y invita a ser la primera.
 

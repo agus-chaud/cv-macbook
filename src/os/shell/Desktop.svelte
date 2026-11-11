@@ -123,6 +123,9 @@
     display: grid;
     grid-auto-flow: column;
     grid-template-rows: repeat(auto-fill, 98px);
+    /* Como mucho cuatro iconos por columna (decisión del 2026-11-11): con max-height, auto-fill no crea más filas.
+       En pantallas bajas caben menos y se reparten igual. */
+    max-height: calc(4 * 98px + 3 * 4px);
     grid-auto-columns: 96px;
     gap: 4px 6px;
     align-content: start;

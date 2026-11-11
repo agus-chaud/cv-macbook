@@ -1,7 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 import { LINKS } from '../../src/content/links';
-import { animationsDone, enter, loadNotes, loadProjects, stubExternalSites, stubTurnstile } from './helpers';
+import { animationsDone, enter, loadNotes, loadProjects, openGuestbookOnDesktop, stubExternalSites, stubTurnstile } from './helpers';
 import { PERSONA } from '../../src/content/persona';
 import { SHELL_PROMPT } from '../../src/os/terminal/identity';
 
@@ -196,14 +196,14 @@ test.describe('S-04 Terminal', () => {
 
   test('un texto a medio escribir en el Libro de visitas sigue ahí tras minimizar y recuperar', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name.endsWith('movil'), 'En móvil no hay ventanas que minimizar');
-    await page.getByTestId('desktop-icon-guestbook').dblclick();
+    await openGuestbookOnDesktop(page);
     await page.getByTestId('guestbook-write').click();
     await page.getByTestId('guestbook-name').fill('Un borrador que no quiero perder');
     const win = page.getByTestId('window-guestbook');
     await win.getByTestId('window-minimize').click();
     await expect(win).toBeHidden();
 
-    await page.getByTestId('desktop-icon-guestbook').dblclick();
+    await run(page, 'open guestbook');
     await expect(win).toBeVisible();
     await expect(page.getByTestId('guestbook-name')).toHaveValue('Un borrador que no quiero perder');
   });

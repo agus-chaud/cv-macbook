@@ -37,9 +37,11 @@ test.describe('M-02 Escritorio en pantallas anchas', () => {
     }
     // Los proyectos con icono propio son opcionales: salen los que tenga el contenido.
     const own = onDesktop(projects).map((p) => `project-${p.id}`);
-    for (const id of ['projects', ...own, 'about', 'notes', 'favorites', 'guestbook', 'stack', 'howto']) {
+    for (const id of ['projects', ...own, 'about', 'notes', 'favorites', 'linkedin', 'stack', 'howto']) {
       await expect(page.getByTestId(`desktop-icon-${id}`)).toBeVisible();
     }
+    // El Libro de visitas no tiene icono en el escritorio: se abre desde la Terminal.
+    await expect(page.getByTestId('desktop-icon-guestbook')).toHaveCount(0);
   });
 
   test('un clic selecciona el icono sin abrir nada', async ({ page }) => {

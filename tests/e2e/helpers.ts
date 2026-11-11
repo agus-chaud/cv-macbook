@@ -15,6 +15,18 @@ export async function enter(page: Page) {
   await expect(page.getByTestId('lock-screen')).toHaveCount(0);
 }
 
+/**
+ * Abre el Libro de visitas en el escritorio como lo haría un visitante. No tiene icono en el escritorio (decisión del
+ * 2026-11-11): se abre desde la Terminal con `open guestbook`. En móvil sigue teniendo su icono en la pantalla de inicio.
+ */
+export async function openGuestbookOnDesktop(page: Page) {
+  await page.getByTestId('dock-item-terminal').click();
+  const input = page.getByTestId('terminal-input');
+  await input.fill('open guestbook');
+  await input.press('Enter');
+  await expect(page.getByTestId('guestbook')).toBeVisible();
+}
+
 /** Lo que aparece tras entrar depende del ancho: escritorio o pantalla de inicio. */
 export const homeTestId = (projectName: string) => (projectName.endsWith('movil') ? 'mobile-home' : 'desktop');
 
