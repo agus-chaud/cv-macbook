@@ -69,13 +69,13 @@ El procedimiento completo —comprobar lo ya configurado, elegir alcance (`user`
 ## Descripción del proyecto
 
 **Nombre:** cv-macbook
-**Descripción:** Plantilla de portfolio con forma de sistema operativo de escritorio en el navegador.
-**Estado actual:** Plantilla con contenido de ejemplo (una persona ficticia, Álex Ejemplo). Quien la usa cambia
-`src/content/` (empezando por `src/content/persona.ts`) y la foto de `src/assets/`.
+**Descripción:** Portfolio y CV de Agustin Chaud Olivieri con forma de sistema operativo de escritorio en el navegador.
+**Estado actual:** En producción con el contenido de Agus (`src/content/`, empezando por `src/content/persona.ts`, y
+la foto de `src/assets/`). Nació de una plantilla; los tests que todavía esperen contenido de ejemplo se adaptan al real.
 
 Un escritorio estilo macOS: pantalla de acceso decorativa, proyectos que se abren en un navegador interno, el CV
-como documento, una carpeta de notas con su página pública, una terminal con minijuegos, un Libro de visitas y un
-correo que llega de verdad. Es un sitio de lectura, sin cuentas ni base de datos.
+como documento, una carpeta de notas con su página pública, una terminal con minijuegos, un Libro de visitas y una
+tarjeta de contacto en el Correo. Es un sitio de lectura, sin cuentas ni base de datos.
 Requisitos en `docs/prd.md`, diseño en `docs/design-system.md`.
 
 ---
@@ -86,7 +86,7 @@ Requisitos en `docs/prd.md`, diseño en `docs/design-system.md`.
 - Base de datos: ninguna (el contenido son colecciones de Astro en el repo)
 - Estilos: CSS propio con variables, según `docs/design-system.md`
 - Despliegue: Cloudflare Workers con activos estáticos; lo despliega Agus, no el agente
-- Otras integraciones: Cloudflare Email Service, Turnstile y `ratelimit` (formulario de Correo)
+- Otras integraciones: Cloudflare Email Service, Turnstile y `ratelimit` (formulario del Libro de visitas)
 
 Detalle y justificación en `docs/architecture.md`.
 
@@ -96,7 +96,7 @@ Detalle y justificación en `docs/architecture.md`.
 
 ```
 src/content/    → proyectos, notas, herramientas y texto del CV (colecciones de Astro)
-src/pages/      → rutas; api/contact.ts es el único código de servidor
+src/pages/      → rutas; api/guestbook.ts y api/guestbook/confirm.ts son el único código de servidor
 src/os/         → isla de Svelte: shell, gestor de ventanas, apps, terminal, stores
 src/lib/        → utilidades (validación, preferencias)
 src/styles/     → variables de diseño y estilos globales
@@ -140,8 +140,8 @@ mejoras/        → ideas futuras no implementadas
 - No crear componentes de interfaz sin consultar antes `docs/design-system.md`.
 - No añadir base de datos, cuentas de usuario ni edición de contenido desde la interfaz: están
   fuera de alcance (ver `docs/prd.md`). Si cambia, se actualiza el PRD primero.
-- No guardar ni registrar en logs el contenido de los mensajes del formulario de Correo.
-- No leer el destino del correo desde la petición: sale siempre de la configuración del servidor.
+- No guardar ni registrar en logs el contenido de las reseñas del Libro de visitas.
+- No leer el destino de sus correos desde la petición: sale siempre de la configuración del servidor.
 - No usar logos ni arte de otras marcas en los iconos de las apps (Gmail, Word, Catán…): iconos propios.
   Excepción, decidida el 2026-10-10: los accesos directos externos (LinkedIn, GitHub, la newsletter)
   y los proyectos llevan su propio icono, como imagen en `public/links/` y `public/projects/`.
