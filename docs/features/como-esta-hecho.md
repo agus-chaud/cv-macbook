@@ -16,19 +16,21 @@ la ficha del proyecto en Proyectos: un **documento largo con índice**, como el 
 El documento tiene estas secciones (el texto lo escribo yo a partir de lo que hemos construido y Agus lo revisa antes de publicarlo):
 
 1. **Qué es Agus OS** y por qué un sistema operativo.
-2. **Stack** (antes «Tecnologías»), cada tecnología **con su logo** y una línea de para qué se usa: Astro, Svelte, TypeScript, Cloudflare (Workers, Turnstile y el servicio de
+2. **En resumen** (2026-11-11): cómo fluye todo en cinco pasos, del contenido a la web, para quien no va a leer el documento entero.
+3. **Stack** (antes «Tecnologías»), cada tecnología **con su logo** y una línea de para qué se usa: Astro, Svelte, TypeScript, Cloudflare (Workers, Turnstile y el servicio de
    correo), Vite, Vitest, Playwright, pnpm, GitHub y GitHub Actions, y Claude Code.
-3. **Cómo funciona por dentro:** un sitio estático con un único trozo de servidor, el escritorio como una «isla» de Svelte, el gestor de ventanas, las
+4. **Cómo funciona por dentro:** un sitio estático con un único trozo de servidor, el escritorio como una «isla» de Svelte, el gestor de ventanas, las
    apps que se cargan al abrirlas, el contenido en colecciones del repositorio y la política de seguridad de contenido.
-4. **Cómo se actualizan solos los datos:** la tarea diaria de GitHub Actions que cuenta los repositorios, el token de solo lectura, qué se publica (solo
-   recuentos, nunca nombres de repositorios privados) y cómo llega el cambio a la web.
-5. **El formulario de Correo** (Turnstile, límites y envío sin guardar nada) y **el Libro de visitas** (enlace cifrado, confirmación del correo y aprobación de Agus,
-   sin base de datos).
-6. **Cómo se trabaja:** fichas antes de código, pruebas que cubren cada requisito y un script que comprueba la cobertura.
-7. **Limitaciones: los bloqueos de LaLiga.** Qué pasa (las operadoras bloquean direcciones compartidas de Cloudflare durante los partidos y la web no carga desde
-   España durante horas), qué ideas hay para resolverlo (sacar las páginas de Cloudflare, un espejo, una página de aviso con vídeo y cuenta atrás, un servidor
-   propio) y **por qué no se ha cambiado**: lo que aporta Cloudflare (Turnstile, los Workers, el envío de correo, los límites de frecuencia), la complejidad de mantener
-   un espejo y lo que dicen los datos.
+5. **Cómo se actualizan solos los datos:** la tarea diaria de GitHub Actions que cuenta los repositorios (también las copias con commits propios), el token de
+   solo lectura, qué se lee (dependencias e imports de todo el código Python y los notebooks), el año por el primer commit, qué se publica (solo recuentos, nunca
+   nombres de repositorios privados) y cómo llega el cambio a la web.
+6. **El Correo** (una tarjeta de contacto, sin formulario) y **el Libro de visitas** (enlace cifrado, confirmación del correo y aprobación de Agus, sin base de
+   datos), con su estado real: sin dominio propio verificado, el envío no está activo.
+7. **Cómo lo construí con IA** (antes «Cómo se trabaja»): fichas antes de código, la prueba antes que el código, un script que comprueba la cobertura, los números
+   de pruebas y la auditoría del Stack como ejemplo.
+
+El 2026-11-11 se quitó la sección «Limitaciones: los bloqueos de LaLiga»: los bloqueos afectan a operadoras de España y venían del sitio del que nace la plantilla;
+no aplican a este. El texto pasa a hablar de vos en todo el documento.
 
 ## Decisiones tomadas
 
@@ -42,8 +44,6 @@ El documento tiene estas secciones (el texto lo escribo yo a partir de lo que he
   anota en `CLAUDE.md` junto a las excepciones anteriores.
 - **Cuenta cómo funciona, no cómo entrar:** nada de claves, tokens, correos, identificadores de cuenta ni valores de configuración. Se explican los **nombres** de las piezas
   y su comportamiento, no los límites exactos de frecuencia ni los nombres de los secretos (no ayudan al lector y sí a quien quiera abusar). Un test lo vigila.
-- **El texto de los bloqueos de LaLiga se apoya en datos reales** (los de hayahora.futbol que ya hemos consultado) y avisa de que son estimaciones; nada de afirmaciones sobre
-  personas ni empresas concretas.
 - **Una página pública `/como-esta-hecho/`** con el mismo texto (se lee sin JavaScript, con título, descripción y en el mapa del sitio), igual que las notas: así se puede compartir
   el enlace con quien quiera saber cómo está montado. *(Esto es lo más prescindible: si Agus no la quiere, se quita sin tocar el resto.)*
 
@@ -75,11 +75,10 @@ Qué comprobará cada test, según el criterio del PRD:
 - **En móvil, el documento ocupa la pantalla y la Terminal queda debajo**: el test de la Terminal comprueba `ls` y `open readme` antes de abrirlo.
 - El código de los logos pesa unos 15 KB y solo viaja al abrir la app: la home no cambia.
 
-**Lo que no se comprueba aquí:** que el texto sea correcto y esté bien contado: lo revisa Agus antes de publicarlo. **Pendiente de Agus:** leer el texto de `src/content/como-esta-hecho.md` y ajustarlo (sobre todo la sección de LaLiga y lo que cuenta de los datos de GitHub).
+**Lo que no se comprueba aquí:** que el texto sea correcto y esté bien contado: lo revisa Agus antes de publicarlo. **Pendiente de Agus:** leer el texto de `src/content/como-esta-hecho.md` y ajustarlo (sobre todo «Cómo lo construí con IA» y el estado del Libro de visitas).
 
 ## Fuera de esta feature
 
 - Publicar el repositorio o enseñar código fuente dentro de la web.
 - Un blog o una versión en inglés.
 - Gráficos o diagramas dibujados a mano de la arquitectura (se pueden añadir después; el texto ya describe cada pieza).
-- Resolver los bloqueos de LaLiga: aquí solo se cuentan. Las ideas viven en `mejoras/` y en el documento externo de ideas.

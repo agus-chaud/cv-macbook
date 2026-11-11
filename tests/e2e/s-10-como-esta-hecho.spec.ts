@@ -5,7 +5,7 @@ import { animationsDone, enter, loadProjects, openProjectDetail, stubExternalSit
 
 const isMobile = (name: string) => name.endsWith('movil');
 const polOs = loadProjects().find((p) => p.id === 'este-portfolio')!;
-const SECTIONS = ['que-es', 'stack', 'como-funciona-por-dentro', 'como-se-actualizan-solos-los-datos', 'el-correo-y-el-libro-de-visitas', 'como-se-trabaja', 'limitaciones-los-bloqueos-de-laliga'];
+const SECTIONS = ['que-es', 'en-resumen', 'stack', 'como-funciona-por-dentro', 'como-se-actualizan-solos-los-datos', 'el-correo-y-el-libro-de-visitas', 'como-lo-construi-con-ia'];
 
 /** Abre el documento como lo haría un visitante: doble clic en su icono o, en móvil, un toque en la pantalla de inicio. */
 async function openHowTo(page: Page, projectName: string) {
@@ -103,14 +103,20 @@ test.describe('S-10 Cómo está hecho', () => {
     expect(TECHS.some((t) => !t.logo)).toBe(true);
   });
 
-  test('el texto cuenta la actualización de datos, el Libro de visitas y los bloqueos de LaLiga', async ({ page }, testInfo) => {
+  test('el texto cuenta la actualización de datos, el Libro de visitas y cómo se construyó con IA', async ({ page }, testInfo) => {
     const doc = await openHowTo(page, testInfo.project.name);
     const body = doc.getByTestId('howto-body');
     await expect(body).toContainText('token de GitHub de solo lectura');
     await expect(body).toContainText('cifrada y autenticada');
-    await expect(body).toContainText('LaLiga');
-    await expect(body).toContainText('hayahora.futbol');
-    await expect(body).toContainText('Por qué no se ha cambiado');
+    await expect(body).toContainText('el envío no está activo');
+    await expect(body).toContainText('Primero se acuerda, después se programa');
+    await expect(body).not.toContainText('LaLiga');
+  });
+
+  test('el enlace del texto al Libro de visitas lo abre, aunque no tenga icono', async ({ page }, testInfo) => {
+    const doc = await openHowTo(page, testInfo.project.name);
+    await doc.getByTestId('howto-body').getByRole('link', { name: 'Libro de visitas' }).click();
+    await expect(page.getByTestId('guestbook')).toBeVisible();
   });
 
   test('los enlaces externos se abren en una pestaña nueva y sin dar acceso al sitio', async ({ page }, testInfo) => {

@@ -185,10 +185,9 @@ desde LinkedIn en el teléfono.
 
 - **[S-10] Cómo está hecho (el README del proyecto)** — Dado un visitante, cuando abre «Cómo está hecho» (desde el
   escritorio, desde el detalle de Agus OS en Proyectos o desde la Terminal), entonces lee un documento con un índice
-  que explica cómo está montado Agus OS: las tecnologías, cada una con su logo; cómo funciona por dentro (el sitio, las
-  ventanas, el formulario de Correo, el Libro de visitas y la actualización automática del Stack con el token de
-  GitHub); y las limitaciones por los bloqueos de LaLiga a Cloudflare, las ideas para resolverlas y por qué no se han
-  aplicado. Los detalles están en `docs/features/como-esta-hecho.md`.
+  que explica cómo está montado Agus OS: las tecnologías, cada una con su logo; un resumen de cómo fluye todo; cómo funciona por
+  dentro (el sitio, las ventanas, el Correo, el Libro de visitas y la actualización automática del Stack con el token de
+  GitHub); y cómo se construyó con IA (fichas, pruebas antes del código y sus números). Los detalles están en `docs/features/como-esta-hecho.md`.
   *Negativo:* dado un logo que no se puede mostrar, entonces la tecnología sigue apareciendo con su nombre; y ningún
   texto del documento contiene una clave, un token, un correo ni un dato de una cuenta.
 

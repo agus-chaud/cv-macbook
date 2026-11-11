@@ -105,13 +105,22 @@ describe('src/content/como-esta-hecho.md', () => {
     const headings = [...body.matchAll(/^## (.+)$/gm)].map((m) => m[1]);
     expect(headings).toEqual([
       'Qué es',
+      'En resumen',
       'Stack',
       'Cómo funciona por dentro',
       'Cómo se actualizan solos los datos',
       'El Correo y el Libro de visitas',
-      'Cómo se trabaja',
-      'Limitaciones: los bloqueos de LaLiga',
+      'Cómo lo construí con IA',
     ]);
+  });
+
+  test('habla de vos, sin mezclar el tú de España', () => {
+    expect(raw).not.toMatch(/\b(escribes|abres|pulsas|quieres|puedes|tienes|haces)\b/i);
+    expect(raw).toMatch(/\b(abrís|escribís|tocás)\b/);
+  });
+
+  test('no habla de los bloqueos de LaLiga, que no afectan a este sitio', () => {
+    expect(raw).not.toMatch(/LaLiga|hayahora/i);
   });
 
   test('«Qué es» dice solo los dos párrafos acordados', () => {

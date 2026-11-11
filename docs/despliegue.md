@@ -106,7 +106,6 @@ publicar números recortados.
 
 | Síntoma | Causa más probable | Qué hacer |
 |---------|--------------------|-----------|
-| La web no carga desde España algunos días, pero desde otra red sí | Durante los partidos de LaLiga, algunas operadoras bloquean IPs compartidas de Cloudflare | No es un fallo de la web y se levanta al acabar el partido. Ver «Cómo está hecho» → Limitaciones |
 | La compilación falla con "name … must match" | El Worker no se llama como el `name` de `wrangler.jsonc` | Renombra uno de los dos |
 | El formulario dice que la verificación "no está configurada" | Falta `PUBLIC_TURNSTILE_SITE_KEY` en las variables de **compilación** | Añádela (paso 3.5) y vuelve a desplegar |
 | Consola: `Turnstile Error 110200` | El dominio no está en el widget | Añádelo en Turnstile → Hostnames |
