@@ -82,7 +82,7 @@
     color: #ffffff;
     text-shadow: none;
   }
-  /* Flecha de alias de macOS: el enlace sale de Pol OS. */
+  /* Flecha de alias de macOS: el enlace sale del sitio. */
   .shortcut::after {
     content: '';
     position: absolute;

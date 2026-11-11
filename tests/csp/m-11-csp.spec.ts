@@ -79,7 +79,7 @@ test.describe('M-11 Cabeceras de seguridad', () => {
     expect(html).not.toMatch(/\sstyle="/i);
   });
 
-  test('los marcos permitidos son Pol OS, Turnstile, el vídeo de YouTube sin cookies y solo los proyectos incrustables', async ({ request }) => {
+  test('los marcos permitidos son el propio sitio, Turnstile, el vídeo de YouTube sin cookies y solo los proyectos incrustables', async ({ request }) => {
     const html = await (await request.get('/')).text();
     const meta = html.match(/<meta http-equiv="content-security-policy" content="([^"]+)"/i)![1];
     const frames = parsePolicy(meta.replace(/&#39;/g, "'"))['frame-src'];
@@ -128,7 +128,7 @@ test.describe('M-11 Cabeceras de seguridad', () => {
     const mail = page.getByTestId('mail');
     await expect(mail.getByTestId('mail-contact-mail')).toBeVisible();
 
-    // Ventanas: mover, redimensionar, ampliar, minimizar, abrir otras apps y el menú de Pol OS
+    // Ventanas: mover, redimensionar, ampliar, minimizar, abrir otras apps y el menú del sistema
     const win = page.getByTestId('window-mail');
     await win.getByTestId('window-maximize').click();
     await win.getByTestId('window-maximize').click();
@@ -146,7 +146,7 @@ test.describe('M-11 Cabeceras de seguridad', () => {
     await page.getByTestId('miniplayer-close').click();
     await page.getByTestId('window-favorites').getByTestId('window-close').click();
 
-    // Cómo está hecho (S-10): el documento con sus logos en línea, desde el escritorio y desde el detalle de Pol OS
+    // Cómo está hecho (S-10): el documento con sus logos en línea, desde el escritorio y desde el detalle de este portfolio
     await page.getByTestId('desktop-icon-howto').dblclick();
     await expect(page.getByTestId('howto-techs')).toBeVisible();
     await page.getByTestId('window-howto').getByTestId('window-close').click();
@@ -164,7 +164,7 @@ test.describe('M-11 Cabeceras de seguridad', () => {
     await expect(page.getByTestId('guestbook-captcha')).toContainText('Verificación simulada');
     await page.getByTestId('guestbook-name').fill('Ana Pérez');
     await page.getByTestId('guestbook-relation').selectOption('cliente');
-    await page.getByTestId('guestbook-text').fill('Trabajar con Pol fue muy fácil y el resultado superó lo que esperaba.');
+    await page.getByTestId('guestbook-text').fill('Trabajar con Agus fue muy fácil y el resultado superó lo que esperaba.');
     await page.getByTestId('guestbook-email').fill('ana@ejemplo.com');
     await page.getByTestId('guestbook-consent').check();
     await page.getByTestId('guestbook-send').click();
@@ -334,7 +334,7 @@ test.describe('M-11 Cabeceras de seguridad', () => {
     });
   });
 
-  test('otra web no puede incrustar Pol OS', async ({ page, context }) => {
+  test('otra web no puede incrustar el sitio', async ({ page, context }) => {
     await context.route('http://otro-origen.test/**', (route) =>
       route.fulfill({ contentType: 'text/html', body: '<!doctype html><iframe id="v" src="http://localhost:4322/" width="800" height="600"></iframe>' }),
     );

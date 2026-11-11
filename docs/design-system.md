@@ -1,7 +1,5 @@
 # Design System
 
-> **Plantilla:** este documento es el de Pol OS, el portfolio de Pol Marzà del que nace esta plantilla. Déjalo como ejemplo del método o reescríbelo para tu proyecto.
-
 <!-- Fuente de verdad visual del proyecto.
      Consultar antes de crear cualquier componente nuevo.
      Actualizar cuando se añadan nuevos patrones, componentes o se modifique la identidad visual. -->
@@ -120,8 +118,8 @@ acceso) no cambia.
 - **Iconos:** glifos de trazo (24 × 24, grosor 1,8–2,4, extremos redondeados) dentro de un
   contenedor con degradado, o un dibujo completo a sangre en las apps principales. Los iconos de documento y
   carpeta son dibujos completos propios. En las apps no se usan logos de otras marcas, salvo Gmail (Correo) y
-  Safari (Navegador), decisión de Pol del 2026-10-17. Otra excepción, decidida por Pol: los accesos directos externos (LinkedIn, GitHub,
-  Con Criterio) y los proyectos llevan su propio icono, una imagen cuadrada de 256 px que la interfaz recorta
+  Safari (Navegador), decisión del 2026-10-17. Otra excepción, decidida el 2026-10-10: los accesos directos externos (LinkedIn, GitHub,
+  la newsletter) y los proyectos llevan su propio icono, una imagen cuadrada de 256 px que la interfaz recorta
   con la silueta de macOS. El de GitHub es la marca en blanco sobre fondo oscuro, para que se vea en ambos temas. El de WhatsApp es el de la app: el símbolo blanco sobre una casilla verde con degradado (`#61fd7d` a `#25cf43`), como se ve en el dock de macOS.
 - **Accesos directos externos** (Newsletter, GitHub, LinkedIn y WhatsApp): llevan una pequeña flecha en la
   esquina inferior izquierda, como los alias de macOS, para indicar que salen del sistema.
@@ -161,14 +159,14 @@ El resto es contenido y debe quedarse en segundo plano.
 
 ### Pantalla de acceso (`LockScreen`)
 Fecha y hora grandes arriba; en el espacio libre de debajo, centrado y algo por encima del centro
-exacto, el bloque de acceso: avatar con la foto de Pol (92 px, redondo), nombre y campo de contraseña
-decorativo con ocho puntos. La foto es `src/assets/pol.webp`, se reduce al compilar a 276 px (hasta 3x
+exacto, el bloque de acceso: avatar con la foto de Agus (92 px, redondo), nombre y campo de contraseña
+decorativo con ocho puntos. La foto es `src/assets/foto.webp`, se reduce al compilar a 276 px (hasta 3x
 de densidad) y es decorativa (`alt` vacío) porque el nombre está justo debajo. Si no carga, quedan las
 iniciales "PM". Se entra con clic o Enter, con animación breve de giro en el botón y transición de
 desenfoque. No acepta texto.
 
 ### Barra de menú (`MenuBar`)
-Logo de Pol OS (menú con Acerca de, Ajustes y Bloquear pantalla), nombre de la app activa en negrita,
+Logo de Agus OS (menú con Acerca de, Ajustes y Bloquear pantalla), nombre de la app activa en negrita,
 los menús Archivo, Edición, Visualización, Ventana y Ayuda, conmutador de tema (sol con tema oscuro,
 luna con claro) y reloj. Solo escritorio.
 
@@ -180,17 +178,16 @@ de cada menú sale de `src/os/menus.ts` (función pura): ahí se decide qué hay
 Roles: `menubar`, `menu`, `menuitem`, `menuitemradio` y `menuitemcheckbox`. Con teclado: flechas, Inicio,
 Fin, Enter y Escape. Los menús no quitan el foco al campo de texto, para que Edición actúe sobre él.
 
-### Cómo usar Pol OS (`Help`)
+### Cómo usar Agus OS (`Help`)
 Ventana de texto con la guía corta que abre Ayuda: abrir con doble clic, ventanas, proyectos, escribir a
-Pol y ajustes. Sin datos ni enlaces. No está en el dock ni en el escritorio.
+Agus y ajustes. Sin datos ni enlaces. No está en el dock ni en el escritorio.
 
 ### Icono de escritorio (`DesktopIcon`)
 Icono de 56px y etiqueta. Props: `art`, `label`, `href` (si es acceso directo externo) o `open`
 (si abre una ventana). Estados: reposo, seleccionado, enfocado.
 
 **Qué hay en el escritorio:** la carpeta **Proyectos** (que abre la vista general de los proyectos que contiene), los proyectos que
-viven solo en GitHub como icono propio (campo `placement: desktop`; hoy `project-template`, con una estrella amarilla sobre fondo
-oscuro), Mi CV (antes «Sobre mí»), Notas, Libro de visitas, Stack y los accesos directos. Los demás proyectos no tienen icono suelto: viven dentro de
+viven solo en GitHub como icono propio (campo `placement: desktop`; hoy ninguno), Mi CV (antes «Sobre mí»), Notas, Libro de visitas, Stack y los accesos directos. Los demás proyectos no tienen icono suelto: viven dentro de
 la carpeta. En móvil pasa igual: la carpeta Proyectos y, suelto en la pantalla de inicio, el de GitHub.
 
 ### Ventana (`Window`)
@@ -212,7 +209,7 @@ título como tooltip; un clic las recupera. Relleno 10/14px y hueco de 10px entr
 ### Libro de visitas (`Guestbook`)
 Ventana de 560 × 560 con barra superior (título "Libro de visitas", una línea de apoyo y el botón principal "Dejar
 reseña"). Debajo, una columna de tarjetas (`--surface`, radio 12, borde fino `--line`): el texto de la reseña (con sus saltos
-de línea, siempre texto plano) y, al pie, el nombre en negrita, la relación con Pol y el detalle (cargo o lugar) en `--muted`, la
+de línea, siempre texto plano) y, al pie, el nombre en negrita, la relación con Agus y el detalle (cargo o lugar) en `--muted`, la
 fecha si la hay y los enlaces a sus redes (`--accent-text`, con el icono de enlace externo) alineados a la derecha. Los enlaces se
 abren en pestaña nueva con `rel="nofollow noopener noreferrer ugc"`. Sin reseñas, un aviso centrado que invita a escribir la
 primera; mientras carga, "Cargando las reseñas…"; si falla, un aviso con `role="alert"`.
@@ -257,13 +254,13 @@ para volver. No hay textos de gusto ni notas: solo el contenido.
   los libros y las películas, que además llevan una ficha más ancha (póster a la izquierda; título, año, sinopsis y el botón «Ver tráiler» a la
   derecha). Los deportes son una foto y su nombre, sin enlace; al pie, una línea en `--muted` acredita cada foto («Fotos de Wikimedia Commons, recortadas:
   Básquet, de autor (licencia) · …»), con el nombre del deporte enlazando a su ficha (pestaña nueva).
-  Los libros llevan, si existe, un enlace final (Yoleo). Un libro con resumen es un botón con «Leer resumen» en `--accent-text` bajo el autor; abre, en la
+  Los libros llevan, si existe, un enlace final a un perfil de lectura. Un libro con resumen es un botón con «Leer resumen» en `--accent-text` bajo el autor; abre, en la
   misma ventana y con la barra «‹ Libros», la portada (72px), el título (20px) y el autor en `--muted`, y debajo cada sección numerada (15px, seminegrita)
   con sus viñetas (14px, interlineado 1,5; la etiqueta en negrita; marcadores en `--muted`).
 - **Música** es una lista como una biblioteca: número, portada cuadrada de 52px, título y artista, duración (si la hay), un enlace a YouTube Music y el
   botón de play (círculo con `--accent-solid`). La que suena queda marcada con `--accent-soft`.
 - Cada región con desplazamiento se puede enfocar con el teclado (`role="region"`).
-- **Portadas:** archivos `.jpg` de `public/favoritos/<sección>/`. Mientras Pol no sube la real, hay una de ejemplo, con rayas y el texto «Portada de ejemplo».
+- **Portadas:** archivos `.jpg` de `public/favoritos/<sección>/`. Mientras Agus no sube la real, hay una de ejemplo, con rayas y el texto «Portada de ejemplo».
 
 **Mini reproductor:** una tarjeta fija abajo a la derecha, encima del dock (`z-index` 7900, por debajo de los menús), de 356 px de ancho con el vídeo de
 YouTube en 16:9 y nunca por debajo de 200 px de alto (el mínimo de YouTube). Arriba, una cabecera con el título, el artista y la posición en la lista
@@ -282,11 +279,11 @@ barra superior «Cómo está hecho.md». Sin foto. Arriba, el título (h1), la d
 los títulos numerados como botones): al pulsar uno, el documento se desplaza a esa sección y le da el foco (el desplazamiento es suave salvo con
 movimiento reducido, y no toca la dirección de la página). Después, el texto con títulos de sección (h2, con línea fina debajo), párrafos,
 listas, `código` y enlaces: los externos abren pestaña nueva y los que van a otra app del escritorio (Stack, Libro de visitas) la abren en
-Pol OS. A mitad del texto, la **lista de tecnologías**: una cuadrícula de recuadros (`minmax(220px, 1fr)`) con el logo en una casilla de 34px
+Agus OS. A mitad del texto, la **lista de tecnologías**: una cuadrícula de recuadros (`minmax(220px, 1fr)`) con el logo en una casilla de 34px
 (un SVG monocromo, del color del texto) y a su lado el nombre en negrita y para qué se usa. Una tecnología sin logo en la colección usa sus
 iniciales en la misma casilla, nunca un hueco. El texto sale de `src/content/como-esta-hecho.md` y se pide al abrir la app.
 
-**Página pública (`/como-esta-hecho/`):** la misma hoja, sin la isla del escritorio, con una barra superior (**Pol OS** a la izquierda y **Abrir Pol OS**
+**Página pública (`/como-esta-hecho/`):** la misma hoja, sin la isla del escritorio, con una barra superior (**Agus OS** a la izquierda y **Abrir Agus OS**
 a la derecha), el índice con enlaces normales y se desplaza con normalidad. Se lee sin JavaScript.
 
 ### Proyectos (`Projects`, `ProjectDetail`)
@@ -305,7 +302,7 @@ Barra de navegación (atrás, adelante, recargar, dirección de solo lectura con
 Favoritos y "Abrir en pestaña nueva"), barra de favoritos con los proyectos y página. Abierto sin
 proyecto muestra la página de Favoritos, como la de Safari: una cuadrícula con solo el icono de cada proyecto (el suyo, o su inicial sobre un degradado) y su nombre debajo. El detalle de cada proyecto
 no vive aquí. Una página incrustable se muestra dentro, con "Cargando…" mientras llega; una no incrustable muestra el aviso "no se puede
-abrir dentro de Pol OS" con un botón para abrirla en una pestaña nueva. Solo carga sitios de la
+abrir dentro de Agus OS" con un botón para abrirla en una pestaña nueva. Solo carga sitios de la
 lista de favoritos.
 
 ### Correo (`Mail`)
@@ -317,7 +314,7 @@ el icono de enlace externo y se abren en una pestaña nueva; el correo es un `ma
 ### Documento (`PaperDoc`)
 Hoja blanca sobre fondo gris con barra superior y botón de descarga. Se usa para Sobre mí. **La hoja es blanca en los
 dos temas**, como un papel de verdad (tokens `--paper-*`); lo único que cambia con el tema es el escritorio gris que la
-rodea (`--paper-desk`). Arriba, la foto en círculo (84px), el título "Hola, soy Pol" (26px, 700) y la línea de
+rodea (`--paper-desk`). Arriba, la foto en círculo (84px), el título "Hola, soy Agus" (26px, 700) y la línea de
 presentación en negrita; después el gancho en cursiva y las secciones con su título y una línea fina. Los enlaces
 a otras apps (Proyectos, Correo) abren esa app en el escritorio; los externos, una pestaña nueva. El botón
 "Descargar PDF" solo aparece si el PDF existe. En móvil, la hoja ocupa todo el ancho con un relleno menor.
@@ -331,18 +328,18 @@ toque.
 **Nota:** misma hoja que Sobre mí (`--paper-*`, blanca en los dos temas) sobre el escritorio gris, con la columna limitada a
 640px. Arriba el título (h1), el subtítulo, y una línea con la fecha y las etiquetas (pastillas pequeñas, no clicables). El
 texto lleva encabezados, listas, citas, enlaces (pestaña nueva), imágenes y bloques de código **sin colorear**
-(monoespaciado, fondo de papel más oscuro). Al final, la invitación a **Con Criterio** (botón con enlace externo) y, en la
+(monoespaciado, fondo de papel más oscuro). Al final, la invitación a la **newsletter**, si hay una configurada (botón con enlace externo) y, en la
 ventana, un enlace a la página pública de la nota. Mientras el texto se pide, "Cargando la nota…"; si falla, un aviso con
 `role="alert"`. El título de la ventana es el de la nota.
 
-**Página pública (`/notas/<nombre>/`):** la misma hoja, sin la isla del escritorio, con una barra superior (**Pol OS** a la
-izquierda y **Abrir en Pol OS** a la derecha). Se desplaza con normalidad (el escritorio no). Se lee sin JavaScript.
+**Página pública (`/notas/<nombre>/`):** la misma hoja, sin la isla del escritorio, con una barra superior (**Agus OS** a la
+izquierda y **Abrir en Agus OS** a la derecha). Se desplaza con normalidad (el escritorio no). Se lee sin JavaScript.
 
 **404:** número grande en `--accent-text`, "Esta página no existe" y un enlace al escritorio, centrado y con los tokens del
 tema.
 
 ### Terminal (`Terminal`)
-Siempre oscura, con el aviso `pol@pol-os ~ %` y la línea de comandos enfocada al abrirla. Flechas
+Siempre oscura, con el aviso `agus@agus-os ~ %` y la línea de comandos enfocada al abrirla. Flechas
 arriba y abajo recorren el historial, Tab completa, Ctrl+L limpia y Ctrl+C cancela la línea. Los errores
 salen en `--term-error`, lo secundario en `--term-muted` y los enlaces subrayados. La salida es una
 región `role="log"` (`aria-live="polite"`) y la línea lleva la etiqueta "Comando". Solo ejecuta comandos
@@ -356,8 +353,8 @@ pantalla, y las marcas visuales llevan `aria-hidden`. El dibujo del ahorcado tam
 
 ### Memory (`Memory`)
 Ventana de 480 × 600 (pantalla completa en móvil), sin icono en el escritorio: se abre con `memory` en la Terminal. Arriba, «Movimientos» y
-«Parejas: n de 8» en `--muted`. Debajo, una cuadrícula de 4 × 4 cartas cuadradas (mínimo 44 px, esquinas de 14 px) con el estilo **«Línea»**, elegido por
-Pol entre tres propuestas el 2026-10-16. Boca abajo, `--accent-soft` con una trama de puntos de acento y un filo `--line`. Levantada, **sin fondo**, solo
+«Parejas: n de 8» en `--muted`. Debajo, una cuadrícula de 4 × 4 cartas cuadradas (mínimo 44 px, esquinas de 14 px) con el estilo **«Línea»**, elegido
+entre tres propuestas el 2026-10-16. Boca abajo, `--accent-soft` con una trama de puntos de acento y un filo `--line`. Levantada, **sin fondo**, solo
 un filo de 1,5 px en `--line-strong` y el logo monocromo (del color del texto, al 56 % de la carta). Emparejada, el filo pasa a `--accent` y aparece el
 nombre debajo, en `--muted`. Los nombres largos del Stack se acortan («Anthropic», «Cloudflare»). Bajo la cuadrícula, una línea con «Pareja: Svelte.» o
 «No son pareja.», sin nombres de cartas sin pareja (el lector de pantalla sí los oye). Al terminar, esa línea desaparece y queda solo el aviso
@@ -385,7 +382,7 @@ acento), que abre su ficha. Sin repositorios, un aviso y el botón al perfil.
 ### Ajustes (`Settings`)
 Selector de apariencia (claro, oscuro, automático), de fondo de pantalla y de **tamaño del texto** (Normal, Grande y Muy grande; una
 miniatura «Aa» con el tamaño real de cada paso), con una nota de que se guarda solo en este navegador. Los mismos tamaños están en
-el menú Visualización. Se abre desde el dock y desde el menú de Pol OS. Las miniaturas de
+el menú Visualización. Se abre desde el dock y desde el menú de Agus OS. Las miniaturas de
 apariencia usan colores fijos para enseñar cada tema sea cual sea el actual.
 
 ### Modo móvil (`MobileHome`, `MobileSheet`, `MobileFolder`)
@@ -406,4 +403,4 @@ a pantalla completa con botón "‹ Inicio". Proyectos y Notas se agrupan en car
 - macOS actual (Sequoia/Tahoe): barra de menú, dock, ventanas, pantalla de acceso y los alias con
   flecha.
 - iOS: pantalla de inicio con carpetas para el modo móvil.
-- Prototipo v0.1 de Pol OS, enlazado al principio de este documento.
+- Prototipo v0.1 de Agus OS, enlazado al principio de este documento.

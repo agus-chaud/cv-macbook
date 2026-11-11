@@ -7,8 +7,8 @@
 ## Qué se construye
 
 La app Terminal deja de ser un estado vacío. Es una terminal de mentira, siempre oscura, con el aviso
-`pol@pol-os ~ %`, donde se escriben comandos y se ve su salida. Sirve para que un desarrollador
-recorra Pol OS a su manera y para esconder algún detalle de humor. **No ejecuta nada de verdad**: no hay
+`agus@agus-os ~ %`, donde se escriben comandos y se ve su salida. Sirve para que un desarrollador
+recorra Agus OS a su manera y para esconder algún detalle de humor. **No ejecuta nada de verdad**: no hay
 servidor, ni `eval`, ni red. Cada comando es una función del propio sitio.
 
 **Comandos visibles** (los que enseña `help`):
@@ -16,9 +16,9 @@ servidor, ni `eval`, ni red. Cada comando es una función del propio sitio.
 | Comando | Qué hace |
 |---|---|
 | `help` | La lista de comandos |
-| `about` | Quién es Pol, con sus enlaces. Solo hechos ya públicos |
+| `about` | Quién es Agus, con sus enlaces. Solo hechos ya públicos |
 | `projects` | Los proyectos de la colección, con su descripción |
-| `open <algo>` | Abre un proyecto (`open planito`) o una app (`open mail`, `open cv`, `open ajustes`…) |
+| `open <algo>` | Abre un proyecto (`open <id>`) o una app (`open mail`, `open cv`, `open ajustes`…) |
 | `ls` | Lo que hay en el escritorio |
 | `social` | Los tres enlaces (se pueden pulsar) |
 | `contact` | Abre Correo |
@@ -74,7 +74,7 @@ Qué comprueba cada test, según el criterio del PRD:
 - **e2e (escritorio y móvil):**
   - Abrir Terminal desde el dock muestra el aviso y una línea enfocada; `help` lista los comandos; `about`
     y `projects` muestran su salida (un proyecto por cada uno de la colección).
-  - `open planito` abre el Navegador en ese proyecto, `open mail` abre Correo, `theme oscuro` cambia el
+  - `open <id>` abre el Navegador en ese proyecto, `open mail` abre Correo, `theme oscuro` cambia el
     tema (y coincide con Ajustes), `wallpaper mar` cambia el fondo, `lock` bloquea y `exit` cierra la ventana.
   - Flecha arriba y abajo recuperan comandos; Tab completa; Ctrl+L limpia; `clear` también.
   - `social` muestra tres enlaces con `target="_blank"`.
@@ -98,4 +98,4 @@ test móvil usa un viewport táctil, no un teléfono. Se prueba a mano una vez.
 - Guardar el historial entre visitas.
 - Colores o fuente elegibles.
 - Un `cat` de las notas: llega con S-01.
-- Comandos que dependan de contenido que Pol aún no ha decidido (su cargo, sus herramientas).
+- Comandos que dependan de contenido que aún no estaba decidido (cargo, herramientas).

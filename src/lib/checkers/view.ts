@@ -13,7 +13,7 @@ export interface View {
 export const DEFAULT_VIEW: View = { rot: 0, tilt: 52 };
 export const TILT_MIN = 28;
 export const TILT_MAX = 82;
-export const VIEW_KEY = 'pol-os:damas:vista';
+export const VIEW_KEY = 'os:damas:vista';
 
 /** El lienzo del SVG. */
 export const VW = 560;

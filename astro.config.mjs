@@ -35,7 +35,7 @@ const OS_SHARED = [
 // Todas las páginas se pre-renderizan. Solo /api/contact (M-08) se ejecuta bajo demanda.
 export default defineConfig({
   site: PERSONA.siteUrl,
-  // 'compile' optimiza las imágenes al compilar. Pol OS no usa sesiones: sin ellas, el adaptador
+  // 'compile' optimiza las imágenes al compilar. El sitio no usa sesiones: sin ellas, el adaptador
   // no pide un KV y el despliegue no crea ese recurso en la cuenta de Cloudflare.
   adapter: cloudflare({ imageService: 'compile' }),
   session: false,

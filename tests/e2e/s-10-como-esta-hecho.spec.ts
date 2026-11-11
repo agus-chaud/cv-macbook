@@ -32,7 +32,7 @@ test.describe('S-10 Cómo está hecho', () => {
     for (const id of SECTIONS) await expect(doc.locator(`h2[id="${id}"]`)).toHaveCount(1);
   });
 
-  test('se abre desde el detalle del proyecto Pol OS, y solo desde ese', async ({ page }, testInfo) => {
+  test('se abre desde el detalle del proyecto de este portfolio, y solo desde ese', async ({ page }, testInfo) => {
     await openProjectDetail(page, testInfo.project.name, polOs);
     await page.getByTestId('project-howto').click();
     await expect(page.getByTestId('howto')).toBeVisible();
@@ -113,7 +113,7 @@ test.describe('S-10 Cómo está hecho', () => {
     await expect(body).toContainText('Por qué no se ha cambiado');
   });
 
-  test('los enlaces externos se abren en una pestaña nueva y sin dar acceso a Pol OS', async ({ page }, testInfo) => {
+  test('los enlaces externos se abren en una pestaña nueva y sin dar acceso al sitio', async ({ page }, testInfo) => {
     const doc = await openHowTo(page, testInfo.project.name);
     const links = doc.getByTestId('howto-body').locator('a[href^="http"]');
     const count = await links.count();

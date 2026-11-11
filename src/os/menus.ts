@@ -158,7 +158,7 @@ export function buildMenus(ctx: MenuContext): Menu[] {
 
   const ayuda: MenuEntry[] = [
     item('help-guide', `Cómo usar ${PERSONA.osName}`, open('help')),
-    item('write-to-pol', `Escribir a ${PERSONA.firstName}…`, open('mail')),
+    item('write-to-me', `Escribir a ${PERSONA.firstName}…`, open('mail')),
     sep(),
     ...LINKS.map((l) => link(`link-${l.id}`, l.label, l.url)),
   ];

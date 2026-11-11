@@ -52,7 +52,7 @@ export interface Item {
   id: string;
   label: string;
   icon: IconSpec;
-  /** Lo que abre dentro de Pol OS. */
+  /** Lo que abre dentro del sitio. */
   open?: OpenTarget;
   /** Enlace externo: se abre en una pestaña nueva. */
   href?: string;

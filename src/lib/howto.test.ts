@@ -161,7 +161,7 @@ describe('src/content/como-esta-hecho.md', () => {
     }
   });
 
-  test('no se nombra a ninguna persona ni empresa concreta de las que han hablado con Pol', () => {
+  test('no se nombra a ninguna persona ni empresa concreta de las que han hablado con el dueño', () => {
     for (const name of ['Lucía', 'Marcos']) expect(raw, name).not.toContain(name);
   });
 });

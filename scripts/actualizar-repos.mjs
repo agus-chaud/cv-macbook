@@ -15,7 +15,7 @@ import { OWNER, SHOWCASE_TOPIC, sameRepos, toShowcase } from '../src/lib/repos.t
 const salida = new URL('../src/content/repos.json', import.meta.url);
 const dry = process.argv.includes('--dry');
 const token = process.env.STACK_GITHUB_TOKEN || process.env.GH_TOKEN || process.env.GITHUB_TOKEN;
-const headers = { Accept: 'application/vnd.github+json', 'User-Agent': 'pol-os-actualizar-repos', ...(token ? { Authorization: `Bearer ${token}` } : {}) };
+const headers = { Accept: 'application/vnd.github+json', 'User-Agent': 'cv-macbook-actualizar-repos', ...(token ? { Authorization: `Bearer ${token}` } : {}) };
 
 const todos = [];
 for (let page = 1; ; page++) {

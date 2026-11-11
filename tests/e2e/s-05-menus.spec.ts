@@ -149,9 +149,9 @@ test.describe('S-05 Menús de la barra de menú', () => {
       await page.getByTestId('guestbook-write').click();
       const field = page.getByTestId('guestbook-name');
       await field.click();
-      await page.keyboard.type('Hola Pol');
+      await page.keyboard.type('Hola Agus');
       await page.keyboard.press('ControlOrMeta+a');
-      await expect(field).toHaveValue('Hola Pol');
+      await expect(field).toHaveValue('Hola Agus');
 
       await trigger(page, 'edicion').click();
       await expect(item(page, 'edicion', 'cut')).not.toHaveAttribute('aria-disabled', 'true');
@@ -163,7 +163,7 @@ test.describe('S-05 Menús de la barra de menú', () => {
       await trigger(page, 'edicion').click();
       await expect(item(page, 'edicion', 'undo')).not.toHaveAttribute('aria-disabled', 'true');
       await item(page, 'edicion', 'undo').click();
-      await expect(field).toHaveValue('Hola Pol');
+      await expect(field).toHaveValue('Hola Agus');
     });
 
     test('"Seleccionar todo" en una ventana de solo lectura selecciona su contenido', async ({ page }) => {
@@ -283,7 +283,7 @@ test.describe('S-05 Menús de la barra de menú', () => {
   });
 
   test.describe('Ayuda', () => {
-    test('"Cómo usar Pol OS" abre la guía', async ({ page }) => {
+    test('"Cómo usar" abre la guía', async ({ page }) => {
       await (await pick(page, 'ayuda', 'help-guide')).click();
       const win = page.getByTestId('window-help');
       await expect(win).toBeVisible();
@@ -291,8 +291,8 @@ test.describe('S-05 Menús de la barra de menú', () => {
       await expect(page.getByTestId('menubar-app')).toHaveText('Ayuda');
     });
 
-    test('"Escribir a Pol" abre Correo', async ({ page }) => {
-      await (await pick(page, 'ayuda', 'write-to-pol')).click();
+    test('"Escribir a…" abre Correo', async ({ page }) => {
+      await (await pick(page, 'ayuda', 'write-to-me')).click();
       await expect(page.getByTestId('window-mail')).toBeVisible();
     });
 
@@ -307,7 +307,7 @@ test.describe('S-05 Menús de la barra de menú', () => {
     });
   });
 
-  test.describe('Menú de Pol OS (logo)', () => {
+  test.describe('Menú del sistema (logo)', () => {
     test('conserva Acerca de, Ajustes y Bloquear pantalla', async ({ page }) => {
       await (await pick(page, 'logo', 'settings')).click();
       await expect(page.getByTestId('window-settings')).toBeVisible();

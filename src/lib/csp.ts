@@ -1,5 +1,5 @@
 /**
- * Política de seguridad de contenido (CSP) de Pol OS (M-11). Funciones puras que usan la
+ * Política de seguridad de contenido (CSP) del sitio (M-11). Funciones puras que usan la
  * configuración de Astro (para construir la política) y los tests (para comprobarla).
  * Los hashes de los scripts y estilos que genera Astro los añade Astro solo; aquí va todo lo demás.
  */

@@ -6,7 +6,7 @@
 
 ## Qué se construye
 
-Un memory clásico con los logos de las herramientas que Pol usa de verdad: **16 cartas boca abajo, 8 parejas**. Se levantan de dos en dos; si son pareja, se quedan
+Un memory clásico con los logos de las herramientas que Agus usa de verdad: **16 cartas boca abajo, 8 parejas**. Se levantan de dos en dos; si son pareja, se quedan
 a la vista y debajo del logo aparece su **nombre** (TypeScript, Svelte, Supabase…), y si no, se vuelven a tapar. Arriba, los **movimientos** y las parejas encontradas. Al
 completarlo, un mensaje con los movimientos y un botón **«Jugar otra»**, que baraja con otras herramientas.
 
@@ -20,7 +20,7 @@ completarlo, un mensaje con los movimientos y un botón **«Jugar otra»**, que 
 ## Decisiones tomadas
 
 - **Una app pequeña, no otro juego de texto:** un memory necesita ver la cuadrícula, y en la Terminal no se podría jugar en el móvil.
-- **Sin icono en el escritorio** (se abre con `memory` en la Terminal): los juegos son un extra, el escritorio es para conocer a Pol.
+- **Sin icono en el escritorio** (se abre con `memory` en la Terminal): los juegos son un extra, el escritorio es para conocer a Agus.
 - **Sus estilos van en `global.css` bajo su clase raíz**, como la Terminal, para que la home no sume una petición de CSS (MEJORA-08). El código y los logos se descargan al abrirlo.
 - **Los logos son los de `simple-icons`** (licencia CC0), igual que en «Cómo está hecho»: monocromos, del color del texto, y se importan uno a uno por su nombre, así que
   solo entran los que se usan. Un catálogo nuevo (`src/lib/memory-logos.ts`) dice qué herramienta del Stack lleva qué logo; las que no tienen logo en esa colección
@@ -53,7 +53,7 @@ Qué comprobará cada test, según el criterio del PRD:
 
 ## Hallazgos al construir
 
-- **Cambio pedido por Pol a mitad (2026-10-16): solo logos reconocibles, más grandes.** El logo de GitHub Actions no se entendía. El catálogo pasa de 33 logos
+- **Cambio pedido a mitad (2026-10-16): solo logos reconocibles, más grandes.** El logo de GitHub Actions no se entendía. El catálogo pasa de 33 logos
   a 19 conocidos (TypeScript, JavaScript, HTML, Python, Rust, Swift, React, Tailwind, Vite, Next.js, Astro, Svelte, Supabase, Cloudflare, Claude, Anthropic, Stripe,
   Vercel y GitHub). **GitHub entra como extra** aunque no esté en el Stack, que cuenta dependencias y no dónde vive el código. El logo ocupa ahora el 66 % de la carta (antes, el 52 %).
 - **El comando de la lista se llama `minigames`**, no `juegos`: `juegos` y `games` ya abren los videojuegos de Favoritos con `open`. `memory` no choca con nada.
@@ -63,7 +63,7 @@ Qué comprobará cada test, según el criterio del PRD:
 
 ## Cambios posteriores
 
-- **2026-10-16, estilo «Línea»** (Pol eligió entre tres propuestas en un prototipo). Las cartas levantadas van sin fondo, solo con un filo; el dorso lleva una trama de puntos.
+- **2026-10-16, estilo «Línea»** (elegido entre tres propuestas en un prototipo). Las cartas levantadas van sin fondo, solo con un filo; el dorso lleva una trama de puntos.
   También se acortan los nombres largos para que quepan («SDK de Anthropic» → «Anthropic», «Cloudflare Workers» → «Cloudflare») y el resultado final sale una sola vez.
 
 ## Fuera de esta feature

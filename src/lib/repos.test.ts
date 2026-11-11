@@ -76,7 +76,7 @@ describe('cómo se enseñan', () => {
 });
 
 describe('el archivo real', () => {
-  test('solo enlaces seguros a repositorios de Pol, y webs https://', () => {
+  test('solo enlaces seguros a repositorios del dueño, y webs https://', () => {
     for (const r of file.repos as { url: string; homepage: string | null }[]) {
       expect(r.url.startsWith(`${PROFILE_URL}/`), r.url).toBe(true);
       if (r.homepage) expect(r.homepage.startsWith('https://'), r.homepage).toBe(true);

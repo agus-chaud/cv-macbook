@@ -29,7 +29,7 @@ describe('.github/workflows/actualizar-datos.yml', () => {
     expect(code).toMatch(/git diff --quiet/);
   });
 
-  test('el token de Pol solo se pasa por una variable de entorno, nunca en la línea de comandos', () => {
+  test('el token del dueño solo se pasa por una variable de entorno, nunca en la línea de comandos', () => {
     expect(code).not.toMatch(/run:.*secrets\./);
     expect(code.match(/secrets\.STACK_GITHUB_TOKEN/g)).toHaveLength(2);
   });
@@ -37,5 +37,21 @@ describe('.github/workflows/actualizar-datos.yml', () => {
   test('solo añade al commit los datos, nada más', () => {
     expect(code).toMatch(/git add src\/content\/stack\.json src\/content\/projects src\/content\/repos\.json/);
     expect(code).not.toMatch(/git add (-A|--all|\.)/);
+  });
+});
+
+// Node 20 está retirado de los runners de GitHub: estas son las primeras versiones de cada action que corren en Node 24.
+const NODE24_MIN: Record<string, number> = { 'actions/checkout': 5, 'actions/setup-node': 5, 'pnpm/action-setup': 5 };
+
+describe.each(['actualizar-datos.yml', 'cobertura.yml'])('.github/workflows/%s', (file) => {
+  const text = readFileSync(join(process.cwd(), '.github/workflows', file), 'utf8');
+
+  test('las actions usan versiones que corren en Node 24', () => {
+    const uses = [...text.matchAll(/uses:\s*([\w.-]+\/[\w.-]+)@v(\d+)/g)];
+    expect(uses.length).toBeGreaterThan(0);
+    for (const [, action, major] of uses) {
+      expect(NODE24_MIN[action], `${action} sin versión mínima conocida`).toBeDefined();
+      expect(Number(major), action).toBeGreaterThanOrEqual(NODE24_MIN[action]);
+    }
   });
 });

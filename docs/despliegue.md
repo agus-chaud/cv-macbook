@@ -1,8 +1,8 @@
 # Despliegue
 
-> **Plantilla:** guía general para publicar tu copia en Cloudflare. La de Pol OS era la de su propio dominio; esta sirve para cualquiera.
+> **Plantilla:** guía general para publicar tu copia en Cloudflare.
 
-Pol OS se publica como un Worker de Cloudflare con activos estáticos. El agente prepara el despliegue, pero lo lanzas tú.
+Agus OS se publica como un Worker de Cloudflare con activos estáticos. El agente prepara el despliegue, pero lo lanzas tú.
 
 ## 0. Antes de empezar
 
@@ -34,7 +34,7 @@ y la **secreta** (Secret Key).
 Cloudflare → **Workers & Pages** → **Create** → **Import a repository** (Workers Builds).
 
 1. Autoriza la app de GitHub de Cloudflare para tu repositorio.
-2. El **nombre del Worker** tiene que coincidir con el `name` de `wrangler.jsonc` (`pol-os-template`, o el que pongas).
+2. El **nombre del Worker** tiene que coincidir con el `name` de `wrangler.jsonc` (`agus-os`, o el que pongas).
    Si no, la compilación falla con "The name in your Wrangler configuration file must match".
 3. Rama de producción: `main`.
 4. Comandos:

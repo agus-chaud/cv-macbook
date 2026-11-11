@@ -14,7 +14,7 @@ describe('absoluteUrl', () => {
 describe('personJsonLd', () => {
   const data = personJsonLd({
     site,
-    name: 'Pol Marzà',
+    name: 'Álex Ejemplo',
     imagePath: '/og.jpg',
     profiles: ['https://github.com/tu-usuario', 'https://www.linkedin.com/in/tu-perfil/', 'http://inseguro.test', 'javascript:alert(1)'],
   });
@@ -23,7 +23,7 @@ describe('personJsonLd', () => {
     expect(data).toMatchObject({
       '@context': 'https://schema.org',
       '@type': 'Person',
-      name: 'Pol Marzà',
+      name: 'Álex Ejemplo',
       url: 'https://example.com/',
       image: 'https://example.com/og.jpg',
     });
@@ -42,7 +42,7 @@ describe('personJsonLd', () => {
 
 describe('jsonLdScript', () => {
   test('es JSON válido que devuelve el mismo objeto', () => {
-    const data = { a: 'Marzà', b: [1, 2], c: { d: true } };
+    const data = { a: 'Ejemplo', b: [1, 2], c: { d: true } };
     expect(JSON.parse(jsonLdScript(data))).toEqual(data);
   });
 
@@ -100,7 +100,7 @@ describe('articleJsonLd', () => {
     description: 'Una descripción.',
     date: new Date('2026-10-10T00:00:00Z'),
     imagePath: '/og.jpg',
-    authorName: 'Pol Marzà',
+    authorName: 'Álex Ejemplo',
     tags: ['método', 'IA'],
   });
 
@@ -111,13 +111,13 @@ describe('articleJsonLd', () => {
       datePublished: '2026-10-10',
       inLanguage: 'es',
       url: 'https://example.com/notas/mi-nota/',
-      author: { '@type': 'Person', name: 'Pol Marzà' },
+      author: { '@type': 'Person', name: 'Álex Ejemplo' },
       keywords: 'método, IA',
     });
   });
 
   test('sin etiquetas no lleva palabras clave', () => {
-    const none = articleJsonLd({ site, path: '/notas/x/', title: 'x', description: 'x', date: new Date(), imagePath: '/og.jpg', authorName: 'Pol' });
+    const none = articleJsonLd({ site, path: '/notas/x/', title: 'x', description: 'x', date: new Date(), imagePath: '/og.jpg', authorName: 'Álex' });
     expect(none).not.toHaveProperty('keywords');
   });
 

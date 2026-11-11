@@ -6,13 +6,13 @@
 
 ## Qué se construye
 
-Pol OS pasa a enviar una política de seguridad de contenido (CSP) y otras cabeceras de seguridad en
+Agus OS pasa a enviar una política de seguridad de contenido (CSP) y otras cabeceras de seguridad en
 todas sus respuestas. Es lo que falta antes del primer despliegue. El visitante no nota nada: todo
 sigue funcionando igual. Lo que cambia es lo que el navegador **se niega a hacer**:
 
-- Ejecutar un script que no sea de Pol OS ni de Turnstile (adiós a la inyección de scripts).
+- Ejecutar un script que no sea de Agus OS ni de Turnstile (adiós a la inyección de scripts).
 - Cargar imágenes, estilos, conexiones o marcos de dominios que no estén en la lista.
-- Que otra web incruste Pol OS dentro de un marco (clickjacking).
+- Que otra web incruste Agus OS dentro de un marco (clickjacking).
 - Revelar la dirección completa de la página al abrir un enlace externo.
 
 La lista de marcos permitidos sale de los proyectos: solo los que están marcados como incrustables.
@@ -29,8 +29,8 @@ Así, añadir un proyecto nuevo y marcarlo como incrustable lo autoriza sin toca
      `frame-ancestors`, además de `X-Content-Type-Options`, `Referrer-Policy` y
      `Permissions-Policy`.
 - **`frame-ancestors 'self'`, no `'none'`.** La página de demostración de "Estudio" se carga
-  dentro de Pol OS, que es su mismo origen. Con `'none'` Pol OS no podría mostrarla. Ninguna otra web
-  puede incrustar Pol OS.
+  dentro de Agus OS, que es su mismo origen. Con `'none'` Agus OS no podría mostrarla. Ninguna otra web
+  puede incrustar Agus OS.
 - **`_headers` no vale para las respuestas del Worker.** Según la documentación de Cloudflare solo
   se aplica a los archivos estáticos, así que `/api/contact` añade sus propias cabeceras desde el
   código (`default-src 'none'`, `frame-ancestors 'none'`, `nosniff`).
@@ -38,7 +38,7 @@ Así, añadir un proyecto nuevo y marcarlo como incrustable lo autoriza sin toca
   - `script-src`: el propio sitio, los hashes de Astro, el script de arranque del tema (por hash) y
     `https://challenges.cloudflare.com`.
   - `frame-src`: `'self'`, `https://challenges.cloudflare.com` y el origen de cada proyecto
-    incrustable (en Pol OS, Afloat, Local Whisper y Planito).
+    incrustable (Agus OS y los proyectos de la colección que se dejan incrustar).
   - `connect-src`: `'self'` (el endpoint) y Turnstile si hiciera falta.
   - `img-src`: `'self'` y `data:` (la flecha de los accesos directos es un SVG en línea).
   - `object-src 'none'`, `base-uri 'none'`, `form-action 'self'`.
@@ -55,7 +55,7 @@ Así, añadir un proyecto nuevo y marcarlo como incrustable lo autoriza sin toca
   configuración de Playwright propia (`playwright.csp.config.ts`, `pnpm test:csp`), que usa el mismo
   servidor local de Cloudflare. Comprobado al construir: `preview` **sí** aplica `_headers`, así que
   no hizo falta el plan alternativo.
-- **No se activa HSTS desde el código.** Lo gestiona Cloudflare en el dominio, y es decisión de Pol.
+- **No se activa HSTS desde el código.** Lo gestiona Cloudflare en el dominio, y es decisión de Agus.
 
 ## Cobertura
 
@@ -76,7 +76,7 @@ Qué comprueba cada test, según el criterio del PRD:
     `unsafe-eval` ni `unsafe-inline` en `script-src`.
   - *Negativos:* un script en línea sin hash, una imagen de un dominio no permitido y un `iframe`
     a un dominio no incluido son bloqueados y generan la violación esperada. Una página de otro
-    origen que incruste Pol OS no lo consigue (el marco no se muestra).
+    origen que incruste Agus OS no lo consigue (el marco no se muestra).
 - **Unitarios de `csp.ts`:** el origen de cada proyecto incrustable entra en `frame-src` y los no
   incrustables no; una `url` con `javascript:`, `data:` o `http:` se rechaza; un proyecto
   incrustable con una ruta local no añade ningún origen; el hash del script de arranque coincide con
@@ -86,7 +86,7 @@ Hallazgos al construir, que cambian cómo se trabaja:
 
 - **`.env.local` gana a una variable de shell** en `pnpm build`: la clave pública de Turnstile que se
   compila es la de `.env.local` aunque se pase otra por línea de comandos. Para `pnpm deploy` desde la
-  máquina de Pol es justo lo que se quiere. Para compilar con otra, un `.env.production.local` (Vite
+  máquina de Agus es justo lo que se quiere. Para compilar con otra, un `.env.production.local` (Vite
   lo lee después). Lo usé temporalmente para la comprobación con el widget real y lo borré.
 - **`pnpm build` y `pnpm preview` comparten con `pnpm dev` la caché de Vite** (`node_modules/.vite`).
   Si se ejecutan con `pnpm dev` abierto, el servidor de desarrollo puede quedarse devolviendo 500

@@ -3,13 +3,14 @@
   import { onMount, tick } from 'svelte';
   import type { NoteData, ProjectData } from '../../items';
   import { MAX_HISTORY, MAX_LINES, complete, run, type GameId, type Line } from '../../terminal/commands';
+  import { SHELL_PROMPT } from '../../terminal/identity';
   import type { Session } from '../../terminal/games/games';
   import { dispatch } from '../../stores/os-actions';
   import { prefs } from '../../stores/prefs.svelte';
 
   let { projects, notes }: { projects: ProjectData[]; notes: NoteData[] } = $props();
 
-  const PROMPT = 'pol@pol-os ~ %';
+  const PROMPT = SHELL_PROMPT;
   const WELCOME: Line[] = [[{ text: `${PERSONA.osName} 1.0 · escribe help para ver los comandos.`, tone: 'muted' }]];
 
   interface Row {

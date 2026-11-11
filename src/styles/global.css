@@ -258,7 +258,7 @@ svg {
   border-radius: 14px;
   cursor: pointer;
   color: var(--fg);
-  /* Estilo «Línea» (elegido por Pol): dorso suave con una trama de puntos; levantada, sin fondo y con un filo gris; emparejada, filo azul. */
+  /* Estilo «Línea»: dorso suave con una trama de puntos; levantada, sin fondo y con un filo gris; emparejada, filo azul. */
   background-color: var(--accent-soft);
   background-image: radial-gradient(circle at center, color-mix(in srgb, var(--accent), transparent 55%) 1.6px, transparent 2px);
   background-size: 12px 12px;

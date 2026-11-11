@@ -7,7 +7,7 @@
 ## Qué se construye
 
 El icono **Sobre mí.pdf** del escritorio deja de abrir un estado vacío y abre un **documento**: una hoja
-blanca sobre fondo gris, como una vista previa de macOS, con la foto de Pol, su nombre, su línea de
+blanca sobre fondo gris, como una vista previa de macOS, con la foto de Agus, su nombre, su línea de
 presentación (*"Convierto ideas en productos que funcionan, rápido y con método."*), el gancho (*"Construir
 con IA es fácil. Construir productos que no se rompan ya es otra historia."*) y las secciones del borrador
 aprobado: **De dónde vengo**, **Cuando llegó la IA**, **Cómo trabajo**, **Ahora mismo**, **Proyectos de los
@@ -16,8 +16,8 @@ que estoy orgulloso** (que lleva a la app Proyectos), **Qué busco** y **Datos**
 En la barra de la ventana, un botón **Descargar PDF** baja una versión del mismo texto pensada para
 imprimir. En móvil se ve a pantalla completa, con el mismo botón.
 
-La línea de presentación pasa también a la **descripción del sitio**: el título para Google será *"Pol Marzà ·
-Convierto ideas en productos que funcionan"* (54 caracteres) y la descripción, *"Mi portfolio en forma de
+La línea de presentación pasa también a la **descripción del sitio**: el título para Google será *"Agustin Chaud Olivieri ·
+Data Scientist · Data Engineer · AI Engineer"* (nombre y línea de `PERSONA`) y la descripción, *"Mi portfolio en forma de
 sistema operativo, dentro del navegador. Abre mis proyectos, lee mis notas y escríbeme desde su correo."* La
 imagen para compartir el enlace añade la línea bajo el nombre.
 
@@ -34,7 +34,7 @@ imagen para compartir el enlace añade la línea bajo el nombre.
 - **Sin PDF, sin botón** (el negativo de M-06): si el archivo no está al compilar, el documento se ve igual y el
   botón no aparece.
 - **Lo que no se publica**, según lo acordado: nombres de terceros (salen como "mi jefe", "un amigo
-  desarrollador"…) y los datos personales que Pol decidió dejar fuera del CV.
+  desarrollador"…) y los datos personales que se decidió dejar fuera del CV.
 - **Contacto:** solo la app Correo, sin dirección visible. Para un currículum estándar, el enlace a LinkedIn.
 - **Diseño:** el `PaperDoc` del sistema de diseño (hoja blanca en ambos temas, como un documento real),
   tipografía del sistema, y el título del documento a 26 px.
@@ -61,8 +61,8 @@ Qué comprueba cada test, según el criterio del PRD:
 
 ## Fuera de esta feature
 
-- Personalizar el PDF con los colores de cada empresa (idea descartada por Pol).
-- Una trayectoria clásica con empresas y fechas, y la formación: Pol prefirió solo la presentación.
+- Personalizar el PDF con los colores de cada empresa (idea descartada).
+- Una trayectoria clásica con empresas y fechas, y la formación: se prefirió solo la presentación.
 - Versión en inglés.
 
 ## Hallazgos al construir

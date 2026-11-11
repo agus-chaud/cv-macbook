@@ -21,11 +21,13 @@ jobs:
     name: Tablas de cobertura
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      # Sin caché: desde la v5, setup-node cachea solo si hay `packageManager`, y aquí no se instala pnpm.
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
+          package-manager-cache: false
 
       # Sin dependencias: el script usa solo módulos nativos de Node.
       - run: node scripts/verificar-cobertura.mjs

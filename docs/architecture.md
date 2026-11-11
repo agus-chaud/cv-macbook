@@ -1,7 +1,5 @@
 # Arquitectura técnica
 
-> **Plantilla:** este documento es el de Pol OS, el portfolio de Pol Marzà del que nace esta plantilla. Déjalo como ejemplo del método o reescríbelo para tu proyecto.
-
 <!-- Documento vivo. Actualizar cada vez que cambie el stack, la estructura de carpetas
      o cualquier decisión técnica relevante.
      Los cambios deben registrarse también en changelog/. -->
@@ -36,8 +34,8 @@ graph TD
   W -->|1 verifica token| T[Turnstile siteverify]
   W -->|2 comprueba límite| R[Binding ratelimit]
   W -->|3 envía| E[Cloudflare Email Service]
-  E --> P[Correo de Pol]
-  V -->|iframe, solo favoritos| X[Proyectos de Pol en otros dominios]
+  E --> P[Correo de Agus]
+  V -->|iframe, solo favoritos| X[Proyectos de Agus en otros dominios]
   V -.->|localStorage| L[Tema y fondo]
   G[Repositorio GitHub: contenido + código] -->|build y deploy| CF
 ```
@@ -51,7 +49,7 @@ src/
 ├── content/              → Contenido editable (colecciones de Astro)
 │   ├── projects/         → Un archivo por proyecto: nombre, dominio, resumen y detalle, capturas, repositorio, enlace, si es incrustable
 │   ├── notes/            → Una nota por archivo Markdown (título, fecha, descripción, cuerpo)
-│   ├── favorites/        → Un archivo JSON por sección de Favoritos (juegos, películas, libros, música): el top 10 de Pol con sus portadas
+│   ├── favorites/        → Un archivo JSON por sección de Favoritos (juegos, películas, libros, música): el top 10 de Agus con sus portadas
 │   ├── guestbook/        → Una reseña aprobada del Libro de visitas por archivo JSON (nunca lleva correo)
 │   ├── stack.json        → El Stack: herramientas con su recuento y año (lo genera scripts/actualizar-stack.mjs cada día)
 │   ├── sobre-mi.md       → Texto de Sobre mí (+ la huella del PDF generado)
@@ -77,13 +75,13 @@ src/
 │   └── stores/           → Estado compartido (preferencias, navegador, `os-actions`: puente app → sistema)
 ├── lib/                  → Utilidades (validación del formulario, preferencias, fechas)
 ├── styles/               → Variables de diseño (tokens) y estilos globales
-└── assets/               → Foto de Pol, iconos, CV en PDF
+└── assets/               → Foto de Agus, iconos, CV en PDF
 public/
 ├── _headers              → Cabeceras de seguridad (frame-ancestors, nosniff…)
 ├── robots.txt            → Qué se indexa (excluye /api/) y dónde está el mapa
 ├── favoritos/            → Las portadas de Favoritos (.jpg), una carpeta por sección y un archivo por elemento
 ├── projects/             → Iconos propios de los proyectos y, en una carpeta por proyecto, sus capturas (WebP y GIF)
-├── links/                → Iconos de los accesos directos externos (LinkedIn, GitHub, Con Criterio)
+├── links/                → Iconos de los accesos directos externos (newsletter, GitHub, LinkedIn, WhatsApp)
 ├── site.webmanifest      → Nombre e iconos para la pantalla de inicio del móvil
 ├── favicon.svg|.ico, apple-touch-icon.png, icon-192|512.png → Iconos (generados, ver scripts/)
 └── og.jpg                → Imagen para compartir el enlace (1200 × 630, generada)
@@ -123,11 +121,11 @@ Consecuencia de seguridad: no hay nada que robar ni que forzar. La única superf
   antes de hacer nada más. En local se usan las claves de prueba publicadas por Cloudflare.
 - **Cloudflare Email Service:** el endpoint envía el mensaje con `env.EMAIL.send()`. Requiere que
   el dominio del remitente use Cloudflare DNS y esté dado de alta en Email Sending. El destino (el
-  correo de Pol) debe estar verificado en la cuenta.
+  correo de Agus) debe estar verificado en la cuenta.
 - **Binding `ratelimit` de Workers:** limita los envíos por IP antes de llamar a Turnstile. El Libro de visitas añade otros dos: por IP (5 por minuto) y por clave (1 por minuto: el correo de destino o el enlace de confirmación).
 - **Servicios de música (S-03):** pendiente. Se incrustaría una lista de YouTube o Spotify; no se
   aloja audio propio.
-- **Proyectos de Pol en el Navegador (M-10):** cada uno se carga en un iframe desde su propio
+- **Proyectos de Agus en el Navegador (M-10):** cada uno se carga en un iframe desde su propio
   dominio. Ver "Navegador interno y cabeceras".
 
 ### Contrato del endpoint de contacto
@@ -177,14 +175,14 @@ dirección (`#`), que el navegador no envía al servidor.
 |----------|------|----------|
 | `TURNSTILE_SECRET_KEY` | secreto del Worker | Validar tokens en servidor |
 | `PUBLIC_TURNSTILE_SITE_KEY` | variable pública, **se lee al compilar** | Pintar el widget en el cliente |
-| `CONTACT_TO` | secreto del Worker | Correo de Pol, destino fijo del formulario |
+| `CONTACT_TO` | secreto del Worker | Correo de Agus, destino fijo del formulario |
 | `CONTACT_FROM` | variable en `wrangler.jsonc` | Remitente: `contacto@m.example.com`, en el dominio dado de alta en Email Sending |
 | `GUESTBOOK_SECRET` | secreto del Worker | Clave que cifra los enlaces de confirmación del Libro de visitas (aleatoria, `openssl rand -base64 32`) |
 | `SITE_URL` | variable en `wrangler.jsonc` | Dirección pública con la que se construye ese enlace: `https://example.com` |
 
 **Producción.** Los secretos se registran con `wrangler secret put` introduciendo el valor de forma
 interactiva (nunca como argumento). La clave pública se pasa al compilar: en `.env.local` si
-se despliega desde la máquina de Pol, o como variable de compilación si se despliega desde GitHub.
+se despliega desde la máquina de Agus, o como variable de compilación si se despliega desde GitHub.
 
 **Desarrollo local.** `pnpm dev` usa siempre la clave pública de **prueba** de Cloudflare, porque la
 real solo acepta el dominio publicado y en `localhost` da el error 110200. Para que el servidor
@@ -203,13 +201,13 @@ no deben ir ahí.
 
 El Navegador carga los proyectos en un `<iframe>`. Dos cosas deben cumplirse:
 
-1. **Pol OS declara qué puede incrustar.** La política de seguridad de contenido (CSP) limita
-   `frame-src` a Pol OS, Turnstile y los orígenes de los proyectos incrustables. Se genera al compilar
+1. **Agus OS declara qué puede incrustar.** La política de seguridad de contenido (CSP) limita
+   `frame-src` a Agus OS, Turnstile y los orígenes de los proyectos incrustables. Se genera al compilar
    (`astro.config.mjs` + `src/lib/csp.ts`) y va en una etiqueta `<meta>`; `frame-ancestors 'self'`,
    que una etiqueta no puede decir, va como cabecera en `public/_headers` para que nadie más incruste
-   Pol OS.
-2. **Cada proyecto permite a Pol OS.** El proyecto debe responder con
-   `Content-Security-Policy: frame-ancestors 'self' https://<dominio-de-pol-os>` y sin
+   Agus OS.
+2. **Cada proyecto permite a Agus OS.** El proyecto debe responder con
+   `Content-Security-Policy: frame-ancestors 'self' https://<dominio-de-agus-os>` y sin
    `X-Frame-Options: DENY`. Para los que no se controlen, su ficha marca `embeddable: false` y el
    Navegador muestra el aviso con el botón "Abrir en pestaña nueva".
 
@@ -234,8 +232,8 @@ se registra alguno con `claude mcp add`, sigue el "Protocolo de MCPs" de `CLAUDE
   pueden generar una URL de previsualización.
 - **Compilación y despliegue:** `pnpm build` genera `dist/`; `pnpm deploy` ejecuta
   `astro build && wrangler deploy`. Las pruebas se ejecutan siempre contra localhost.
-- **Quién despliega:** **Pol**, nunca el agente (límite 2 de `CLAUDE.md`). El agente deja la rama
-  lista, con build y pruebas pasando, y explica qué se va a publicar. Pol pulsa el botón: o fusiona
+- **Quién despliega:** **Agus**, nunca el agente (límite 2 de `CLAUDE.md`). El agente deja la rama
+  lista, con build y pruebas pasando, y explica qué se va a publicar. Agus pulsa el botón: o fusiona
   el PR si hay integración continua con Workers Builds, o lanza `pnpm deploy` desde su máquina.
 - **Orden del primer despliegue:** (1) dominio en Cloudflare DNS, (2) alta del dominio en Email
   Sending y verificación del correo de destino, (3) crear el widget de Turnstile, (4) registrar los
@@ -253,7 +251,7 @@ se registra alguno con `claude mcp add`, sigue el "Protocolo de MCPs" de `CLAUDE
 **Contexto:** se planteó un login de propietario con edición de contenido y subida de fotos.
 **Opciones consideradas:** (a) panel de edición con contraseña, D1 y R2; (b) contenido en el
 repositorio, editado con commits.
-**Decisión:** (b). Pol edita pidiéndoselo a un agente, y los cambios van por Git.
+**Decisión:** (b). El contenido se edita pidiéndoselo a un agente, y los cambios van por Git.
 **Consecuencias:** sin base de datos ni autenticación; el contenido tiene historial; cada cambio de
 contenido requiere un despliegue.
 
@@ -267,7 +265,7 @@ Workers.
 ### 2026-10-10 — Svelte para la isla del escritorio
 **Contexto:** la interfaz tiene ventanas, arrastre, estado compartido y animaciones.
 **Opciones consideradas:** Svelte 5, React, JavaScript sin framework (como el prototipo).
-**Decisión:** Svelte 5, por su poco peso y su manejo del estado, y porque Pol quiere aprenderlo.
+**Decisión:** Svelte 5, por su poco peso y su manejo del estado.
 **Consecuencias:** el código de la interfaz se escribe en Svelte; no hay componentes React.
 
 ### 2026-10-10 — Mensajes de contacto: se reenvían, no se guardan
@@ -286,7 +284,7 @@ abren en pestaña nueva.
 límite de frecuencia.
 **Opciones consideradas:** Vercel (más conocido, pero el correo exigiría un proveedor aparte) y
 Cloudflare (Turnstile, límite de frecuencia y correo en la misma plataforma).
-**Decisión:** Cloudflare Workers. Pol quiere además aprender la plataforma.
+**Decisión:** Cloudflare Workers.
 **Consecuencias:** el MCP de Vercel no se usa en este proyecto.
 
 ### 2026-10-10 — Ajustes de Astro 7 y del adaptador de Cloudflare
@@ -334,7 +332,7 @@ admite para `frame-ancestors`. Además, `_headers` de Workers solo se aplica a a
 con las directivas de `src/lib/csp.ts` y el hash del script de arranque del tema (calculado desde la
 misma constante que lo genera). (2) `public/_headers` aporta `frame-ancestors 'self'`,
 `X-Content-Type-Options`, `Referrer-Policy` y `Permissions-Policy`. (3) `/api/contact` lleva sus
-cabeceras en el código. `frame-ancestors` es `'self'` y no `'none'` porque, en su momento, Pol OS mostraba
+cabeceras en el código. `frame-ancestors` es `'self'` y no `'none'` porque, en su momento, Agus OS mostraba
 sus propias páginas de demostración en el Navegador. Ya no las hay (los proyectos son reales), pero el
 esquema de proyectos sigue admitiendo una ruta local, así que `'self'` se mantiene; si nunca se vuelve a
 usar una, se puede endurecer a `'none'`.
@@ -358,11 +356,11 @@ en `tests/csp/s-06-rendimiento.spec.ts`.
 
 ### 2026-10-10 — Subdominio m.example.com para el envío de correo
 **Contexto:** Email Sending se da de alta por dominio y añade sus propios registros DNS.
-**Decisión:** Pol dio de alta `m.example.com` (subdominio) en lugar de la raíz. El panel de
+**Decisión:** Se dio de alta `m.example.com` (subdominio) en lugar de la raíz. El panel de
 Cloudflare lo muestra como "Enabled" con los registros "Configured" y una cuota de 1000 mensajes al
 día.
 **Consecuencias:** la reputación de envío queda separada de la raíz. El remitente es `contacto@m.example.com`. Falta verificar la
-dirección de destino (la de Pol) en Cloudflare y crear el widget de Turnstile.
+dirección de destino (la de Agus) en Cloudflare y crear el widget de Turnstile.
 
 ### 2026-10-10 — Terminal de mentira y ventanas minimizadas que no se desmontan
 **Contexto:** La Terminal (S-04) debe ser divertida para quien escribe código sin convertirse en una vía de
@@ -378,21 +376,21 @@ Terminal se pierde al volver a la pantalla de inicio (no hay ventanas que minimi
 
 ### 2026-10-10 — Proyectos reales e icono propio
 **Contexto:** Estudio y Panel eran proyectos inventados, con una página de demostración local.
-**Decisión:** Se quitan junto con `public/demo/` y entran Afloat, Local Whisper, Yoleo, Planito y
-project-template (el repositorio plantilla del que nació Pol OS), con Pol OS. Un proyecto puede
+**Decisión:** Se quitan junto con `public/demo/` y entran los proyectos reales,
+entre ellos el propio portfolio. Un proyecto puede
 llevar un `icon` propio (`/projects/*.png|webp`, validado al compilar): el favicon de su repositorio público.
 Sin él, la inicial sobre su degradado. La incrustación de cada sitio se decide por sus cabeceras reales:
-Yoleo (`X-Frame-Options: DENY`) y GitHub no se pueden incrustar y muestran el aviso con su botón.
+Los que responden con `X-Frame-Options: DENY`, y GitHub, no se pueden incrustar y muestran el aviso con su botón.
 **Consecuencias:** los tests ya no cargan ninguna página local de demostración: los sitios externos se
 simulan siempre. Un test unitario vigila el contenido (iconos que existen, direcciones seguras, dominio que
 se enseña igual al de la dirección, GitHub nunca incrustable).
 
 ### 2026-10-10 — Iconos de marca en enlaces y proyectos
-**Contexto:** Pol aportó los iconos de LinkedIn, GitHub, Con Criterio y de varios proyectos, y autorizó usarlos
+**Contexto:** se aportaron los iconos de LinkedIn, GitHub, la newsletter y de varios proyectos, con autorización para usarlos
 aunque sean marcas registradas. Antes, `CLAUDE.md` prohibía los logos de otras marcas.
 **Decisión:** Los iconos viven como imágenes de 256 px en `public/links/` y `public/projects/`, y la interfaz las
 recorta con la silueta de macOS. La regla de `CLAUDE.md` se mantiene para las apps y se exceptúan esos enlaces y
-proyectos. El icono de GitHub se rehízo en blanco sobre fondo oscuro; el de Planito es un dibujo propio. El
+proyectos. El icono de GitHub se rehízo en blanco sobre fondo oscuro. El
 Navegador muestra los Favoritos como solo icono y nombre; el detalle de cada proyecto irá en su propia página.
 **Consecuencias:** `img-src 'self'` basta, sin ampliar la CSP. Algunos llegaron de 40 y 48 px
 y se veían blandos; se sustituyeron por las versiones de 1024 y 512 px que ofrecen sus propias webs (normalizadas a 256 px).
@@ -404,7 +402,7 @@ y se veían blandos; se sustituyeron por las versiones de 1024 y 512 px que ofre
 imagen fija para el movimiento reducido), `repo` (solo si es público) y `github` (lenguajes, etiquetas y licencia).
 `github` es una **copia** que rellena `scripts/actualizar-proyectos.mjs` leyendo la API pública de GitHub, sin claves,
 y se commitea: ni el sitio ni el visitante hablan con GitHub. No se guardan estrellas ni fechas, porque caducan. Los
-repositorios privados (Yoleo, Pol OS y la web de Local Whisper) no se enlazan ni publican sus lenguajes: su
+repositorios privados no se enlazan ni publican sus lenguajes: su
 tecnología se escribe a mano en `stack`. El doble clic en un proyecto del escritorio pasa a abrir su detalle.
 **Consecuencias:** `img-src 'self'` basta, sin ampliar la CSP. Añadir un proyecto es un JSON, sus capturas y, si tiene
 repositorio público, lanzar el script. El script importa `src/lib/github-info.ts` directamente: Node 24 ejecuta
@@ -412,7 +410,7 @@ TypeScript sin compilar, así que ese archivo solo puede usar sintaxis "borrable
 
 ### 2026-10-10 — Sobre mí: un texto, dos salidas
 **Contexto:** El currículum debía verse como un documento en la ventana y poder descargarse en PDF, sin que los dos se
-desfasaran, y la línea de presentación de Pol debía llegar a Google y a la imagen para compartir.
+desfasaran, y la línea de presentación de Agus debía llegar a Google y a la imagen para compartir.
 **Decisión:** El texto vive en `src/content/sobre-mi.md` (con `tagline` y `hook` en la cabecera). La página lo
 convierte a HTML al compilar con el procesador de Markdown de Astro, y `scripts/generar-cv.mjs` lo convierte con ese
 mismo procesador (`@astrojs/markdown-satteri`, resuelto desde Astro porque pnpm no lo expone en la raíz) para generar el
@@ -435,16 +433,16 @@ que la ventana enseña como "construyendo desde".
 token. `stack-declarado.ts` se publica: el script se niega a escribir si nombra un repositorio privado.
 
 ### 2026-10-10 — Stack: datos automáticos desde GitHub, publicados cada día
-**Contexto:** "Herramientas" parecía un cajón de utilidades que se podían usar; Pol quería enseñar con qué construye y que
+**Contexto:** "Herramientas" parecía un cajón de utilidades que se podían usar; se quería enseñar con qué se construye y que
 se mantuviera solo, sin editarlo a mano cada vez que empieza un repositorio nuevo.
 **Decisión:** Una ventana **Stack**, ficha técnica sin nada clicable. Sus datos son `src/content/stack.json`, que genera
-`scripts/actualizar-stack.mjs`: lista los repositorios de Pol (sin forks), lee sus lenguajes, sus `package.json` y `Cargo.toml`
+`scripts/actualizar-stack.mjs`: lista los repositorios de Agus (sin forks), lee sus lenguajes, sus `package.json` y `Cargo.toml`
 y los nombres de sus archivos, y traduce cada dependencia a una herramienta con el catálogo `src/lib/stack-catalog.ts`.
 El año de "desde" es el del primer repositorio con esa herramienta, pero nunca anterior a su lanzamiento (`introduced`).
 Una tarea de GitHub Actions (`.github/workflows/actualizar-datos.yml`) lo ejecuta cada día a las 06:00 UTC y a mano, pasa
 los tests y, si hay cambios, **publica directamente en `main`** (la fusión despliega la web). De los repositorios privados
 solo se publican recuentos: el script se niega a escribir el archivo si un nombre de repositorio se colara. Un token de
-GitHub de solo lectura de Pol (`STACK_GITHUB_TOKEN`) permite contar también los privados; sin él se cuentan solo los públicos.
+GitHub de solo lectura de Agus (`STACK_GITHUB_TOKEN`) permite contar también los privados; sin él se cuentan solo los públicos.
 **Consecuencias:** Si el token falta o caduca, la tarea **falla** en lugar de publicar números recortados (el script lo
 detecta al ver que antes había repositorios privados y ahora no). El workflow tiene permiso de escritura, así que solo se
 dispara por calendario o a mano, nunca por un pull request, y un test lo vigila. Los recuentos incluyen los repositorios que
@@ -474,33 +472,33 @@ comparte con las apps cargadas bajo demanda se agrupan en un único archivo (`ma
 Rollup los partía en un archivo por módulo y la home pasaba de 11 a 16 peticiones, por encima del tope de 12.
 
 ### 2026-10-11 — Libro de visitas sin base de datos: enlace cifrado y aprobación manual (S-09)
-**Contexto:** Pol quiere reseñas de visitantes con correo confirmado y su aprobación. El PRD descartaba contenido enviado por visitantes
+**Contexto:** se querían reseñas de visitantes con correo confirmado y aprobación manual. El PRD descartaba contenido enviado por visitantes
 y una base de datos.
 **Decisión:** (1) Sin base de datos: el estado de «pendiente de confirmar» viaja en el enlace del correo, cifrado y autenticado con
 AES-GCM (Web Crypto, clave secreta del servidor) y con caducidad de 48 horas. (2) El enlace usa el fragmento de la dirección y la página
 de confirmación pide pulsar un botón: el fragmento no llega a los registros y los programas de correo que abren los enlaces no confirman
-solos. (3) Al confirmar, la reseña llega a Pol por correo con el archivo JSON ya formado; publicar es añadirlo a `src/content/guestbook/`
-(commit y despliegue de Pol). Las reseñas aprobadas son una colección de Astro, un archivo estático para la ventana. (4) Dos límites más
+solos. (3) Al confirmar, la reseña llega a Agus por correo con el archivo JSON ya formado; publicar es añadirlo a `src/content/guestbook/`
+(commit y despliegue de Agus). Las reseñas aprobadas son una colección de Astro, un archivo estático para la ventana. (4) Dos límites más
 con el binding `ratelimit`: por IP y por clave (correo o enlace). (5) El correo del visitante no se guarda en el repositorio: para saber
-si una edición o retirada es de la misma persona, Pol compara con el correo del mensaje original.
+si una edición o retirada es de la misma persona, Agus compara con el correo del mensaje original.
 **Consecuencias:** se mantiene el «sin base de datos», pero el sitio manda ahora correo a terceros (el enlace de confirmación):
 cuenta para la cuota diaria de Email Service y exige el dominio de envío dado de alta (ya lo está). Una confirmación repetida mandaría dos
-correos a Pol si pasara más de un minuto. Cambiar `GUESTBOOK_SECRET` invalida los enlaces pendientes. Si el volumen crece, se puede pasar a
+correos a Agus si pasara más de un minuto. Cambiar `GUESTBOOK_SECRET` invalida los enlaces pendientes. Si el volumen crece, se puede pasar a
 D1 y a un panel de aprobación sin cambiar lo que ve el visitante.
 
 ### 2026-10-11 — Gráficos del Stack hechos a mano (M-05)
-**Contexto:** Pol quiso «más vidilla» en el Stack, que eran solo barras, sin cambiar de vista. La home tiene un presupuesto de JavaScript
+**Contexto:** se pidió «más vidilla» en el Stack, que eran solo barras, sin cambiar de vista. La home tiene un presupuesto de JavaScript
 (S-06) y la CSP no admite estilos ni scripts externos.
 **Decisión:** (1) Sin librería de gráficos: la geometría es una función pura (`src/lib/stack-charts.ts`) y el rosco (SVG) y la línea de año a
 año (HTML y CSS, para que el texto siga el tamaño de Ajustes) salen de los mismos datos. (2) Colores de categoría como variables (`--cat-1` a
 `--cat-8`) con una paleta por tema, y un test que calcula su contraste leyendo `tokens.css`. (3) Sin animación. (4) Cada gráfico tiene su
-equivalente en texto. (5) Se probaron antes un mapa de burbujas y uno de recuadros (treemap); a Pol no le convencieron («queda todo muy
+equivalente en texto. (5) Se probaron antes un mapa de burbujas y uno de recuadros (treemap); no convencieron («queda todo muy
 apilotonado» y en móvil se vería mal, y el detalle ya enseña cada herramienta), así que se quitaron junto con su código.
 **Consecuencias:** `src/content/stack.json` y la tarea diaria no cambian. Un test lee `tokens.css` con expresiones regulares: si cambia la
 estructura de los bloques de tema, hay que ajustarlo.
 
 ### 2026-10-11 — «Cómo está hecho»: un documento, dos salidas, y logos de una colección (S-10)
-**Contexto:** el repositorio no es público, así que el portfolio cuenta por sí mismo cómo funciona. Pol pidió una vista aparte, larga, con las
+**Contexto:** el portfolio cuenta por sí mismo cómo funciona, sin que haga falta leer el código. Se pidió una vista aparte, larga, con las
 tecnologías con su logo.
 **Decisión:** (1) El texto es un archivo Markdown (`src/content/como-esta-hecho.md`), como Sobre mí. De él salen la ventana (que pide un archivo
 estático, `/como-esta-hecho.json`, al abrirse: la home no lleva el texto) y la página pública `/como-esta-hecho/` (que se lee sin JavaScript y
@@ -515,22 +513,22 @@ enlaces `#abrir-…` del texto abren apps en la ventana y quedan como texto en l
 abierto lo deja devolviendo errores de dependencias (caché de Vite): hay que reiniciarlo.
 
 ### 2026-10-12 — Favoritos: contenido propio, portadas locales y YouTube solo al pulsar play (S-03)
-**Contexto:** Pol quiso que el portfolio enseñe cómo es él (juegos, películas, libros y música) en lugar de un juego. Se estudiaron las APIs de TMDB, IGDB y
+**Contexto:** se quiso que el portfolio enseñe cómo es su propietario (juegos, películas, libros y música) en lugar de un juego. Se estudiaron las APIs de TMDB, IGDB y
 YouTube; se descartaron: TMDB limita el almacenamiento a seis meses y es solo para uso no comercial, e IGDB y YouTube piden claves. Además, las condiciones de
 YouTube no permiten ocultar el reproductor, separar el audio, reproducir en segundo plano ni guardar copias, y Plyr está en desuso.
-**Decisión:** (1) Todo el contenido lo aporta Pol y vive en el repositorio: una colección `favorites` con un archivo por sección (top 10), validada al compilar, y las
+**Decisión:** (1) Todo el contenido lo aporta Agus y vive en el repositorio: una colección `favorites` con un archivo por sección (top 10), validada al compilar, y las
 portadas como `.jpg` en `public/favoritos/` (sin peticiones a terceros al abrir una sección). (2) Los deportes llevan una foto con licencia libre de Wikimedia Commons,
 guardada en el repositorio y acreditada con su autor, su licencia y un enlace a su ficha (decisión del 2026-10-25, que sustituye a los videojuegos con Shelvid), y las películas enlazan con su tráiler. (3) La música y los tráilers se reproducen con el reproductor oficial de YouTube en un mini reproductor único, con el vídeo
 siempre a la vista, controlado con la API oficial (`iframe_api`) y desde `youtube-nocookie.com`. (4) **Nada de YouTube se carga hasta pulsar play**: el script de
 la API y el vídeo se piden entonces; la política de seguridad solo se amplía con `https://www.youtube.com` en `script-src` y `https://www.youtube-nocookie.com` en
 `frame-src` (nunca en `connect-src` ni `img-src`). (5) El mini reproductor se monta solo mientras hay algo que reproducir, y bloquear la pantalla lo cierra.
 **Consecuencias:** las portadas son de sus editores y solo identifican la obra y enlazan con ella. No se descargan ni alojan canciones: sería copyright aunque no se vendan.
-Título, artista y duración los escribe Pol (la API de YouTube pide clave). La home está **en su tope de 12 peticiones**: la nueva app añadió su CSS (Astro enlaza el CSS de
+Título, artista y duración los escribe Agus (la API de YouTube pide clave). La home está **en su tope de 12 peticiones**: la nueva app añadió su CSS (Astro enlaza el CSS de
 las apps cargadas bajo demanda: MEJORA-08) y dos trozos de código compartidos, que se agruparon en `os-shared` con `manualChunks` (la tienda del reproductor, el cliente
 de Turnstile, las preferencias). La próxima app cargada bajo demanda ya no cabe sin resolver MEJORA-08.
 
 ### 2026-10-16 — Juegos de la Terminal y Terminal bajo demanda (S-04)
-**Contexto:** Pol quería minijuegos sin sobrecargar la web. Una app «Juegos» metería su CSS en la home, que está en su tope de 12 peticiones
+**Contexto:** se querían minijuegos sin sobrecargar la web. Una app «Juegos» metería su CSS en la home, que está en su tope de 12 peticiones
 (MEJORA-08), y la Terminal iba en el paquete inicial: con el código de los juegos, la home pasaba de su presupuesto de JavaScript (130,9 KB frente a 130).
 **Decisión:** (1) Los juegos (Wordle, ahorcado y adivina el número) viven en la Terminal. Cada uno es una máquina de estados pura en
 `src/os/terminal/games/games.ts`, que se importa al escribir `minigames` (antes `juegos`, que chocaba con `open juegos` de Favoritos) o el nombre de un juego. `commands.ts` solo conoce sus nombres y devuelve
@@ -560,9 +558,9 @@ carga ni la cuenta, y la CSP la acepta porque sale del mismo origen. Mientras ll
 demanda: es la solución de MEJORA-08, pendiente de aplicar a Stack, Proyectos, Favoritos y Libro de visitas.
 
 ### 2026-10-16 — La ventana GitHub y su etiqueta `showcase` (C-01)
-**Contexto:** Pol quería enseñar sus repositorios públicos sin mezclarlos con Proyectos (que son trabajos terminados y con web) y sin enseñar los de clase o de
+**Contexto:** se querían enseñar los repositorios públicos sin mezclarlos con Proyectos (que son trabajos terminados y con web) y sin enseñar los de clase o de
 ejemplo. Antes, C-01 decía que cada repositorio público aparecería como proyecto.
-**Decisión:** el icono de GitHub abre una ventana con los repositorios públicos que Pol etiqueta con el topic `showcase` en GitHub. Un script de la tarea diaria
+**Decisión:** el icono de GitHub abre una ventana con los repositorios públicos que Agus etiqueta con el topic `showcase` en GitHub. Un script de la tarea diaria
 (`scripts/actualizar-repos.mjs`) lee la lista pública, filtra con `src/lib/repos.ts` (públicos, sin forks, con la etiqueta) y guarda `src/content/repos.json`;
 la web lo sirve como `/repos.json` y la ventana lo pide al abrirse. La lista se rehace entera cada día, así que lo borrado o desetiquetado desaparece.
 **Consecuencias:** la web nunca llama a GitHub (la CSP no cambia). El commit automático solo se hace si cambian los repositorios (la fecha no cuenta). La

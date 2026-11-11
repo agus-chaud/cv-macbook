@@ -24,7 +24,7 @@ async function openForm(page: Page, projectName: string) {
 const valid = {
   name: 'Ana Pérez',
   detail: 'Diseñadora | Madrid',
-  text: 'Trabajar con Pol fue muy fácil y el resultado superó lo que esperaba.',
+  text: 'Trabajar con Agus fue muy fácil y el resultado superó lo que esperaba.',
   email: 'ana@ejemplo.com',
 };
 
@@ -368,7 +368,7 @@ test.describe('S-09 Página de confirmación', () => {
     await expect(page.getByTestId('confirm-button')).toBeEnabled();
   });
 
-  test('la página no se indexa, no tiene errores de accesibilidad y vuelve a Pol OS', async ({ page }) => {
+  test('la página no se indexa, no tiene errores de accesibilidad y vuelve al escritorio', async ({ page }) => {
     await page.goto(`/libro-de-visitas/confirmar#${token}`);
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
     await expect(page.getByTestId('confirm-home')).toHaveAttribute('href', '/');

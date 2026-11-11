@@ -22,7 +22,7 @@ archivo y las skills tienen instrucciones desfasadas o contradictorias.
 
 `docs/` tiene cinco archivos, porque es un sitio pequeño con algo de lógica: `prd.md`,
 `architecture.md`, `design-system.md`, `testing.md` y `despliegue.md` (cómo publicarlo, paso a paso).
-Vienen de Pol OS, el portfolio del que nace esta plantilla: sirven de ejemplo del método y se adaptan
+Sirven de ejemplo del método y se adaptan
 al proyecto de cada uno. Qué documentos aplican según el tamaño del
 proyecto y en qué orden se rellenan está en **`/documentacion`**.
 
@@ -68,7 +68,7 @@ El procedimiento completo —comprobar lo ya configurado, elegir alcance (`user`
 
 ## Descripción del proyecto
 
-**Nombre:** pol-os-template
+**Nombre:** cv-macbook
 **Descripción:** Plantilla de portfolio con forma de sistema operativo de escritorio en el navegador.
 **Estado actual:** Plantilla con contenido de ejemplo (una persona ficticia, Álex Ejemplo). Quien la usa cambia
 `src/content/` (empezando por `src/content/persona.ts`) y la foto de `src/assets/`.
@@ -76,7 +76,6 @@ El procedimiento completo —comprobar lo ya configurado, elegir alcance (`user`
 Un escritorio estilo macOS: pantalla de acceso decorativa, proyectos que se abren en un navegador interno, el CV
 como documento, una carpeta de notas con su página pública, una terminal con minijuegos, un Libro de visitas y un
 correo que llega de verdad. Es un sitio de lectura, sin cuentas ni base de datos.
-Nace de Pol OS, el portfolio de Pol Marzà (https://polmarza.com).
 Requisitos en `docs/prd.md`, diseño en `docs/design-system.md`.
 
 ---
@@ -86,7 +85,7 @@ Requisitos en `docs/prd.md`, diseño en `docs/design-system.md`.
 - Framework: Astro con `@astrojs/cloudflare`; el escritorio es una isla de Svelte 5
 - Base de datos: ninguna (el contenido son colecciones de Astro en el repo)
 - Estilos: CSS propio con variables, según `docs/design-system.md`
-- Despliegue: Cloudflare Workers con activos estáticos; lo despliega Pol, no el agente
+- Despliegue: Cloudflare Workers con activos estáticos; lo despliega Agus, no el agente
 - Otras integraciones: Cloudflare Email Service, Turnstile y `ratelimit` (formulario de Correo)
 
 Detalle y justificación en `docs/architecture.md`.
@@ -144,11 +143,11 @@ mejoras/        → ideas futuras no implementadas
 - No guardar ni registrar en logs el contenido de los mensajes del formulario de Correo.
 - No leer el destino del correo desde la petición: sale siempre de la configuración del servidor.
 - No usar logos ni arte de otras marcas en los iconos de las apps (Gmail, Word, Catán…): iconos propios.
-  Excepción, decidida por Pol el 2026-10-10: los accesos directos externos (LinkedIn, GitHub, la newsletter)
+  Excepción, decidida el 2026-10-10: los accesos directos externos (LinkedIn, GitHub, la newsletter)
   y los proyectos llevan su propio icono, como imagen en `public/links/` y `public/projects/`.
-  Otra excepción, decidida por Pol el 2026-10-11: la lista de tecnologías de «Cómo está hecho» enseña el logo de cada una (paquete `simple-icons`,
+  Otra excepción, decidida el 2026-10-11: la lista de tecnologías de «Cómo está hecho» enseña el logo de cada una (paquete `simple-icons`,
   licencia CC0); no son iconos de apps y solo sirven para nombrar la tecnología.
-  Otra excepción, decidida por Pol el 2026-10-17: el Correo lleva el logo de Gmail y el Navegador el de Safari.
+  Otra excepción, decidida el 2026-10-17: el Correo lleva el logo de Gmail y el Navegador el de Safari.
 - No permitir que el Navegador cargue direcciones que no estén en la colección de proyectos.
 
 ---

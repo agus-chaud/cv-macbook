@@ -1,7 +1,5 @@
 # Estrategia de testing
 
-> **Plantilla:** este documento es el de Pol OS, el portfolio de Pol Marzà del que nace esta plantilla. Déjalo como ejemplo del método o reescríbelo para tu proyecto.
-
 <!-- Documento vivo. Actualizar cuando cambie el stack o las convenciones de testing.
      Los cambios deben registrarse también en changelog/. -->
 
@@ -9,14 +7,14 @@
 
 ## Filosofía
 
-Pol OS es sobre todo interfaz, así que el valor está en que los flujos funcionen de punta a punta
+Agus OS es sobre todo interfaz, así que el valor está en que los flujos funcionen de punta a punta
 (entrar, abrir un proyecto, mandar un mensaje), no en funciones sueltas. Por eso:
 
 - **Pocos tests unitarios, solo donde hay lógica de verdad:** el gestor de ventanas, la validación
   del formulario y el catálogo de comandos de la terminal.
 - **Tests de extremo a extremo para cada criterio de aceptación del PRD** que se pueda comprobar
   mirando la pantalla.
-- **Lo visual no se testea con aserciones frágiles.** El aspecto lo revisa Pol contra el prototipo.
+- **Lo visual no se testea con aserciones frágiles.** El aspecto lo revisa Agus contra el prototipo.
   Si algo es puramente visual y no se puede comprobar por la interfaz, la ficha de la feature lo
   dice con `no verificable por interfaz: <razón>`.
 
@@ -116,7 +114,7 @@ correo se sustituye por un doble que guarda el mensaje en memoria; el test lo le
 - Cómo está hecho (S-10): los títulos de sección y el índice (ids únicos y sin acentos), el reparto del texto en dos mitades por la lista de
   tecnologías, que cada tecnología tiene logo o iniciales, y guardas sobre el texto real (las siete secciones en orden, ningún correo, clave,
   token ni nombre de secreto ni límite exacto, enlaces seguros, ninguna persona concreta); en el navegador, que se abre desde el escritorio, el
-  detalle de Pol OS (y solo de él) y la Terminal, que cada punto del índice lleva a su sección, que cada tecnología sale con su logo o sus
+  detalle de Agus OS (y solo de él) y la Terminal, que cada punto del índice lleva a su sección, que cada tecnología sale con su logo o sus
   iniciales, que los enlaces externos son seguros y los de apps abren la app, el aviso si no carga y que no se desborda con el texto más grande;
   contra la compilación, la página pública (título, descripción, canónica, legible sin JavaScript, en el mapa del sitio, sin violaciones).
 - Libro de visitas (S-09): la validación (longitudes, relación, texto plano, caracteres de control y de inversión de texto, el
@@ -132,12 +130,12 @@ correo se sustituye por un doble que guarda el mensaje en memoria; el test lo le
 - Notas (S-01): el orden por fecha, número y nombre; el nombre y el enlace directo `?nota=` (un nombre desconocido, vacío o
   con caracteres raros se ignora); la fecha larga sin depender de la zona horaria; los datos estructurados `BlogPosting`;
   y guardas sobre el contenido real (nombre válido, descripción de hasta 160 caracteres, fecha, etiquetas, cuerpo, ningún
-  correo ni nombre de tercero, enlaces seguros). En el navegador: la carpeta, abrir una nota, la invitación a Con Criterio,
+  correo ni nombre de tercero, enlaces seguros). En el navegador: la carpeta, abrir una nota, la invitación a la newsletter,
   el aviso si el texto no carga, la selección frente a abrir, el enlace directo (también tras recargar), `notes` y
   `open <nota>` en la Terminal, y los enlaces sin JavaScript. Contra la compilación: cada página pública con su título,
   descripción, dirección canónica, Open Graph de artículo y JSON-LD, legible con JavaScript desactivado, el JSON de cada
   nota, el mapa del sitio y que una dirección inexistente devuelve 404 con la página propia.
-- GitHub (C-01): en unitarios (`repos.test.ts`), qué repositorios salen (públicos, con `showcase`, sin forks, de Pol), el orden, las webs que no son
+- GitHub (C-01): en unitarios (`repos.test.ts`), qué repositorios salen (públicos, con `showcase`, sin forks, de Agus), el orden, las webs que no son
   `https://`, que la fecha no cuente como cambio, «hace 3 días» y los colores de lenguaje, y guardas sobre el archivo real. En el navegador (`c-01-github`, con
   repositorios de ejemplo servidos en lugar de `/repos.json`): el icono abre la ventana, el orden, los datos y enlaces de cada tarjeta, «En Proyectos», el
   archivo vacío, el fallo de carga, `open github`, el móvil y axe.
@@ -163,7 +161,7 @@ correo se sustituye por un doble que guarda el mensaje en memoria; el test lo le
 - Estilos, degradados y animaciones concretas.
 - El envío real de correo y Turnstile real (se simulan; se prueban a mano una vez tras el primer
   despliegue).
-- Que un proyecto externo se deje incrustar de verdad: depende de su cabecera, no de Pol OS.
+- Que un proyecto externo se deje incrustar de verdad: depende de su cabecera, no de Agus OS.
 - Servicios externos de música (S-03).
 
 ---
@@ -214,7 +212,7 @@ Google Chrome instalado.
 `pnpm test:e2e:navegadores` corre los mismos tests en WebKit y Firefox. Los navegadores se instalan una vez con
 `pnpm exec playwright install webkit firefox` (unos 190 MB, en la caché de Playwright del usuario). Tarda más (unos 7 minutos), así
 que se lanza antes de un PR que toque la interfaz, no en cada cambio. Se añadió el 2026-10-16 porque las fichas de las damas
-salían desplazadas en el navegador de Pol y Chrome no lo detectaba. Dos diferencias de Safari que los tests tienen en cuenta: con Tab
+salían desplazadas en Safari y Chrome no lo detectaba. Dos diferencias de Safari que los tests tienen en cuenta: con Tab
 solo salta entre campos de texto (a los botones se llega con Opción+Tab: `nextControlKey` en `helpers.ts`), y espera más que
 Chrome para cargar las imágenes con `loading="lazy"` (el test de las portadas baja por la lista). Los tests que dependen del reloj o
 de los límites de peticiones pueden fallar de vez en cuando con tantas pruebas a la vez; si fallan, se repiten sueltos.

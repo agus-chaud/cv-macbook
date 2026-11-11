@@ -4,7 +4,7 @@
  *
  * Dos pasos, sin guardar nada en el servidor:
  *  1. `handleSubmit`: valida lo que envía el visitante y le manda un enlace de confirmación (cifrado, con caducidad).
- *  2. `handleConfirm`: abre ese enlace y, si es auténtico, manda la reseña a Pol. Pol decide si la publica.
+ *  2. `handleConfirm`: abre ese enlace y, si es auténtico, manda la reseña al dueño, que decide si la publica.
  *
  * Privacidad: ni el texto de la reseña ni el correo se registran. Lo único que sale por `log` es el código del resultado.
  */
@@ -178,7 +178,7 @@ function confirmationText(value: GuestbookInput, link: string): string {
   ].join('\n');
 }
 
-/** Paso 2: el visitante abre el enlace y pulsa «Confirmar»; la reseña llega a Pol. */
+/** Paso 2: el visitante abre el enlace y pulsa «Confirmar»; la reseña llega al dueño. */
 export async function handleConfirm(req: GuestbookRequest, deps: Omit<GuestbookDeps, 'verifyTurnstile'>): Promise<GuestbookResult> {
   const end = makeEnd(deps);
   const read = await readJson(req, deps, end);
@@ -197,7 +197,7 @@ export async function handleConfirm(req: GuestbookRequest, deps: Omit<GuestbookD
   if (!checked.ok) return end(422, 'invalid_token');
   const { value } = checked;
 
-  // Una pulsación repetida no manda otro correo a Pol hasta pasado un minuto.
+  // Una pulsación repetida no manda otro correo al dueño hasta pasado un minuto.
   const limited = await deps.keyLimiter.limit({ key: `token:${await fingerprint(token)}` });
   if (!limited.success) return end(429, 'rate_limited');
 

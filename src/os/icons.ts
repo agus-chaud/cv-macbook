@@ -1,6 +1,6 @@
 /**
- * Iconos de Pol OS. Los de las apps son dibujos propios, salvo Correo y Navegador (logos de Gmail y Safari). Las otras
- * marcas ajenas son los iconos de los enlaces externos (LinkedIn, GitHub) y de los proyectos de Pol, que Pol autorizó
+ * Iconos del sistema. Los de las apps son dibujos propios, salvo Correo y Navegador (logos de Gmail y Safari). Las otras
+ * marcas ajenas son los iconos de los enlaces externos (LinkedIn, GitHub) y de los proyectos, autorizados
  * y viven como imágenes en /public.
  * Los SVG son cadenas estáticas de este archivo, nunca contenido externo.
  */
@@ -72,7 +72,7 @@ export const ART_SVG = {
 /**
  * Iconos de app dibujados enteros (64 × 64), a sangre dentro de la casilla con degradado. Colores planos, sin `id` ni
  * degradados internos: el mismo SVG sale muchas veces en la página y los `id` repetidos chocan.
- * Correo y Navegador llevan los logos de Gmail y Safari (decisión de Pol del 2026-10-17); el resto son dibujos propios.
+ * Correo y Navegador llevan los logos de Gmail y Safari (decisión del 2026-10-17); el resto son dibujos propios.
  */
 const BLUEPRINT_GRID = Array.from({ length: 7 }, (_, i) => `M${(i + 1) * 8} 0v64M0 ${(i + 1) * 8}h64`).join('');
 /** Contorno de una rueda dentada centrada en (32, 32): `teeth` dientes trapezoidales entre los radios `r` y `R`. */

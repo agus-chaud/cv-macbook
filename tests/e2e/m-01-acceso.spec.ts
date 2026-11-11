@@ -3,13 +3,13 @@ import { gotoLock, homeTestId } from './helpers';
 import { PERSONA } from '../../src/content/persona';
 
 test.describe('M-01 Pantalla de acceso', () => {
-  test('muestra el nombre de Pol y la contraseña rellena con ocho puntos', async ({ page }) => {
+  test('muestra el nombre del dueño y la contraseña rellena con ocho puntos', async ({ page }) => {
     await gotoLock(page);
     await expect(page.getByTestId('lock-name')).toHaveText(PERSONA.name);
     await expect(page.getByTestId('lock-dots').locator('i')).toHaveCount(8);
   });
 
-  test('el avatar muestra la foto de Pol, ya cargada y servida desde el propio sitio', async ({ page }) => {
+  test('el avatar muestra la foto del dueño, ya cargada y servida desde el propio sitio', async ({ page }) => {
     await gotoLock(page);
     const photo = page.getByTestId('lock-photo');
     await expect(photo).toBeVisible();

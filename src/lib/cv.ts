@@ -22,7 +22,7 @@ export function splitFrontmatter(markdown: string): { data: Record<string, strin
   return { data, body: markdown.slice(match[0].length) };
 }
 
-/** Los enlaces `https://` del texto se abren en una pestaña nueva y sin dar acceso a Pol OS. */
+/** Los enlaces `https://` del texto se abren en una pestaña nueva y sin dar acceso al sitio. */
 export const externalLinks = (html: string) =>
   html.replace(/<a href="(https:\/\/[^"]+)"/g, '<a href="$1" target="_blank" rel="noopener noreferrer"');
 

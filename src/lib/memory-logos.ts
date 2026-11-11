@@ -3,7 +3,7 @@
  * dueños y aquí solo sirven para nombrar la herramienta), importados uno a uno para que solo entren los que se usan. Este archivo solo lo
  * importa la ventana del memory, que se carga al abrirla.
  *
- * Solo logos que se reconocen a simple vista (decisión de Pol, 2026-10-16): fuera los de nicho aunque estén en el Stack (GitHub Actions, MCP,
+ * Solo logos que se reconocen a simple vista (decisión del 2026-10-16): fuera los de nicho aunque estén en el Stack (GitHub Actions, MCP,
  * TanStack, Hono, Zod…). Todos son herramientas del Stack salvo GitHub, que va aparte en `MEMORY_EXTRAS`.
  */
 import {

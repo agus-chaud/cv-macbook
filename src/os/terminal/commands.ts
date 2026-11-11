@@ -11,6 +11,7 @@ import { WALLPAPERS, type ThemePref, type WallpaperId } from '../../lib/prefs';
 import type { AppId } from '../apps/registry';
 import type { Action } from '../menus';
 import { PERSONA } from '../../content/persona';
+import { SHELL_HOST, SHELL_USER } from './identity';
 
 export type Tone = 'accent' | 'muted' | 'error' | 'hit' | 'near';
 export interface Segment {
@@ -171,7 +172,7 @@ add('projects', {
   usage: 'projects',
   summary: 'lista de proyectos',
   run: (_a, _r, ctx) => {
-    // El ancho de la columna sale del id más largo: con uno fijo, `project-template` se pegaba a su nombre.
+    // El ancho de la columna sale del id más largo: con uno fijo, un id largo se pegaba a su nombre.
     const idWidth = Math.max(0, ...ctx.projects.map((p) => p.id.length)) + 2;
     return out(
       ctx.projects.length === 0
@@ -213,7 +214,7 @@ function findNote(wanted: string, notes: TerminalContext['notes']) {
 
 add('open', {
   usage: 'open <algo>',
-  summary: 'abre un proyecto, una nota o una app (open planito, open mail…)',
+  summary: 'abre un proyecto, una nota o una app (open lead-scoring, open mail…)',
   run: (args, _r, ctx) => {
     if (args.length === 0) return out([text('Uso: open <proyecto o app>. Prueba projects o ls.', 'muted')]);
     const wanted = normalize(args.join(' '));
@@ -295,7 +296,7 @@ add('neofetch', {
     const info: [string, string][] = [
       ['OS', PERSONA.osName],
       ['Host', 'tu navegador'],
-      ['Shell', 'pol-sh (de mentira)'],
+      ['Shell', `${SHELL_USER}-sh (de mentira)`],
       ['Tema', `${THEME_NAMES[ctx.theme]} · fondo ${ctx.wallpaper}`],
       ['Pantalla', `${ctx.viewport.width}×${ctx.viewport.height}`],
       ['Stack', 'Astro · Svelte · Cloudflare'],
@@ -306,7 +307,7 @@ add('neofetch', {
     for (let i = 0; i < rows; i++) {
       const art = (LOGO[i] ?? '').padEnd(30);
       const right: Segment[] =
-        i === 0 ? [seg('pol@pol-os', 'accent')] : i === 1 ? [seg('──────────', 'muted')] : info[i - 2] ? [seg(`${info[i - 2][0]}: `, 'accent'), seg(info[i - 2][1])] : [];
+        i === 0 ? [seg(SHELL_HOST, 'accent')] : i === 1 ? [seg('──────────', 'muted')] : info[i - 2] ? [seg(`${info[i - 2][0]}: `, 'accent'), seg(info[i - 2][1])] : [];
       lines.push([seg(art, 'accent'), ...right]);
     }
     return out(lines);
@@ -334,7 +335,7 @@ add('memory', { run: () => out([text('Abriendo Memory…', 'muted')], [{ type: '
 add('checkers', { run: () => out([text('Abriendo Damas…', 'muted')], [{ type: 'open', target: { app: 'checkers' } }]) });
 
 // ─── Escondidos: no salen en `help` ni se completan ──────────────────────────────────────────────
-add('sudo', { run: () => out([text('pol no está en el archivo sudoers. Este incidente será reportado (a nadie).', 'error')]) });
+add('sudo', { run: () => out([text(`${SHELL_USER} no está en el archivo sudoers. Este incidente será reportado (a nadie).`, 'error')]) });
 add('rm', { run: () => out([text('rm: aquí no se borra nada. Buen intento.', 'error')]) });
 for (const editor of ['vim', 'nano', 'emacs']) {
   add(editor, { run: () => out([text(`Has abierto ${editor}. Buena suerte para salir.`), text('(Es broma: aquí no hay editor. Escribe help.)', 'muted')]) });

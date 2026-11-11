@@ -6,23 +6,23 @@
 
 ## Qué se construye
 
-El repositorio de Pol OS no es público, así que el portfolio cuenta por sí mismo **cómo está hecho**. Una vista nueva, aparte y mucho más detallada que
+El portfolio cuenta por sí mismo **cómo está hecho**, sin que haga falta leer el código. Una vista nueva, aparte y mucho más detallada que
 la ficha del proyecto en Proyectos: un **documento largo con índice**, como el README de un repositorio, que se abre desde tres sitios:
 
 - un icono propio en el escritorio (y en la pantalla de inicio del móvil),
-- un botón en el detalle del proyecto **Pol OS**, dentro de Proyectos,
+- un botón en el detalle del proyecto **Agus OS**, dentro de Proyectos,
 - la Terminal (`open readme`, `open como`).
 
-El documento tiene estas secciones (el texto lo escribo yo a partir de lo que hemos construido y Pol lo revisa antes de publicarlo):
+El documento tiene estas secciones (el texto lo escribo yo a partir de lo que hemos construido y Agus lo revisa antes de publicarlo):
 
-1. **Qué es Pol OS** y por qué un sistema operativo.
+1. **Qué es Agus OS** y por qué un sistema operativo.
 2. **Stack** (antes «Tecnologías»), cada tecnología **con su logo** y una línea de para qué se usa: Astro, Svelte, TypeScript, Cloudflare (Workers, Turnstile y el servicio de
    correo), Vite, Vitest, Playwright, pnpm, GitHub y GitHub Actions, y Claude Code.
 3. **Cómo funciona por dentro:** un sitio estático con un único trozo de servidor, el escritorio como una «isla» de Svelte, el gestor de ventanas, las
    apps que se cargan al abrirlas, el contenido en colecciones del repositorio y la política de seguridad de contenido.
 4. **Cómo se actualizan solos los datos:** la tarea diaria de GitHub Actions que cuenta los repositorios, el token de solo lectura, qué se publica (solo
    recuentos, nunca nombres de repositorios privados) y cómo llega el cambio a la web.
-5. **El formulario de Correo** (Turnstile, límites y envío sin guardar nada) y **el Libro de visitas** (enlace cifrado, confirmación del correo y aprobación de Pol,
+5. **El formulario de Correo** (Turnstile, límites y envío sin guardar nada) y **el Libro de visitas** (enlace cifrado, confirmación del correo y aprobación de Agus,
    sin base de datos).
 6. **Cómo se trabaja:** fichas antes de código, pruebas que cubren cada requisito y un script que comprueba la cobertura.
 7. **Limitaciones: los bloqueos de LaLiga.** Qué pasa (las operadoras bloquean direcciones compartidas de Cloudflare durante los partidos y la web no carga desde
@@ -33,7 +33,7 @@ El documento tiene estas secciones (el texto lo escribo yo a partir de lo que he
 ## Decisiones tomadas
 
 - **Es una app más del escritorio**, no una pestaña de Proyectos: un documento con la hoja de papel de Sobre mí, con índice y enlaces internos a cada
-  sección. Pol pidió «una vista aparte» porque la ficha del proyecto no cabe todo esto.
+  sección. Se pidió «una vista aparte» porque la ficha del proyecto no cabe todo esto.
 - **El texto es un archivo Markdown del repositorio** (`src/content/como-esta-hecho.md`), igual que Sobre mí: se edita sin tocar código y se convierte a HTML al compilar.
 - **Los logos salen de `simple-icons`**, una colección de logos de marcas en SVG con licencia CC0 (las marcas siguen siendo de sus dueños; se usan solo para nombrar la
   tecnología). Se importan solo los que se usan, así que no pesan en la home (la app se carga al abrirla). De las tecnologías de la lista, **Playwright y Turnstile no están en
@@ -45,7 +45,7 @@ El documento tiene estas secciones (el texto lo escribo yo a partir de lo que he
 - **El texto de los bloqueos de LaLiga se apoya en datos reales** (los de hayahora.futbol que ya hemos consultado) y avisa de que son estimaciones; nada de afirmaciones sobre
   personas ni empresas concretas.
 - **Una página pública `/como-esta-hecho/`** con el mismo texto (se lee sin JavaScript, con título, descripción y en el mapa del sitio), igual que las notas: así se puede compartir
-  el enlace con quien quiera saber cómo está montado. *(Esto es lo más prescindible: si Pol no la quiere, se quita sin tocar el resto.)*
+  el enlace con quien quiera saber cómo está montado. *(Esto es lo más prescindible: si Agus no la quiere, se quita sin tocar el resto.)*
 
 ## Cobertura
 
@@ -59,7 +59,7 @@ Qué comprobará cada test, según el criterio del PRD:
   logo (SVG válido y de una sola pieza) o, si no lo tiene, su texto de reserva; ningún texto contiene una clave, un token, un correo, una dirección de cuenta ni los nombres de los
   secretos; todos los enlaces son `https://` o internos.
   - *Negativo:* un logo que falta no deja la tecnología sin nombre.
-- **e2e (escritorio y móvil, con axe en claro y oscuro):** se abre desde el escritorio, desde el detalle de Pol OS y desde la Terminal; muestra el índice y cada enlace del
+- **e2e (escritorio y móvil, con axe en claro y oscuro):** se abre desde el escritorio, desde el detalle de Agus OS y desde la Terminal; muestra el índice y cada enlace del
   índice lleva a su sección; cada tecnología aparece con su nombre y su logo (o su recuadro de texto); los enlaces externos se abren en pestaña nueva; no se desborda ni con el texto más grande.
 - **Contra la compilación:** la página pública responde 200 con su título y su descripción, se lee con JavaScript desactivado, está en el mapa del sitio y no hay violaciones de la
   política; el recorrido de M-11 abre la app.
@@ -75,7 +75,7 @@ Qué comprobará cada test, según el criterio del PRD:
 - **En móvil, el documento ocupa la pantalla y la Terminal queda debajo**: el test de la Terminal comprueba `ls` y `open readme` antes de abrirlo.
 - El código de los logos pesa unos 15 KB y solo viaja al abrir la app: la home no cambia.
 
-**Lo que no se comprueba aquí:** que el texto sea correcto y esté bien contado: lo revisa Pol antes de publicarlo. **Pendiente de Pol:** leer el texto de `src/content/como-esta-hecho.md` y ajustarlo (sobre todo la sección de LaLiga y lo que cuenta de los datos de GitHub).
+**Lo que no se comprueba aquí:** que el texto sea correcto y esté bien contado: lo revisa Agus antes de publicarlo. **Pendiente de Agus:** leer el texto de `src/content/como-esta-hecho.md` y ajustarlo (sobre todo la sección de LaLiga y lo que cuenta de los datos de GitHub).
 
 ## Fuera de esta feature
 

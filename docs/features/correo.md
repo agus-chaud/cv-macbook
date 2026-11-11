@@ -9,19 +9,19 @@
 La app Correo deja de ser un estado vacío y pasa a ser un cliente de correo de verdad. Se abre
 desde el dock (ventana en escritorio, pantalla completa en móvil) y tiene:
 
-- **Para:** una ficha con el nombre de Pol y un candado. No se puede editar y no enseña la
+- **Para:** una ficha con el nombre de Agus y un candado. No se puede editar y no enseña la
   dirección, que vive solo en el servidor.
 - **De:** el correo del visitante. **Asunto** y **mensaje**.
 - La verificación anti-bots de Cloudflare (Turnstile).
 - El botón **Enviar**.
 
 Si algo está mal, el error aparece junto al campo y no se envía nada. Si todo va bien, el mensaje
-llega al correo de Pol con el del visitante como "responder a", y el visitante ve una pantalla de
+llega al correo de Agus con el del visitante como "responder a", y el visitante ve una pantalla de
 confirmación con la opción "Escribir otro". Si el servidor rechaza el envío (demasiados mensajes,
 verificación fallida, fallo del servicio de correo), el visitante ve un mensaje claro y **no pierde
 lo que había escrito**.
 
-En el servidor nace el primer y único endpoint de Pol OS, `POST /api/contact`, siguiendo el
+En el servidor nace el primer y único endpoint de Agus OS, `POST /api/contact`, siguiendo el
 contrato de `docs/architecture.md`. No guarda el mensaje ni lo escribe en los registros.
 
 ## Decisiones tomadas
@@ -85,7 +85,7 @@ Decisiones y hallazgos que salieron durante la construcción:
 
 - El binding `send_email` va restringido con `allowed_sender_addresses`: solo puede enviar desde
   `contacto@m.example.com`. El destino no se restringe en la configuración porque es el correo de
-  Pol y no debe estar en el repositorio.
+  Agus y no debe estar en el repositorio.
 - Los tipos de Cloudflare (`worker-configuration.d.ts`, más de 16.000 líneas) no se commitean:
   `pnpm check` los genera. Chocan con el DOM en `Element.append`, así que el cargador de Turnstile
   usa `appendChild`.
@@ -100,10 +100,10 @@ Decisiones y hallazgos que salieron durante la construcción:
 - Con la clave real del widget en `localhost` Turnstile responde `110200` (dominio no permitido): por
   eso en desarrollo se usa siempre la de prueba.
 
-**Lo que no se comprueba aquí:** que el correo llegue de verdad a la bandeja de Pol, ni la
+**Lo que no se comprueba aquí:** que el correo llegue de verdad a la bandeja de Agus, ni la
 verificación real de Turnstile. Las pruebas no envían correo real ni usan claves reales (límite 1
 de `CLAUDE.md`). Se comprobará a mano una vez, tras el primer despliegue: enviar un mensaje desde
-Pol OS y ver que llega con el "responder a" correcto. Queda anotado en el PR.
+Agus OS y ver que llega con el "responder a" correcto. Queda anotado en el PR.
 
 ## Fuera de esta feature
 
@@ -111,9 +111,9 @@ Pol OS y ver que llega con el "responder a" correcto. Queda anotado en el PR.
   arranque de M-09 y `frame-src` para el Navegador. Es la siguiente feature y es **obligatoria
   antes del primer despliegue**.
 - Alta del dominio en Email Sending, verificación del correo de destino y creación del widget de
-  Turnstile en Cloudflare: son pasos de Pol (ver `docs/architecture.md`).
+  Turnstile en Cloudflare: son pasos de Agus (ver `docs/architecture.md`).
 - Guardar los mensajes, adjuntos y respuestas automáticas al visitante.
-- Dar de alta los secretos reales en producción: lo hace Pol con `wrangler secret put`.
+- Dar de alta los secretos reales en producción: lo hace Agus con `wrangler secret put`.
 
 ## Cambio del 2026-10-25: tarjeta de contacto
 

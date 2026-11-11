@@ -194,7 +194,7 @@ describe('Ayuda', () => {
   test('abre la guía y Correo, y enlaza a las tres webs en una pestaña nueva', () => {
     const a = menu(buildMenus(ctx()), 'ayuda');
     expect(item(a, 'help-guide').action).toEqual({ type: 'open', target: { app: 'help' } });
-    expect(item(a, 'write-to-pol').action).toEqual({ type: 'open', target: { app: 'mail' } });
+    expect(item(a, 'write-to-me').action).toEqual({ type: 'open', target: { app: 'mail' } });
     expect(items(a).filter((i) => i.href).map((i) => i.href)).toEqual(LINKS.map((l) => l.url));
   });
 

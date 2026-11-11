@@ -4,7 +4,7 @@ import { animationsDone, enter, inFolder, loadProjects, openProjectDetail, stubE
 
 const projects = loadProjects();
 const folderProjects = inFolder(projects);
-const withRepo = projects.find((p) => p.repo && p.github && p.screenshots.length > 0 && p.embeddable)!; // planito, afloat…
+const withRepo = projects.find((p) => p.repo && p.github && p.screenshots.length > 0 && p.embeddable)!; // el primero que tenga repositorio, capturas y web incrustable
 const withoutRepo = projects.find((p) => !p.repo)!;
 const embeddable = projects.find((p) => p.embeddable)!;
 const blocked = projects.find((p) => !p.embeddable && !p.url.includes('github.com'))!;

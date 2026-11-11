@@ -10,14 +10,14 @@ Una partida de **damas españolas contra la máquina**, con un tablero en 3D dib
 madera con grosor**, con sombra sobre la mesa y **perspectiva** (lo cercano se ve más grande). Las fichas son **blancas y rojas**, con volumen y un brillo suave;
 la dama lleva dos fichas apiladas. Hay una animación corta al mover.
 
-Aspecto acordado con el prototipo: [Damas de Pol OS](https://claude.ai/artifact/F8XjGJgrwVZsPBwoqF6Zys), versión 5. Es privado.
+Aspecto acordado con el prototipo: [Damas de Agus OS](https://claude.ai/artifact/F8XjGJgrwVZsPBwoqF6Zys), versión 5. Es privado.
 
 - **En el escritorio, el tablero se gira y se inclina arrastrando con el ratón:** de lado a lado lo gira (arrastrar a la derecha lo gira hacia la izquierda, como
   si empujaras la mesa) y arriba o abajo lo inclina (hacia abajo se ve más desde arriba), entre 28° y 82°. Un arrastre no cuenta como clic. Debajo hay botones para
   girar de 45° en 45°, inclinar y «Restablecer», que también sirven con el teclado. **La vista inicial es desde el lado de quien juega**, como sentado a la mesa, y
   **la vista elegida se guarda** en este navegador para la próxima partida. Se abre con **`checkers`** en la Terminal y aparece en la lista de `minigames` junto a `memory`. Como el memory, no tiene icono en el escritorio.
 
-- **El color se sortea en cada partida** (decisión de Pol al dar el visto bueno). Las blancas salen primero: si te tocan las rojas, empieza la máquina y el tablero
+- **El color se sortea en cada partida** (decidido al dar el visto bueno). Las blancas salen primero: si te tocan las rojas, empieza la máquina y el tablero
   se da la vuelta para que tus fichas queden de tu lado. El nivel (**Fácil** o **Normal**) se cambia en cualquier momento arriba a la derecha.
 - **Para mover**, se toca o se pulsa una ficha propia y se marcan sus destinos posibles; al tocar uno, la ficha se mueve. Si hay una captura en cadena, se marca
   el recorrido completo. Si es obligatorio capturar, solo se pueden elegir las fichas que capturan, y un aviso lo explica.
@@ -75,7 +75,7 @@ Además:
 | C-06 | Tablero en 3D con giro e inclinación (ratón y botones) y vista guardada en el escritorio, desde arriba en el móvil, ratón, dedo y teclado: `src/os/apps/checkers/Checkers.svelte`, `src/os/apps/checkers/checkers.css`, `src/lib/checkers/view.ts`, `src/os/apps/registry.ts`, `src/os/apps/AppView.svelte` | `tests/e2e/c-06-damas.spec.ts` |
 | C-06 | Se abre con `checkers` y sale en `minigames`: `src/os/terminal/commands.ts`, `src/os/terminal/games/games.ts` | `src/os/terminal/commands.test.ts`, `tests/e2e/c-06-damas.spec.ts` |
 | C-06 | La home no carga el juego ni su CSS, ni suma peticiones, y la política de seguridad deja cargar su hoja | `tests/csp/s-06-rendimiento.spec.ts`, `tests/csp/m-11-csp.spec.ts`, `tests/e2e/c-06-damas.spec.ts` |
-| C-06 | Que el nivel Normal sea un rival razonable | no verificable por interfaz: la dificultad es una sensación; Pol juega unas partidas y se ajusta la profundidad de búsqueda |
+| C-06 | Que el nivel Normal sea un rival razonable | no verificable por interfaz: la dificultad es una sensación; Agus juega unas partidas y se ajusta la profundidad de búsqueda |
 
 Qué comprobará cada test, según el criterio del PRD:
 
@@ -97,7 +97,7 @@ Qué comprobará cada test, según el criterio del PRD:
   se carga al abrir la ventana (`?url` + `<svelte:head>`). Es la solución general de **MEJORA-08**, probada aquí; la CSP real la deja pasar (`m-11`).
 - **El color al azar** cambió el final de la ficha: no hay selector de color. Con rojas, el tablero y el teclado se dan la vuelta; los nombres de las casillas siguen siendo
   los de las blancas (a1 abajo a la izquierda de las blancas), que es la convención.
-- **Las fichas salían desplazadas respecto a las casillas en el navegador de Pol** (2026-10-16, tras fusionar). Se colocaban con una transformación CSS en píxeles dentro del SVG
+- **Las fichas salían desplazadas respecto a las casillas en Safari** (2026-10-16, tras fusionar). Se colocaban con una transformación CSS en píxeles dentro del SVG
   escalado, y los navegadores no la interpretan igual (en Chromium y en el navegador interno se veía bien, y por eso los tests no lo vieron). Ahora se colocan con el atributo
   `transform` del SVG, y el deslizamiento se calcula en el componente. Hay un test que comprueba que cada ficha cae sobre su casilla en tres vistas y con la ventana ampliada.
   Los tests corren solo en Chromium, así que otros motores (Safari, Firefox) quedan sin probar automáticamente.

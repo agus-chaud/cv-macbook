@@ -37,7 +37,7 @@ hay que apuntar con precisión. Esta feature rehace sus controles para que se ma
 | S-03 | Posición «3 de 10» y marca de la canción que suena en la lista: `src/os/shell/MiniPlayer.svelte`, `src/os/apps/favorites/MusicList.svelte` | `tests/e2e/s-03-reproductor.spec.ts` |
 | S-03 | Tráilers sin anterior ni siguiente; extremos de la lista desactivados: `src/os/shell/MiniPlayer.svelte`, `src/lib/player-queue.ts` | `src/lib/favorites.test.ts`, `tests/e2e/s-03-reproductor.spec.ts` |
 | S-03 | Reproductor a ancho completo sobre el dock en el móvil, sin desbordar y sin tapar el final de la lista: `src/os/shell/MiniPlayer.svelte`, `src/os/apps/favorites/Favorites.svelte` | `tests/e2e/s-03-reproductor.spec.ts` |
-| S-03 | Que se maneje bien con el pulgar en un teléfono real | no verificable por interfaz: la comodidad real no la mide un test; la prueba Pol a mano en su móvil antes de dar la feature por buena |
+| S-03 | Que se maneje bien con el pulgar en un teléfono real | no verificable por interfaz: la comodidad real no la mide un test; la prueba Agus a mano en su móvil antes de dar la feature por buena |
 
 Qué comprobará cada test, según el criterio del PRD:
 
@@ -57,7 +57,7 @@ Qué comprobará cada test, según el criterio del PRD:
 - **La home volvió a pasarse del presupuesto de JavaScript (130,26 KB frente a 130)** por el código nuevo. Se resolvió sacando lo que solo usa el reproductor de los trozos compartidos con la home:
   los iconos (`src/os/shell/player-icons.ts`) y la lógica de anterior y posición (`src/lib/player-queue.ts`). La home queda por debajo del tope sin tocar el presupuesto.
 - El YouTube simulado de los tests ahora responde como el real: `play` y `pause` emiten el cambio de estado, y hay una ayuda para simular que el visitante pausa con los controles del vídeo.
-- Sigue sin verse un vídeo real reproducirse en el entorno de revisión: la comodidad real y la reproducción las prueba Pol a mano.
+- Sigue sin verse un vídeo real reproducirse en el entorno de revisión: la comodidad real y la reproducción las prueba Agus a mano.
 
 ## Fuera de esta feature
 

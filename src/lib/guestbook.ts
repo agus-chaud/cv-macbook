@@ -187,7 +187,7 @@ export function validateGuestbook(raw: unknown): Validation {
 }
 
 // ─── Reseñas publicadas ────────────────────────────────────────────────────────────────────────────────────────
-/** El nombre del archivo que se le sugiere a Pol: el del autor, en minúsculas y sin acentos. */
+/** El nombre del archivo que se sugiere al dueño: el del autor, en minúsculas y sin acentos. */
 export function slugify(name: string): string {
   const slug = name
     .normalize('NFD')

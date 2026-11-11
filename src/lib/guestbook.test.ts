@@ -8,7 +8,7 @@ const valid = {
   name: 'Ana Pérez',
   detail: 'Diseñadora | Madrid',
   relation: 'cliente',
-  text: 'Trabajar con Pol fue muy fácil y el resultado superó lo que esperaba.',
+  text: 'Trabajar con Agus fue muy fácil y el resultado superó lo que esperaba.',
   email: 'ana@ejemplo.com',
   links: [{ network: 'linkedin', value: 'ana-perez' }],
   consent: true,
@@ -33,7 +33,7 @@ describe('normalizeLink', () => {
     expect(normalizeLink('linkedin', 'es.linkedin.com/in/ana-perez')).toBe('https://www.linkedin.com/in/ana-perez');
     expect(normalizeLink('x', 'https://twitter.com/ana_1')).toBe('https://x.com/ana_1');
     expect(normalizeLink('youtube', 'https://www.youtube.com/@anaperez')).toBe('https://www.youtube.com/@anaperez');
-    expect(normalizeLink('github', 'https://github.com/tu-usuario/pol-os')).toBe('https://github.com/tu-usuario');
+    expect(normalizeLink('github', 'https://github.com/tu-usuario/mi-portfolio')).toBe('https://github.com/tu-usuario');
   });
 
   test('rechaza otras redes, otros dominios, protocolos raros, credenciales y puertos', () => {

@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { describe, expect, test } from 'vitest';
 import { CATEGORIES, TOOLS } from './stack-catalog';
 import type { StackData } from './stack';
+import { PERSONA } from '../content/persona';
 
 // Guardas sobre el archivo que genera scripts/actualizar-stack.mjs: es lo que se publica en la web.
 const raw = readFileSync(join(process.cwd(), 'src/content/stack.json'), 'utf8');
@@ -45,9 +46,8 @@ describe('src/content/stack.json', () => {
   });
 
   test('no revela el nombre de ningún repositorio, público ni privado', () => {
-    for (const name of ['yoleo-2026', 'localwhisper-landing', 'localwhisper-app', 'sayhi', 'pol-os', 'project-template', 'planito', 'afloat']) {
-      expect(raw.toLowerCase(), name).not.toContain(name);
-    }
-    expect(raw).not.toMatch(/github\.com|polmarza|\/[\w.-]+\/[\w.-]+/i);
+    // Los nombres concretos no se pueden listar aquí (este archivo se publica): el script ya se niega a escribir si se cuela uno.
+    expect(raw.toLowerCase()).not.toContain(PERSONA.github.toLowerCase());
+    expect(raw).not.toMatch(/github\.com|\/[\w.-]+\/[\w.-]+/i);
   });
 });

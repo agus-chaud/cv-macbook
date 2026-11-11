@@ -55,7 +55,7 @@ test.describe('M-06 Sobre mí como documento', () => {
     await expect(page.getByTestId('mail')).toBeVisible();
   });
 
-  test('los enlaces externos se abren en una pestaña nueva y sin dar acceso a Pol OS', async ({ page }, testInfo) => {
+  test('los enlaces externos se abren en una pestaña nueva y sin dar acceso al sitio', async ({ page }, testInfo) => {
     await openAbout(page, testInfo.project.name);
     const external = page.getByTestId('about-body').locator('a[href^="https://"]');
     expect(await external.count()).toBeGreaterThan(0);

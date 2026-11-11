@@ -1,4 +1,4 @@
-# Favoritos (para conocer a Pol)
+# Favoritos (para conocer a Agus)
 
 **Estado:** Verificada
 **Requisitos que cierra:** S-03
@@ -7,12 +7,12 @@
 ## Qué se construye
 
 Una carpeta **Favoritos** en el escritorio (y en la pantalla de inicio del móvil), con la misma forma que Proyectos: una vista de **cuatro tarjetas**, y cada una abre su
-ventana con el **top 10** de Pol en esa categoría. No hay notas, justificaciones ni líneas de gusto: los propios elementos dicen cómo es Pol.
+ventana con el **top 10** de Agus en esa categoría. No hay notas, justificaciones ni líneas de gusto: los propios elementos dicen cómo es Agus.
 
 - **Deportes** (sustituye a Videojuegos desde el 2026-10-25): una cuadrícula de fotos con licencia libre de **Wikimedia Commons** (básquet, fútbol y pádel), guardadas
   en el repositorio; al pie, cada foto se acredita con su autor, su licencia y un enlace a su ficha.
 - **Películas y series:** una cuadrícula de pósteres con título, año y una sinopsis breve; cada una con su **tráiler** de YouTube, que se abre en el mini reproductor.
-- **Libros:** una cuadrícula de portadas y, al final, un enlace al perfil de Pol en **Yoleo**. Un libro puede llevar un **resumen** (añadido el 2026-10-25): su portada
+- **Libros:** una cuadrícula de portadas y, al final, un enlace a un perfil de lectura, si se configura. Un libro puede llevar un **resumen** (añadido el 2026-10-25): su portada
   abre, dentro de la misma ventana, una vista con la portada, el título, el autor y el resumen por secciones; «‹ Libros» o Escape vuelven a la cuadrícula.
 - **Música:** una **lista** de canciones con su portada, el título, el artista y un botón de play; al pulsarlo, se abre el **mini reproductor**.
 
@@ -21,23 +21,23 @@ tráiler que se ha pulsado. Se puede pausar, pasar a la canción siguiente de la
 
 ## Decisiones tomadas
 
-- **Sin claves ni APIs de terceros.** Todo el contenido lo aporta Pol (enlaces, portadas) y vive en el repositorio, como el resto de colecciones; así no hay nada que caduque ni que
+- **Sin claves ni APIs de terceros.** Todo el contenido lo aporta Agus (enlaces, portadas) y vive en el repositorio, como el resto de colecciones; así no hay nada que caduque ni que
   dependa de condiciones de uso ajenas. La ficha de TMDB, IGDB y similares se descarta.
 - **Una colección de Astro `favorites`**, un archivo por categoría (`games`, `movies`, `books`, `music`), validado al compilar: cada elemento lleva su título, su portada, su enlace y los
   campos propios de su sección. El máximo es 10 elementos por sección.
-- **Las portadas son archivos del repositorio**, en `.jpg` (`public/favoritos/<sección>/<nombre>.jpg`, con el nombre del elemento en minúsculas y con guiones; Pol las sube él). Mientras no estén, sale una portada de relleno claramente falsa, no enlaces a otras webs: no hay peticiones a terceros al abrir una sección.
-  Son imágenes que aporta Pol; pertenecen a sus editores y aquí solo sirven para identificar la obra y enlazar con ella.
+- **Las portadas son archivos del repositorio**, en `.jpg` (`public/favoritos/<sección>/<nombre>.jpg`, con el nombre del elemento en minúsculas y con guiones; Agus las sube él). Mientras no estén, sale una portada de relleno claramente falsa, no enlaces a otras webs: no hay peticiones a terceros al abrir una sección.
+  Son imágenes que aporta Agus; pertenecen a sus editores y aquí solo sirven para identificar la obra y enlazar con ella.
 - **Música y tráilers solo con el reproductor oficial de YouTube**, con el vídeo siempre a la vista, por las condiciones de YouTube: no se puede ocultarlo, reproducir en segundo plano, ni
   descargar o guardar copias del contenido. Tampoco se descargan canciones: sería copyright aunque no se vendan.
 - **Nada de YouTube se carga hasta pulsar play.** El script del reproductor (`youtube.com/iframe_api`) y el vídeo (`youtube-nocookie.com`) solo se piden cuando el visitante pulsa; la política de
   seguridad se amplía solo con esos dos dominios.
 - **Los controles son los de la API oficial de YouTube** (play, pausa, siguiente), accionados desde botones propios; no se oculta ni se tapa el reproductor.
-- **El título, el artista y la duración los escribe Pol** (o se dejan sin duración): no se consulta la API de YouTube, que pide clave.
+- **El título, el artista y la duración los escribe Agus** (o se dejan sin duración): no se consulta la API de YouTube, que pide clave.
 - **Música como lista, no como cuadrícula**, con el aspecto de una biblioteca de música (portada, título, artista, duración y play). La alternativa de insertar una lista de reproducción de
-  YouTube con su panel queda descartada de entrada (no se puede personalizar y no permite el estilo de Pol OS), pero se puede añadir luego un enlace a la lista completa de Pol en YouTube.
+  YouTube con su panel queda descartada de entrada (no se puede personalizar y no permite el estilo de Agus OS), pero se puede añadir luego un enlace a la lista completa de Agus en YouTube.
 - **Cuatro ventanas del mismo tipo:** una sola pieza de código muestra las cuadrículas de portadas (juegos, películas y libros); la música usa su propia lista.
 - **El mini reproductor es único:** si se pulsa play en otro elemento mientras suena uno, sustituye al anterior.
-- **En el escritorio se apila como una ventana más** (decisión de Pol del 2026-10-17): pasa por delante al ponerse algo a sonar o al tocarlo, y una ventana que se toca después (por ejemplo, Favoritos al volver a la carpeta) pasa por delante de él.
+- **En el escritorio se apila como una ventana más** (decisión del 2026-10-17): pasa por delante al ponerse algo a sonar o al tocarlo, y una ventana que se toca después (por ejemplo, Favoritos al volver a la carpeta) pasa por delante de él.
 
 ## Cobertura
 
@@ -52,7 +52,7 @@ Qué comprobará cada test, según el criterio del PRD:
   - *Negativo:* un identificador de YouTube mal formado se rechaza al compilar.
 - **e2e (escritorio y móvil, con axe en claro y oscuro):** la carpeta se abre y tiene las cuatro tarjetas; cada sección enseña sus elementos con portada, título y enlace seguro (pestaña nueva); la
   música es una lista con play; pulsar play abre el mini reproductor con el vídeo a la vista (con YouTube simulado); pulsar otra canción lo sustituye; «siguiente» pasa a la canción siguiente; cerrarlo lo
-  detiene; el enlace a Yoleo y los créditos de las fotos de deportes están.
+  detiene; el enlace al perfil de lectura y los créditos de las fotos de deportes están.
   - *Negativo:* **antes de pulsar play no se pide nada a YouTube**; y si el vídeo no se puede cargar, el elemento sigue enlazando a YouTube sin dejar un reproductor roto.
 - **Contra la compilación (`pnpm test:csp`):** la política permite exactamente los dos dominios de YouTube (y solo en los destinos que toca), y el recorrido con el reproductor simulado no registra violaciones.
 
@@ -73,15 +73,15 @@ Qué comprobará cada test, según el criterio del PRD:
   el servidor de desarrollo.
 - **Deportes (2026-10-25):** las fotos salen de Wikimedia Commons (licencia, autor y ficha leídos de su API, no escritos a mano) y se recortan a 600 × 800. La de
   fútbol se cambió por una sin el número de Flickr en el nombre: el test que impide teléfonos en el contenido (`\d{9,}`) saltaba con la dirección de su ficha.
-- Las portadas se nombran con el título sin apóstrofes (`ill-tell-you-someday.jpg`), para que coincidan con los nombres que se le dieron a Pol.
+- Las portadas se nombran con el título sin apóstrofes (`ill-tell-you-someday.jpg`), para que coincidan con los nombres que se acordaron.
 - **No se ha podido ver reproducir un vídeo real:** el navegador de revisión crea el reproductor con el dominio sin cookies pero no llega a YouTube y deja el hueco en negro.
 
 **Lo que no se comprueba aquí:** que YouTube reproduzca de verdad (los tests no salen a internet y lo simulan); se prueba a mano con un vídeo real tras construirlo.
 
-## Qué necesita Pol hacer (y qué queda pendiente)
+## Qué necesita Agus hacer (y qué queda pendiente)
 
 - **Subir las portadas reales** con el mismo nombre que las de ejemplo, en `.jpg`.
-- **La dirección de su perfil de Yoleo** (el enlace final de los libros no sale hasta que esté en `books.json`).
+- **La dirección de un perfil de lectura**, si se quiere (el enlace final de los libros no sale hasta que esté en `books.json`).
 - **Probar a mano** una canción y un tráiler con YouTube de verdad.
 - Opcional: la duración de cada canción (`duration`, como `3:45`).
 
@@ -89,7 +89,7 @@ Qué comprobará cada test, según el criterio del PRD:
 
 - Los **10 libros**, **10 canciones** (enlace de YouTube, título y artista), **10 juegos** (con su enlace a Shelvid) y **10 películas o series** (con su enlace de tráiler), cada uno con su **portada**
   como imagen.
-- La **dirección de tu perfil de Yoleo**.
+- La **dirección de un perfil de lectura**.
 - La construcción puede empezar ya con contenido de ejemplo (marcado como tal) y sustituirlo cuando lleguen los datos.
 
 ## Fuera de esta feature

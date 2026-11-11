@@ -19,7 +19,7 @@ Qué hay en cada menú:
 
 **Archivo**
 - Nuevo mensaje…: abre Correo.
-- Abrir proyecto: una entrada por cada proyecto (Estudio, Panel, Pol OS), que lo abre en el Navegador.
+- Abrir proyecto: una entrada por cada proyecto (Estudio, Panel, Agus OS), que lo abre en el Navegador.
 - Sobre mí: abre el CV.
 - Abrir en pestaña nueva: la dirección del proyecto que muestra el Navegador (desactivado si no hay ninguno).
 - Cerrar ventana: cierra la ventana activa (desactivado si no hay ventanas).
@@ -42,10 +42,10 @@ Qué hay en cada menú:
   elegir una la trae al frente. Hoy una ventana minimizada solo se recupera pulsando su app en el dock.
 
 **Ayuda**
-- Cómo usar Pol OS: una ventana corta con lo que no es evidente (doble clic para abrir, arrastrar
-  ventanas, Escape para cerrar, cómo escribir a Pol).
-- Escribir a Pol…: abre Correo.
-- Con Criterio, GitHub y LinkedIn: abren su web en una pestaña nueva.
+- Cómo usar Agus OS: una ventana corta con lo que no es evidente (doble clic para abrir, arrastrar
+  ventanas, Escape para cerrar, cómo escribir a Agus).
+- Escribir a Agus…: abre Correo.
+- La newsletter, GitHub y LinkedIn: abren su web en una pestaña nueva.
 
 El menú del logo (Acerca de, Ajustes y Bloquear pantalla) y el nombre de la app en negrita no cambian.
 
@@ -65,7 +65,7 @@ El menú del logo (Acerca de, Ajustes y Bloquear pantalla) y el nombre de la app
   navegadores actuales y es la única vía que respeta el historial de deshacer del campo. Si algún día
   se retira, estas acciones se desactivan sin romper nada más.
 - **"Pantalla completa" puede ser rechazada** (iPad, algunos navegadores): si falla, no pasa nada.
-- **"Cómo usar Pol OS" es una app más** (`help`), estática y sin datos, con el mismo marco de ventana.
+- **"Cómo usar Agus OS" es una app más** (`help`), estática y sin datos, con el mismo marco de ventana.
   No aparece en el dock ni en el escritorio: solo se abre desde Ayuda.
 - Los textos de los menús salen de la propia función, en español, sin dependencias nuevas.
 
@@ -83,7 +83,7 @@ Qué comprueba cada test, según el criterio del PRD:
   - Visualización: Oscuro cambia el tema y la marca se mueve; un fondo lo cambia; las marcas coinciden con Ajustes.
   - Ventana: lista las ventanas abiertas; una minimizada se recupera desde el menú; Cascada coloca las ventanas escalonadas.
   - Edición: con texto escrito en Correo, Cortar y Deshacer actúan sobre él sin perder el foco.
-  - Ayuda: abre "Cómo usar Pol OS" y los enlaces externos llevan `target="_blank"`.
+  - Ayuda: abre "Cómo usar Agus OS" y los enlaces externos llevan `target="_blank"`.
   - Teclado: flechas, Enter y Escape; con un menú abierto, mover el ratón sobre otro lo abre.
   - *Negativos:* con ninguna ventana abierta, "Cerrar ventana", "Minimizar" y "Ampliar" salen
     desactivados y elegirlos no hace nada; sin proyecto en el Navegador, "Abrir en pestaña nueva" sale

@@ -6,8 +6,8 @@
 
 ## Qué se construye
 
-El esqueleto de Pol OS funcionando en local. El visitante abre la home y ve la pantalla de acceso:
-fecha y hora grandes, avatar con las iniciales de Pol, su nombre y el campo de contraseña relleno
+El esqueleto de Agus OS funcionando en local. El visitante abre la home y ve la pantalla de acceso:
+fecha y hora grandes, avatar con las iniciales de Agus, su nombre y el campo de contraseña relleno
 de puntos. Con un clic o con Enter entra al escritorio.
 
 En pantallas anchas, el escritorio tiene barra de menú de cristal, dock con las apps del sistema
@@ -39,7 +39,7 @@ app llega en una próxima feature. El contenido de cada una es el de sus requisi
   hacer doble clic: así M-02 se comprueba de verdad.
 - El tema sigue a `prefers-color-scheme`. El selector manual (menú y Ajustes) es de M-09.
 - No se despliega nada en esta feature. Se deja `wrangler.jsonc` listo, pero el despliegue es de
-  Pol y depende de la migración del dominio.
+  Agus y depende de la migración del dominio.
 - Los e2e se ejecutan en dos tamaños de ventana: escritorio (1280 × 800) y móvil (390 × 844).
 
 Decisiones que salieron durante la construcción:
@@ -47,7 +47,7 @@ Decisiones que salieron durante la construcción:
 - Versiones: Astro 7.3.8, `@astrojs/cloudflare` 14.3.4, `@astrojs/svelte` 9.0.1, Svelte 5.57.2.
   TypeScript se queda en 6.0.3 porque `astro check` y el tooling de Svelte aún no admiten la 7.
 - `session: false` en `astro.config.mjs`: sin él, el adaptador pide un KV `SESSION` y el despliegue
-  lo crearía en la cuenta de Cloudflare. Pol OS no usa sesiones.
+  lo crearía en la cuenta de Cloudflare. Agus OS no usa sesiones.
 - Barra de desarrollo de Astro desactivada: se pintaba encima del dock y se llevaba los clics.
 - `astro dev` pasa a segundo plano cuando lo lanza un agente. Para Playwright se arranca con
   `--ignore-lock`, que lo mantiene en primer plano.
@@ -74,8 +74,8 @@ Qué comprueba cada test, según los criterios del PRD:
   *Negativo:* arrastrar una ventana fuera de la
   pantalla deja la barra de título visible (también en el test unitario del gestor de ventanas).
   Incluye un análisis de accesibilidad con axe.
-- **M-07:** los tres accesos directos aparecen con sus URL (concriterio.blog, github.com/polmarza y
-  linkedin.com/in/polmarza), llevan `target="_blank"` y `rel="noopener"`, y un solo clic no navega
+- **M-07:** los tres accesos directos aparecen con sus URL (la newsletter, GitHub y
+  LinkedIn), llevan `target="_blank"` y `rel="noopener"`, y un solo clic no navega
   en escritorio.
 - **M-03:** a 390px se ve la rejilla, un toque abre a pantalla completa e "Inicio" vuelve. Las
   carpetas muestran sus elementos. *Negativo:* cambiar el ancho con algo abierto lo conserva.
@@ -87,4 +87,4 @@ Qué comprueba cada test, según los criterios del PRD:
 - El selector manual de tema y fondo de pantalla (M-09).
 - El endpoint de contacto, Turnstile y Email Service (M-08).
 - Despliegue, dominio y DNS (en curso aparte, ver `mejoras/backlog.md`).
-- La foto real de Pol: se usan las iniciales hasta que exista `src/assets/pol.jpg`.
+- La foto real de Agus: se usan las iniciales hasta que exista `src/assets/foto.webp`.

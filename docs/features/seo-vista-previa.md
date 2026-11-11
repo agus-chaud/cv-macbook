@@ -6,7 +6,7 @@
 
 ## Qué se construye
 
-Dos cosas que ve la gente antes de abrir Pol OS, y que hoy faltan:
+Dos cosas que ve la gente antes de abrir Agus OS, y que hoy faltan:
 
 1. **Cómo se ve el enlace al compartirlo.** Al pegar `example.com` en LinkedIn, WhatsApp, Slack o X,
    sale una tarjeta con tu foto, tu nombre, el título y la descripción, en lugar de un recuadro vacío.
@@ -18,7 +18,7 @@ Dos cosas que ve la gente antes de abrir Pol OS, y que hoy faltan:
 
 ## Decisiones tomadas
 
-- **El icono es el de "Pol OS"**: el cuadrado redondeado con degradado violeta-azul y una "P" blanca, el
+- **El icono es el de "Agus OS"**: el cuadrado redondeado con degradado violeta-azul y una "P" blanca, el
   mismo de los iconos del escritorio. Se genera una vez a partir de un SVG y se guarda en `public/`:
   `favicon.svg` (el que usan los navegadores modernos), `favicon.ico` (para los que piden el antiguo),
   `apple-touch-icon.png` de 180 px (iOS, sin esquinas redondeadas porque iOS las pone) y dos PNG de
@@ -26,7 +26,7 @@ Dos cosas que ve la gente antes de abrir Pol OS, y que hoy faltan:
 - **La imagen para compartir mide 1200 × 630** (la proporción que piden las redes) y es un **JPEG**
   (pesa unos 90 KB: en PNG eran casi 500 KB, y WhatsApp y otras redes no muestran la vista previa de
   imágenes demasiado pesadas), generado con un script del repositorio (`scripts/generar-imagenes.mjs`) a partir de una plantilla
-  HTML: tu foto en un círculo, "Pol Marzà" y "Portfolio" sobre el degradado de fondo "Atardecer", con
+  HTML: tu foto en un círculo, "Agustin Chaud Olivieri" y "Portfolio" sobre el degradado de fondo "Atardecer", con
   los márgenes seguros que recortan LinkedIn y WhatsApp. Se guarda la imagen, no se genera al compilar,
   para no añadir dependencias al despliegue. Si cambias la foto o el texto, se vuelve a ejecutar.
 - **No invento tu cargo.** La descripción y la imagen no dicen a qué te dedicas porque ese dato sigue
@@ -35,7 +35,7 @@ Dos cosas que ve la gente antes de abrir Pol OS, y que hoy faltan:
   páginas indexables: hoy solo `/`, y las notas (S-01) se añadirán al hacerlas. `robots.txt` permite
   todo, excluye `/api/` y `/demo/` y apunta al mapa.
 - **Los datos estructurados** (`Person` en JSON-LD) llevan nombre, dirección, foto y los perfiles de
-  LinkedIn, GitHub y Con Criterio. **Ni el correo ni ningún dato privado.** Es un bloque de datos, no
+  LinkedIn, GitHub y la newsletter. **Ni el correo ni ningún dato privado.** Es un bloque de datos, no
   de código: la CSP no lo afecta.
 - **Un `<noscript>`** con tus tres enlaces para quien no ejecute JavaScript (y para algunos
   rastreadores): hoy sin JavaScript solo se ve la pantalla de acceso.
@@ -61,7 +61,7 @@ Qué comprueba cada test, según el criterio del PRD:
   - `robots.txt` excluye `/api/` y `/demo/` y enlaza el mapa; `sitemap.xml` es XML bien formado, con
     direcciones absolutas de `example.com`, solo de páginas que existen y que responden 200.
   - El JSON-LD se lee como JSON, es de tipo `Person` y sus enlaces son `https://`.
-  - *Negativos:* **ningún metadato, ni el JSON-LD, ni el HTML contiene el correo de Pol ni una
+  - *Negativos:* **ningún metadato, ni el JSON-LD, ni el HTML contiene el correo de Agus ni una
     dirección con `@`**; `/demo/estudio.html` lleva `noindex`; `/api/contact` no sale en el mapa.
 - **Rendimiento (contra la compilación, Chrome):** LCP y CLS medidos con los observadores del propio
   navegador, JavaScript total descargado, número de peticiones, que ningún recurso se pida fuera del

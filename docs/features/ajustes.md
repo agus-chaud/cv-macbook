@@ -7,7 +7,7 @@
 ## Qué se construye
 
 La app Ajustes deja de ser un estado vacío. Se abre desde el dock (en escritorio y en móvil) y
-desde el menú de Pol OS, y tiene dos secciones:
+desde el menú de Agus OS, y tiene dos secciones:
 
 - **Apariencia:** Claro, Oscuro o Automático (sigue al sistema), con una miniatura de cada opción.
 - **Fondo de pantalla:** Atardecer, Mar, Grafito y Alba, los cuatro degradados del prototipo.
@@ -41,7 +41,7 @@ Decisiones que salieron durante la construcción:
 - El script del `<head>` se genera desde `src/lib/prefs.ts` (`PREFS_BOOT_SCRIPT`), con las mismas
   listas de temas y fondos válidos: no hay reglas duplicadas a mano.
 - El estado compartido vive en `src/os/stores/prefs.svelte.ts`; lo usan Ajustes y la barra de menú.
-- Ajustes también se abre desde el menú de Pol OS ("Ajustes…").
+- Ajustes también se abre desde el menú de Agus OS ("Ajustes…").
 
 ## Cobertura
 

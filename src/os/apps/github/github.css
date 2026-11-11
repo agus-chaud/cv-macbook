@@ -1,5 +1,5 @@
 /* GitHub (C-01). Este archivo no lo carga la home: la ventana lo enlaza al abrirse (`?url` + <svelte:head>), como las damas.
-   Las tarjetas recuerdan a las del perfil de GitHub, con los colores de Pol OS. */
+   Las tarjetas recuerdan a las del perfil de GitHub, con los colores del sitio. */
 .github-app {
   height: 100%;
   display: flex;

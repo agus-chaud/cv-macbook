@@ -2,7 +2,7 @@
  * Los repositorios de la ventana GitHub (C-01): de la respuesta de la API de GitHub a las tarjetas, sin red ni DOM. Lo usan el script diario
  * (`scripts/actualizar-repos.mjs`, que Node ejecuta sin compilar: solo sintaxis «borrable»), la ventana y los tests.
  *
- * Solo salen los repositorios públicos que Pol etiqueta con el topic `showcase`, y nunca los forks.
+ * Solo salen los repositorios públicos que el dueño etiqueta con el topic `showcase`, y nunca los forks.
  */
 import { PERSONA } from '../content/persona.ts';
 

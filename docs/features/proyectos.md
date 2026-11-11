@@ -13,7 +13,7 @@ detalle.
 
 **Detalle de un proyecto**, con un botón "‹ Proyectos" para volver:
 - Cabecera con su icono, nombre y dirección, y los botones: **Abrir en el Navegador** (si el sitio se deja
-  incrustar) o **Visitar sitio ↗** en una pestaña nueva (si no, como Yoleo o GitHub), y **Ver repositorio ↗**
+  incrustar) o **Visitar sitio ↗** en una pestaña nueva (si no, como GitHub), y **Ver repositorio ↗**
   cuando el repositorio es público.
 - **Qué es:** unos párrafos escritos para el proyecto.
 - **Stack:** las tecnologías. Si hay repositorio público, también sus lenguajes (con su porcentaje) y sus
@@ -41,13 +41,10 @@ Terminal. El Navegador sigue con sus Favoritos de icono y nombre para quien quie
   JSON de los proyectos con `repo`; se lanza a mano y el resultado se commitea. Así el sitio no depende de GitHub
   ni de sus límites, y se ve igual aunque GitHub caiga. No se guardan estrellas ni fechas de actividad: caducan.
 - **Las capturas son archivos locales** en `public/projects/<id>/`: imágenes WebP de 1280 px de ancho como máximo
-  (de 15 a 90 KB) y **GIF animados cuando el proyecto los tiene** (Pol lo decidió al construir: los cuatro de
-  project-template, de 115 a 250 KB). Cada GIF lleva además una imagen fija (`still`): quien tiene activado el
-  movimiento reducido ve la fija, que se elige con `<picture>` y sin JavaScript. Las de Planito, Afloat y
-  project-template salen de sus repositorios; las de Local Whisper y Yoleo, de sus webs en vivo
-  (capturadas con permiso de Pol, a 1280 × 800).
-- **Solo los repositorios públicos llevan botón y lenguajes.** Públicos: Planito, Afloat, project-template y la app
-  de Local Whisper (`localwhisper-app`). **Privados** (Yoleo, Pol OS y la web de Local Whisper): no se enlazan
+  (de 15 a 90 KB) y **GIF animados cuando el proyecto los tiene** (decidido al construir). Cada GIF lleva además una imagen fija (`still`): quien tiene activado el
+  movimiento reducido ve la fija, que se elige con `<picture>` y sin JavaScript. Las capturas salen del repositorio del
+  proyecto o, si no lo hay, de su web en vivo (a 1280 × 800).
+- **Solo los repositorios públicos llevan botón y lenguajes.** Los **privados** no se enlazan
   ni se publican sus lenguajes; su tecnología se escribe a mano en `stack`, con lo que cuentan sus README.
 - **Todo es texto, nunca HTML.** Los párrafos se pintan como texto; los enlaces los construye el código con las
   direcciones validadas (`https://` y `https://github.com/<repo>`). La CSP no cambia: las imágenes son de `'self'`.
@@ -81,7 +78,7 @@ Qué comprueba cada test, según el criterio del PRD:
   - El doble clic en el icono de un proyecto del escritorio abre su detalle; el icono Proyectos del escritorio, la
     entrada del menú Archivo y `open proyectos` en la Terminal abren la app.
   - *Negativos:* un proyecto sin capturas o sin repositorio no enseña esos apartados ni botones; uno no incrustable
-    (Yoleo, GitHub) tiene "Visitar sitio ↗" con `target="_blank"` y no "Abrir en el Navegador". Sin errores de
+    (como GitHub) tiene "Visitar sitio ↗" con `target="_blank"` y no "Abrir en el Navegador". Sin errores de
     accesibilidad con el detalle abierto, en claro y en oscuro.
 - **Unitarios:** el reparto de lenguajes (suma 100, agrupa los pequeños en "Otros", ordena); el botón principal según
   `embeddable`; y la guarda del contenido (cada captura existe en `public/` y tiene texto alternativo, cada GIF tiene su imagen fija, `repo` bien
@@ -96,12 +93,12 @@ etiquetas de GitHub en vivo (el script los copia a mano cuando se quiere refresc
 
 ## Fuera de esta feature
 
-- Una URL pública por proyecto (`/proyectos/planito`) con su propio título y descripción para buscadores, como
+- Una URL pública por proyecto (`/proyectos/<id>`) con su propio título y descripción para buscadores, como
   tendrán las notas (S-01). Es una buena mejora y encaja después; se anota en `mejoras/` si se quiere.
-- Vídeo (por ejemplo, el de una partida de Afloat que hay en su repositorio) y demos interactivas: la galería
+- Vídeo y demos interactivas: la galería
   admite imágenes y GIF.
 - Estrellas, fechas de actividad, número de commits o cualquier dato que caduque.
-- Datos de proyectos sin repositorio público más allá de lo que se escriba a mano (Local Whisper, Yoleo).
+- Datos de proyectos sin repositorio público más allá de lo que se escriba a mano.
 - Comentarios, valoraciones o formularios por proyecto.
 - Abrir los repositorios de GitHub como proyectos automáticamente (C-01): el script solo refresca los que ya están.
 
@@ -110,13 +107,11 @@ etiquetas de GitHub en vivo (el script los copia a mano cuando se quiere refresc
 - **La ampliación de una captura tapaba su pie de foto y los controles:** `max-height` en porcentaje no se resuelve
   dentro de una caja de alto automático. La imagen rellena ahora su caja y se ajusta con `object-fit`. Lo cazó
   la revisión a ojo, no un test.
-- **En la Terminal, `projects` pegaba los ids largos a su nombre** (`project-templateproject-template`): la columna
+- **En la Terminal, `projects` pegaba los ids largos a su nombre** (el id quedaba pegado al nombre): la columna
   tenía un ancho fijo de 12. Ahora sigue al id más largo, usa la frase corta y hay un test.
 - **Un negativo no se podía probar de punta a punta:** "un proyecto sin capturas no enseña ese apartado" se salta en
   e2e porque ahora todos tienen capturas. La decisión de qué apartados se enseñan se extrajo a `detailSections`, que
   se prueba con datos vacíos; el e2e se ejecutará solo si algún día hay un proyecto sin capturas.
-- **Decisiones cambiadas durante la construcción:** los GIF de project-template se usan animados (Pol, al construir),
+- **Decisiones cambiadas durante la construcción:** los GIF se usan animados (decidido al construir),
   con imagen fija para el movimiento reducido; y el doble clic en un proyecto abre su detalle (M-04 reescrito).
-- **GitHub dice que project-template es Python y JavaScript** (son sus scripts), lo que sorprende en una plantilla de
-  documentación; se enseña tal cual lo cuenta GitHub.
 

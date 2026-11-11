@@ -54,7 +54,7 @@ describe('direcciones y enlace profundo', () => {
   });
 
   test('NOTE_ID solo admite minúsculas, números y guiones sueltos', () => {
-    for (const ok of ['a', 'mi-nota', 'planito-5-por-14-metros']) expect(NOTE_ID.test(ok), ok).toBe(true);
+    for (const ok of ['a', 'mi-nota', 'mi-nota-de-5-por-14-metros']) expect(NOTE_ID.test(ok), ok).toBe(true);
     for (const bad of ['', 'Mi-nota', 'mi_nota', '-a', 'a-', 'a--b', 'a b', 'ñ']) expect(NOTE_ID.test(bad), bad).toBe(false);
   });
 

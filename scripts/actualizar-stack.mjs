@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Actualiza `src/content/stack.json` (la ventana Stack, M-05) analizando los repositorios de Pol en GitHub:
+ * Actualiza `src/content/stack.json` (la ventana Stack, M-05) analizando los repositorios del dueño en GitHub:
  * lenguajes, dependencias de `package.json`, de Cargo, de Gradle y de Python (requirements, pyproject.toml, environment.yml,
  * Pipfile, setup.py y los imports de todos los `.py` y notebooks), archivos reveladores y el año del primer commit que trajo
  * cada evidencia. Cada dependencia se traduce a una herramienta con el catálogo de `src/lib/stack-catalog.ts`, y se suman
@@ -12,7 +12,7 @@
  * el script se niega a escribirlo si alguno se colara.
  *
  * Necesita un token de GitHub en `STACK_GITHUB_TOKEN`, `GH_TOKEN` o `GITHUB_TOKEN`:
- *  - con un token de Pol (permiso de lectura de sus repositorios) cuenta también los privados;
+ *  - con un token del dueño (permiso de lectura de sus repositorios) cuenta también los privados;
  *  - con el token por defecto de GitHub Actions, solo los públicos.
  * Sin token el límite de peticiones de GitHub (60 por hora) se agota enseguida, así que no se intenta.
  *
@@ -33,7 +33,7 @@ if (!token) {
   console.error('Falta un token de GitHub (STACK_GITHUB_TOKEN, GH_TOKEN o GITHUB_TOKEN).');
   process.exit(1);
 }
-const headers = { Accept: 'application/vnd.github+json', Authorization: `Bearer ${token}`, 'User-Agent': 'pol-os-actualizar-stack' };
+const headers = { Accept: 'application/vnd.github+json', Authorization: `Bearer ${token}`, 'User-Agent': 'cv-macbook-actualizar-stack' };
 
 async function get(path, { allow = [] } = {}) {
   const res = await fetch(path.startsWith('http') ? path : `https://api.github.com/${path}`, { headers });
@@ -51,10 +51,18 @@ async function paginated(path) {
   }
 }
 
-// ¿El token es de Pol? Entonces ve también sus repositorios privados.
-const yo = await get('user', { allow: [401, 403] }).catch(() => null);
-const esDePol = yo?.login === OWNER;
-const listado = esDePol ? await paginated('user/repos?affiliation=owner&visibility=all') : await paginated(`users/${OWNER}/repos?type=owner`);
+// Un 401 es un token inválido o vencido. Se dice claro y al principio (`::error::` lo destaca en el resumen de Actions) en lugar
+// de fallar después con un error genérico de la API.
+const resUsuario = await fetch('https://api.github.com/user', { headers });
+if (resUsuario.status === 401) {
+  console.error('::error::GitHub rechaza el token (401): STACK_GITHUB_TOKEN es inválido o venció. Hay que generar uno nuevo y actualizar el secreto del repositorio.');
+  process.exit(1);
+}
+
+// ¿El token es del dueño? Entonces ve también sus repositorios privados.
+const yo = resUsuario.ok ? await resUsuario.json() : null;
+const esDelDueño = yo?.login === OWNER;
+const listado = esDelDueño ? await paginated('user/repos?affiliation=owner&visibility=all') : await paginated(`users/${OWNER}/repos?type=owner`);
 // Un fork cuenta si tiene commits propios por delante de su original.
 async function forkConCommitsPropios(repo) {
   const detalle = await get(`repos/${repo.full_name}`);
@@ -66,7 +74,7 @@ async function forkConCommitsPropios(repo) {
 const propios = listado.filter((r) => r.owner.login === OWNER);
 const repos = [];
 for (const r of propios) if (!r.fork || (await forkConCommitsPropios(r))) repos.push(r);
-console.log(`Repositorios a analizar: ${repos.length}, ${repos.filter((r) => r.fork).length} forks (${esDePol ? 'públicos y privados' : 'solo públicos'}).`);
+console.log(`Repositorios a analizar: ${repos.length}, ${repos.filter((r) => r.fork).length} forks (${esDelDueño ? 'públicos y privados' : 'solo públicos'}).`);
 
 // stack-declarado.ts se publica: no puede nombrar un repositorio privado.
 const privados = new Set(propios.filter((r) => r.private).map((r) => r.name.toLowerCase()));
@@ -217,10 +225,10 @@ try {
 } catch {
   /* primera vez */
 }
-// Si antes se contaban repositorios privados y ahora no, el token de Pol falta o ha caducado: publicar eso recortaría
+// Si antes se contaban repositorios privados y ahora no, el token del dueño falta o ha caducado: publicar eso recortaría
 // los números en silencio. Mejor que la tarea falle y se vea.
 if (anterior && anterior.repos.private > 0 && datos.repos.private === 0) {
-  console.error('Antes había repositorios privados y ahora no: el token de Pol (STACK_GITHUB_TOKEN) falta o ha caducado. No se escribe nada.');
+  console.error('Antes había repositorios privados y ahora no: STACK_GITHUB_TOKEN falta o ha caducado. No se escribe nada.');
   process.exit(1);
 }
 console.log(`${datos.tools.length} herramientas en ${datos.repos.total} repositorios (${datos.repos.public} públicos, ${datos.repos.private} privados).`);

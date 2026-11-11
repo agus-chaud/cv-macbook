@@ -10,11 +10,11 @@ Tres minijuegos de texto dentro de la Terminal, para quien la abra y tenga curio
 
 - **`juegos`** enseña la lista de los tres y cómo empezar (esa lista ya viene con el código de los juegos). Es la única línea nueva de `help` («juegos — tres minijuegos para pasar el rato»); los juegos en sí no salen en `help`.
 - **`wordle`:** adivinar una palabra de cinco letras en seis intentos. Cada intento se pinta letra a letra: **en su sitio**, **está pero en otro sitio** o **no está**. Las palabras son
-  del mundo de Pol (tecnología, producto, sus proyectos), en español.
+  del mundo de la tecnología y el producto, en español.
 - **`ahorcado`:** adivinar una palabra letra a letra antes de seis fallos, con el muñeco dibujado con caracteres. Mismas fuentes de palabras, de longitud variable.
-- **`adivina`:** Pol piensa un número del 1 al 100 y el visitante tiene siete intentos, con pistas de «más alto» o «más bajo».
+- **`adivina`:** La Terminal piensa un número del 1 al 100 y el visitante tiene siete intentos, con pistas de «más alto» o «más bajo».
 
-Mientras se juega, la Terminal cambia el aviso (`wordle>` en vez de `pol@pol-os ~ %`) y lo que se escribe va al juego. **`salir`** o **Ctrl+C** terminan la partida y devuelven la
+Mientras se juega, la Terminal cambia el aviso (`wordle>` en vez de `agus@agus-os ~ %`) y lo que se escribe va al juego. **`salir`** o **Ctrl+C** terminan la partida y devuelven la
 Terminal normal; al acabar (ganando o perdiendo) se enseña la solución y cómo volver a jugar. Funciona igual en el escritorio y en el móvil.
 
 ## Decisiones tomadas
@@ -31,7 +31,7 @@ Terminal normal; al acabar (ganando o perdiendo) se enseña la solución y cómo
   accesible con el resultado. Dos tonos nuevos de la Terminal (`hit` y `near`) con contraste de 4,5:1 sobre su fondo.
 - **Una partida nueva cada vez**, con palabra al azar; no hay «palabra del día» ni estadísticas guardadas.
 - **Las jugadas no entran en el historial** de comandos (las flechas siguen recorriendo comandos, no letras sueltas).
-- **Las listas de palabras las redacto yo y las revisa Pol** antes de cerrar: unas 60 para Wordle y unas 40 para el ahorcado.
+- **Las listas de palabras las redacto yo y las revisa Agus** antes de cerrar: unas 60 para Wordle y unas 40 para el ahorcado.
 
 ## Cobertura
 
@@ -42,7 +42,7 @@ Terminal normal; al acabar (ganando o perdiendo) se enseña la solución y cómo
 | S-04 | Modo partida en la Terminal (aviso, `salir`, Ctrl+C, historial sin jugadas) y carga bajo demanda: `src/os/apps/terminal/Terminal.svelte`, `src/os/apps/AppView.svelte` | `tests/e2e/s-04-juegos.spec.ts` |
 | S-04 | Wordle sin depender solo del color (marcas de texto y tonos con contraste): `src/os/terminal/games/games.ts`, `src/styles/tokens.css`, `src/styles/global.css` | `src/os/terminal/games/games.test.ts`, `tests/e2e/s-04-juegos.spec.ts` |
 | S-04 | La home no carga los juegos y sigue dentro de su presupuesto: `astro.config.mjs` (`preload-helper` en `os-shared`) | `tests/csp/s-06-rendimiento.spec.ts`, `tests/e2e/s-04-juegos.spec.ts` |
-| S-04 | Que las listas de palabras sean adecuadas | no verificable por interfaz: es una cuestión de criterio; Pol revisa las listas antes de cerrar la feature |
+| S-04 | Que las listas de palabras sean adecuadas | no verificable por interfaz: es una cuestión de criterio; Agus revisa las listas antes de cerrar la feature |
 
 Qué comprobará cada test, según el criterio del PRD:
 
@@ -67,8 +67,8 @@ Qué comprobará cada test, según el criterio del PRD:
 
 ## Cambios posteriores
 
-- **2026-10-16:** `ahorcado` y `adivina` pasan a llamarse **`hangman`** y **`guess`** (decisión de Pol: los comandos de la Terminal van en inglés). Los nombres en español siguen funcionando, escondidos; los textos de los juegos siguen en español.
-- **2026-10-16:** el comando de la lista pasa de `juegos` a **`minigames`** (decisión de Pol): `juegos` y `games` ya abrían los videojuegos de Favoritos con `open`. Se cambió con el memory (C-05).
+- **2026-10-16:** `ahorcado` y `adivina` pasan a llamarse **`hangman`** y **`guess`** (decisión: los comandos de la Terminal van en inglés). Los nombres en español siguen funcionando, escondidos; los textos de los juegos siguen en español.
+- **2026-10-16:** el comando de la lista pasa de `juegos` a **`minigames`**: `juegos` y `games` ya abrían los videojuegos de Favoritos con `open`. Se cambió con el memory (C-05).
 
 ## Fuera de esta feature
 

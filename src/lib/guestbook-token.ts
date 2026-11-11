@@ -7,7 +7,7 @@
 
 export const TOKEN_TTL_MS = 48 * 60 * 60 * 1000;
 const VERSION = 1;
-const AAD = new TextEncoder().encode('pol-os-guestbook-v1');
+const AAD = new TextEncoder().encode('os-guestbook-v1');
 const IV_BYTES = 12;
 const TAG_BYTES = 16;
 

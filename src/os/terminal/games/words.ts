@@ -1,5 +1,5 @@
 /**
- * Las palabras de los juegos de la Terminal (S-04), del mundo de Pol: tecnología, producto, contenido y su portfolio. Se escriben con sus tildes;
+ * Las palabras de los juegos de la Terminal (S-04), del mundo del dueño: tecnología, producto, contenido y su portfolio. Se escriben con sus tildes;
  * al jugar, las tildes no cuentan y la ñ es una letra propia. Las comprueba `games.test.ts`.
  */
 

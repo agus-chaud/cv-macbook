@@ -6,8 +6,8 @@
 
 ## Qué se construye
 
-La ventana **Stack** deja de ser solo una lista de barras. Pol pidió «más vidilla, otros tipos de gráficos», **sin pestañas ni cambio de vista**.
-Se probaron antes un mapa de burbujas y uno de recuadros; Pol los quitó («queda todo muy apilotonado», y en móvil se vería mal). Queda esto, **por este
+La ventana **Stack** deja de ser solo una lista de barras. Se pidió «más vidilla, otros tipos de gráficos», **sin pestañas ni cambio de vista**.
+Se probaron antes un mapa de burbujas y uno de recuadros; se quitaron («queda todo muy apilotonado», y en móvil se vería mal). Queda esto, **por este
 orden** y en una sola columna:
 
 1. **Los datos:** tres tarjetas, con las herramientas, los repositorios (públicos y privados) y el año desde el que construye; y debajo, de dónde
@@ -23,9 +23,9 @@ Los datos son los mismos de siempre (`src/content/stack.json`, que actualiza sol
 
 - **Gráficos hechos a mano**, sin librerías: la home tiene un presupuesto de JavaScript (S-06) y la CSP no admite estilos ni scripts externos.
   La línea es HTML y CSS (así el texto sigue el tamaño elegido en Ajustes); solo el rosco es SVG.
-- **Sin mapa de «lo que más uso»**: el detalle ya enseña cada herramienta y el mapa apilotonaba la ficha (Pol). El código de burbujas y de
+- **Sin mapa de «lo que más uso»**: el detalle ya enseña cada herramienta y el mapa apilotonaba la ficha. El código de burbujas y de
   recuadros se borró con él.
-- **El detalle va siempre a la vista**, no plegado (Pol): así no hay nada que pulsar y la ficha original del Stack («solo se lee») se mantiene.
+- **El detalle va siempre a la vista**, no plegado: así no hay nada que pulsar y la ficha original del Stack («solo se lee») se mantiene.
 - **Cada gráfico tiene su equivalente en texto**: el rosco lleva su leyenda con los números y la línea, una columna por año con la cifra y los
   nombres. Nada depende solo del color.
 - **Colores de categoría con variables** (`--cat-1` a `--cat-8`), una paleta para el tema claro y otra para el oscuro, con contraste
@@ -33,7 +33,7 @@ Los datos son los mismos de siempre (`src/content/stack.json`, que actualiza sol
 - **Sin animación** en los gráficos: nada que haya que desactivar con `prefers-reduced-motion`.
 - **El rosco cuenta herramientas por categoría** (no suma de repositorios, que contaría varias veces el mismo repositorio).
 - **La explicación de cómo se obtienen los datos** va en el propio Stack, en dos frases. La explicación completa (y todo lo demás sobre cómo está
-  hecho Pol OS) irá en una vista aparte, con su propia ficha.
+  hecho Agus OS) irá en una vista aparte, con su propia ficha.
 
 ## Cobertura
 
@@ -59,7 +59,7 @@ Qué comprueba cada test, según el criterio del PRD:
 
 - **La home superó su presupuesto de CSS** (43 KB frente a 40): Astro enlaza también el CSS de las apps cargadas bajo demanda, y sigue en 42,6 KB
   sin el mapa. Se probó a sacarlas del grafo del servidor y no cambió nada. Se subió el tope a 50 KB (comentado en el test) y se anotó MEJORA-08 para
-  arreglarlo de verdad. **Es una decisión a revisar por Pol.**
+  arreglarlo de verdad. **Es una decisión a revisar por Agus.**
 - **El texto de «1 repositorios»** (en un intento anterior): se usa el singular cuando toca.
 - **La paleta se comprueba leyendo `tokens.css`**; también se verificó que el test falla con un color de poco contraste.
 - **Los intentos con burbujas y con recuadros** dejaron aprendizajes que ya no están en el código: un recuadro con relleno propio se agranda y pisa a
@@ -67,7 +67,7 @@ Qué comprueba cada test, según el criterio del PRD:
 
 ## Fuera de esta feature
 
-- Cambiar de vista con pestañas, filtrar o pulsar una herramienta (Pol pidió expresamente que no).
+- Cambiar de vista con pestañas, filtrar o pulsar una herramienta (se pidió expresamente que no).
 - Un mapa de «lo que más uso» (probado y descartado).
 - Mostrar nombres de repositorios, sobre todo de los privados.
 - Animar los gráficos o mostrar valores al pasar el ratón más allá de la etiqueta nativa.

@@ -1,11 +1,10 @@
-# pol-os-template
+# cv-macbook
 
 Una plantilla de portfolio con forma de **sistema operativo de escritorio en el navegador**: pantalla de acceso, ventanas,
 dock, Terminal con minijuegos, proyectos que se abren en un navegador interno, el CV como documento, notas con su página
 pública, un Libro de visitas y un correo que llega de verdad.
 
-Nace de **[Pol OS](https://polmarza.com)**, el portfolio de Pol Marzà. Esta copia trae el mismo sistema con el contenido de
-una persona ficticia, Álex Ejemplo, para que cambies los datos y lo publiques como tuyo.
+Trae el contenido de una persona ficticia, Álex Ejemplo, para que cambies los datos y lo publiques como tuyo.
 
 ![El escritorio de la plantilla: iconos a la derecha, el dock abajo y la barra de menú arriba](.github/capturas/escritorio.webp)
 
@@ -85,16 +84,14 @@ El detalle y el porqué de cada decisión están en [`docs/architecture.md`](doc
 
 ## El método
 
-Pol OS se construyó con un agente de código (Claude Code) y un método: nada se programa sin acordar antes qué se
+Este proyecto se construyó con un agente de código (Claude Code) y un método: nada se programa sin acordar antes qué se
 construye y con qué prueba se demostrará cada requisito. Se ve en el repositorio:
 
 - [`docs/`](docs): el PRD (requisitos por prioridad MoSCoW), la arquitectura, el sistema de diseño y la estrategia de pruebas.
-  Son los documentos de Pol OS: déjalos como ejemplo o reescríbelos para tu proyecto.
+  Son los documentos de Agus OS: déjalos como ejemplo o reescríbelos para tu proyecto.
 - [`docs/features/`](docs/features): una ficha por cada funcionalidad, con su tabla de cobertura. `node scripts/verificar-cobertura.mjs`
   comprueba que ningún requisito se quede sin su test, y un workflow lo vigila en cada pull request.
 - [`CLAUDE.md`](CLAUDE.md) y [`.claude/skills/`](.claude/skills): las reglas y los procedimientos que sigue el agente.
-
-El método completo, como plantilla para cualquier proyecto, está en [project-template](https://github.com/polmarza/project-template).
 
 ## Créditos del contenido de ejemplo
 
@@ -105,4 +102,4 @@ El método completo, como plantilla para cualquier proyecto, está en [project-t
 
 ## Licencia
 
-MIT, de [Pol Marzà](https://polmarza.com). Ver [`LICENSE`](LICENSE).
+MIT. Ver [`LICENSE`](LICENSE).

@@ -19,7 +19,7 @@ const dry = process.argv.includes('--dry');
 const token = process.env.STACK_GITHUB_TOKEN || process.env.GH_TOKEN || process.env.GITHUB_TOKEN;
 const headers = {
   Accept: 'application/vnd.github+json',
-  'User-Agent': 'pol-os-actualizar-proyectos',
+  'User-Agent': 'cv-macbook-actualizar-proyectos',
   ...(token ? { Authorization: `Bearer ${token}` } : {}),
 };
 

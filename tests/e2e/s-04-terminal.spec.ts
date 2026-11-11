@@ -3,6 +3,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { LINKS } from '../../src/content/links';
 import { animationsDone, enter, loadProjects, stubExternalSites, stubTurnstile } from './helpers';
 import { PERSONA } from '../../src/content/persona';
+import { SHELL_PROMPT } from '../../src/os/terminal/identity';
 
 const projects = loadProjects();
 
@@ -33,7 +34,7 @@ test.describe('S-04 Terminal', () => {
 
   test('se abre con el aviso y la línea enfocada, y help lista los comandos', async ({ page }, testInfo) => {
     await openTerminal(page, testInfo.project.name);
-    await expect(page.getByTestId('terminal').getByText('pol@pol-os ~ %')).toBeVisible();
+    await expect(page.getByTestId('terminal').getByText(SHELL_PROMPT)).toBeVisible();
     await expect(log(page)).toContainText('escribe help');
 
     await run(page, 'help');

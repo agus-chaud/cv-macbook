@@ -1,5 +1,5 @@
 /**
- * POST /api/guestbook/confirm — paso 2 del Libro de visitas (S-09): abre el enlace de confirmación y manda la reseña a Pol.
+ * POST /api/guestbook/confirm — paso 2 del Libro de visitas (S-09): abre el enlace de confirmación y manda la reseña al dueño.
  * La lógica está en src/lib/guestbook-service.ts. No lleva Turnstile: el token cifrado ya prueba que se pasó por el primer paso.
  */
 import type { APIRoute } from 'astro';

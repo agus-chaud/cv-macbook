@@ -29,7 +29,7 @@
   const secure = $derived(project?.url.startsWith('https://') ?? false);
 
   // Una web de otro dominio necesita su propio origen para funcionar (cookies, almacenamiento).
-  // Una página local no: sin allow-same-origin no puede salir del sandbox ni tocar Pol OS.
+  // Una página local no: sin allow-same-origin no puede salir del sandbox ni tocar el sitio.
   const SANDBOX = 'allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox';
   const sandbox = $derived(project?.url.startsWith('/') ? SANDBOX : `${SANDBOX} allow-same-origin`);
 

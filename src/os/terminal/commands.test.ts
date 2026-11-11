@@ -2,12 +2,13 @@ import { describe, expect, test } from 'vitest';
 import { LINKS } from '../../content/links';
 import { COMPLETABLE_COMMANDS, GAME_IDS, MAX_INPUT, VISIBLE_COMMANDS, closest, complete, normalize, run, type Line, type TerminalContext } from './commands';
 import { PERSONA } from '../../content/persona';
+import { SHELL_HOST, SHELL_USER } from './identity';
 
 const ctx = (over: Partial<TerminalContext> = {}): TerminalContext => ({
   projects: [
     { id: 'mitienda', name: 'Mi Tienda', summary: 'Una tienda online de ejemplo.' },
     { id: 'estudio', name: 'Estudio', summary: 'Web de un estudio.' },
-    { id: 'pol-os', name: 'Pol OS', summary: 'Este portfolio.' },
+    { id: 'mi-portfolio', name: 'Mi Portfolio', summary: 'Este portfolio.' },
   ],
   notes: [
     { id: 'de-frankenstein-a-sistema', title: 'De Frankenstein a sistema: cómo dejé el vibe coding' },
@@ -62,11 +63,11 @@ describe('about, projects, ls y social', () => {
   });
 
   test('projects alinea la columna de ids aunque haya uno muy largo', () => {
-    const wide = ctx({ projects: [...ctx().projects, { id: 'project-template', name: 'project-template', summary: 'Una plantilla.' }] });
+    const wide = ctx({ projects: [...ctx().projects, { id: 'proyecto-de-id-largo', name: 'proyecto-de-id-largo', summary: 'Un id largo.' }] });
     const rows = run('projects', wide).lines.filter((l) => l.length === 3);
     const idCells = rows.map((l) => l[1].text);
     expect(new Set(idCells.map((c) => c.length)).size).toBe(1);
-    expect(idCells[0].length).toBeGreaterThanOrEqual('project-template'.length + 2);
+    expect(idCells[0].length).toBeGreaterThanOrEqual('proyecto-de-id-largo'.length + 2);
     for (const l of rows) expect(l[1].text.endsWith(' ')).toBe(true);
   });
 
@@ -76,7 +77,7 @@ describe('about, projects, ls y social', () => {
 
   test('ls lista los proyectos, el CV, las notas, el libro de visitas, el stack y los enlaces', () => {
     const t = text('ls');
-    for (const s of ['Mi Tienda', 'Pol OS', 'Mi CV.pdf', 'Notas/', 'Libro de visitas', 'Stack', 'Cómo está hecho', 'GitHub ↗']) expect(t, s).toContain(s);
+    for (const s of ['Mi Tienda', 'Mi Portfolio', 'Mi CV.pdf', 'Notas/', 'Libro de visitas', 'Stack', 'Cómo está hecho', 'GitHub ↗']) expect(t, s).toContain(s);
   });
 
   test('social muestra los tres enlaces como enlaces https', () => {
@@ -88,7 +89,7 @@ describe('about, projects, ls y social', () => {
 
 describe('open', () => {
   test('abre un proyecto por id, por nombre y con otras mayúsculas o espacios', () => {
-    for (const input of ['open mitienda', 'open Mi Tienda', 'open MI TIENDA', 'open mi-tienda', 'open pol-os', 'open Pol OS']) {
+    for (const input of ['open mitienda', 'open Mi Tienda', 'open MI TIENDA', 'open mi-tienda', 'open mi-portfolio', 'open Mi Portfolio']) {
       const r = run(input, ctx());
       expect(r.actions, input).toHaveLength(1);
       expect(r.actions[0]).toMatchObject({ type: 'open', target: { app: 'browser' } });
@@ -215,9 +216,14 @@ describe('comandos de sistema', () => {
     expect(t).toMatch(/1\s+help/);
     expect(t).toMatch(/3\s+history/);
   });
+  test('sudo responde con el usuario de la persona', () => {
+    expect(text('sudo ls')).toContain(`${SHELL_USER} no está en el archivo sudoers`);
+  });
+
   test('neofetch enseña el logo y los datos del estado', () => {
     const t = text('neofetch');
-    expect(t).toContain('pol@pol-os');
+    expect(t).toContain(SHELL_HOST);
+    expect(t).toContain(`${SHELL_USER}-sh`);
     expect(t).toContain('1280×800');
     expect(t).toContain('1 min 15 s');
     expect(t).toContain('Astro · Svelte · Cloudflare');
@@ -339,7 +345,7 @@ describe('Tab', () => {
 describe('utilidades', () => {
   test('normalize quita acentos, mayúsculas y símbolos', () => {
     expect(normalize('Sobre mí')).toBe('sobremi');
-    expect(normalize('Pol-OS')).toBe('polos');
+    expect(normalize('Mi-Portfolio')).toBe('miportfolio');
   });
   test('closest solo sugiere lo que se parece de verdad', () => {
     expect(closest('projcts', ['projects', 'about'])).toBe('projects');

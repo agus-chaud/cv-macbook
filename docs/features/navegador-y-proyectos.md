@@ -6,7 +6,7 @@
 
 ## Qué se construye
 
-El Navegador deja de ser un estado vacío y pasa a ser la forma de ver los proyectos de Pol. Doble
+El Navegador deja de ser un estado vacío y pasa a ser la forma de ver los proyectos de Agus. Doble
 clic en el icono de un proyecto del escritorio (o un toque dentro de la carpeta Proyectos en
 móvil) abre el Navegador con ese proyecto cargado dentro de la ventana. Abierto desde el dock, el
 Navegador muestra la página de Favoritos: una ficha por proyecto con su icono, nombre,
@@ -21,7 +21,7 @@ La ventana tiene:
 - **Página:** el sitio del proyecto dentro de un `iframe`, con un indicador mientras carga.
 
 Si un proyecto está marcado como no incrustable, en lugar de una ventana en blanco aparece el aviso
-"no se puede abrir dentro de Pol OS" con el botón "Abrir en pestaña nueva".
+"no se puede abrir dentro de Agus OS" con el botón "Abrir en pestaña nueva".
 
 ## Decisiones tomadas
 
@@ -42,7 +42,7 @@ Si un proyecto está marcado como no incrustable, en lugar de una ventana en bla
 - **Proyectos de ejemplo:**
   - "Estudio" carga una página de demostración local (`public/demo/estudio.html`), así el
     Navegador se ve funcionando sin depender de webs externas.
-  - "Panel" y "Pol OS" se quedan como no incrustables, para enseñar el aviso. Pol OS no puede
+  - "Panel" y "Agus OS" se quedan como no incrustables, para enseñar el aviso. Agus OS no puede
     cargarse dentro de sí mismo.
 - **La CSP con `frame-src`** (dominios permitidos en el `iframe`) llega con `public/_headers` en
   M-08. Queda anotado en `docs/architecture.md`.
@@ -84,4 +84,4 @@ Qué comprueba cada test, según los criterios del PRD:
 - La CSP y `public/_headers` (con M-08).
 - Abrir repositorios de GitHub como proyectos (C-01).
 - Pestañas múltiples dentro del Navegador.
-- Las descripciones reales del resto de proyectos: contenido pendiente de Pol.
+- Las descripciones reales del resto de proyectos: contenido pendiente de Agus.

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Crea una portada de ejemplo (claramente falsa) para cada elemento de Favoritos que todavía no tiene la suya. Nunca pisa una portada
- * que ya exista: Pol sube las reales con el mismo nombre en public/favoritos/<sección>/. Necesita Chrome (como generar-cv.mjs).
+ * que ya exista: las reales se suben con el mismo nombre en public/favoritos/<sección>/. Necesita Chrome (como generar-cv.mjs).
  *
  * Uso: node scripts/generar-portadas-ejemplo.mjs
  */

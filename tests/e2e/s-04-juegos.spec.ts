@@ -1,9 +1,8 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 import { HANGMAN_WORDS, WORDLE_WORDS } from '../../src/os/terminal/games/words';
+import { SHELL_PROMPT as PROMPT } from '../../src/os/terminal/identity';
 import { animationsDone, enter, stubExternalSites } from './helpers';
-
-const PROMPT = 'pol@pol-os ~ %';
 
 /**
  * Fija el azar de los juegos: la Terminal pide un único número a `crypto` para elegir palabra o número, y aquí se devuelve 0 (la primera

@@ -1,4 +1,4 @@
-# GitHub: los repositorios públicos de Pol
+# GitHub: los repositorios públicos de Agus
 
 **Estado:** Verificada
 **Requisitos que cierra:** C-01 (redefinido con esta ficha)
@@ -7,7 +7,7 @@
 ## Qué se construye
 
 El icono de **GitHub** del escritorio deja de ser un acceso directo a github.com y pasa a abrir una ventana propia, como Proyectos, con **los
-repositorios públicos que Pol etiqueta para enseñar**. Así los Proyectos siguen siendo la selección de trabajos terminados y con web, y lo experimental (por ejemplo, un clon de
+repositorios públicos que Agus etiqueta para enseñar**. Así los Proyectos siguen siendo la selección de trabajos terminados y con web, y lo experimental (por ejemplo, un clon de
 YouTube Music) tiene su sitio sin colarse entre ellos.
 
 Cada repositorio se ve como en el perfil de GitHub, en una tarjeta:
@@ -15,7 +15,7 @@ Cada repositorio se ve como en el perfil de GitHub, en una tarjeta:
 - El **icono de repositorio** (el libro con el marcador), el **nombre** en grande y, si es público en GitHub, la etiqueta «Public».
 - La **descripción** (el «About» del repositorio) y, si tiene web (`homepage`), su **dirección**, que se abre en una pestaña nueva.
 - Abajo, el **lenguaje principal** con su punto de color, las **estrellas**, los **forks** y cuándo se actualizó por última vez («hace 3 días»).
-- Si el repositorio también está en Proyectos, una etiqueta **«En Proyectos»** que abre su ficha en Pol OS.
+- Si el repositorio también está en Proyectos, una etiqueta **«En Proyectos»** que abre su ficha en Agus OS.
 - El nombre lleva al repositorio en GitHub, en una pestaña nueva.
 
 Arriba, el total («12 repositorios») y un botón **«Visitar mi GitHub»**. Ordenados por la última actualización, los más recientes primero. En el
@@ -23,20 +23,20 @@ móvil, una sola columna a pantalla completa, como las demás apps.
 
 ## Decisiones tomadas
 
-- **Proyectos y GitHub son cosas distintas** (decisión de Pol): Proyectos es la selección de trabajos terminados; GitHub, lo que Pol quiera enseñar de su código,
+- **Proyectos y GitHub son cosas distintas**: Proyectos es la selección de trabajos terminados; GitHub, lo que Agus quiera enseñar de su código,
   experimentos incluidos. No se crean proyectos solos.
-- **Sale solo lo que Pol etiqueta** (decisión de Pol: crea repositorios de clase o de ejemplo que no quiere enseñar). Para que un repositorio salga, Pol le añade el
+- **Sale solo lo que Agus etiqueta** (decidido así porque hay repositorios de clase o de ejemplo que no se quieren enseñar). Para que un repositorio salga, Agus le añade el
   topic **`showcase`** en GitHub (en la página del repositorio, «About» → ruedecita → «Topics»). Sin la etiqueta no sale, aunque sea público. Para quitarlo, se quita
   la etiqueta. No hay listas de ocultos que mantener ni hay que pedírselo a nadie.
 - **Los datos salen de la tarea diaria que ya existe**, con un paso nuevo (`scripts/actualizar-repos.mjs`), que guarda en el repositorio un archivo
   `src/content/repos.json` con lo que enseña cada tarjeta. La ventana lo pide al abrirse como `/repos.json`. La web no llama a GitHub: no cambia la política de seguridad, no hay límites de la API que se
   agoten con las visitas, y si un día falla la tarea se ven los datos del día anterior.
-- **La lista se rehace entera cada día**, no se acumula: si Pol borra un repositorio, lo pasa a privado o le quita la etiqueta, desaparece de la web en la siguiente
+- **La lista se rehace entera cada día**, no se acumula: si Agus borra un repositorio, lo pasa a privado o le quita la etiqueta, desaparece de la web en la siguiente
   ejecución (como mucho, al día siguiente; antes si lanza la tarea a mano en GitHub Actions). Lo mismo con los cambios de nombre, descripción o estrellas. El
   commit automático de la tarea publica la web solo.
 - **Solo repositorios públicos.** De los privados no se guarda nada, como ahora en el Stack (solo los recuentos).
 - **Fuera, aunque lleven la etiqueta:** los privados y los forks. Los archivados salen si llevan la etiqueta, con una marca «Archivado».
-- **Los enlaces van a pestaña nueva**, no al Navegador de Pol OS: el Navegador solo carga los proyectos de la colección (regla de `CLAUDE.md`) y GitHub no se
+- **Los enlaces van a pestaña nueva**, no al Navegador de Agus OS: el Navegador solo carga los proyectos de la colección (regla de `CLAUDE.md`) y GitHub no se
   deja incrustar.
 - **El icono del escritorio sigue siendo el de GitHub** (es un acceso con su propia identidad, como ya se decidió con C-03), pero sin la flecha de enlace
   externo, porque ahora abre una ventana. El icono de repositorio de las tarjetas es propio, dibujado con trazos, no copiado de GitHub.
@@ -51,10 +51,10 @@ móvil, una sola columna a pantalla completa, como las demás apps.
 |-----------|------------------|---------------|
 | C-01 | Guardar en la tarea diaria los repositorios públicos con el topic `showcase` (sin privados ni forks): `scripts/actualizar-repos.mjs`, `.github/workflows/actualizar-datos.yml`, `src/content/repos.json`, `src/pages/repos.json.ts`, `src/lib/repos.ts` | `src/lib/repos.test.ts` |
 | C-01 | La ventana GitHub con sus tarjetas, el total, el orden y «Visitar mi GitHub»: `src/os/apps/github/Github.svelte`, `src/os/apps/github/github.css`, `src/os/apps/registry.ts`, `src/os/items.ts`, `src/os/apps/AppView.svelte` | `tests/e2e/c-01-github.spec.ts`, `tests/e2e/m-07-accesos.spec.ts` |
-| C-01 | «En Proyectos» abre la ficha del proyecto en Pol OS | `tests/e2e/c-01-github.spec.ts` |
+| C-01 | «En Proyectos» abre la ficha del proyecto en Agus OS | `tests/e2e/c-01-github.spec.ts` |
 | C-01 | `open github` en la Terminal | `src/os/terminal/commands.test.ts`, `tests/e2e/c-01-github.spec.ts` |
 | C-01 | La home no carga la app ni su CSS, y la política de seguridad no cambia | `tests/csp/s-06-rendimiento.spec.ts`, `tests/csp/m-11-csp.spec.ts` |
-| C-01 | Que la tarea diaria los actualice en GitHub Actions | no verificable por interfaz: se ejecuta en GitHub con el token de Pol; se comprueba en la primera ejecución tras fusionar (el commit automático debe tocar `repos.json`) |
+| C-01 | Que la tarea diaria los actualice en GitHub Actions | no verificable por interfaz: se ejecuta en GitHub con el token de Agus; se comprueba en la primera ejecución tras fusionar (el commit automático debe tocar `repos.json`) |
 
 Qué comprobará cada test, según el criterio del PRD:
 
@@ -82,6 +82,6 @@ Qué comprobará cada test, según el criterio del PRD:
 
 - Crear proyectos automáticamente a partir de los repositorios.
 - Buscar, filtrar por lenguaje o paginar (con unos 40 repositorios no hace falta; se reconsidera si pasan de 100).
-- Leer el README de cada repositorio dentro de Pol OS.
+- Leer el README de cada repositorio dentro de Agus OS.
 - Repositorios privados o de organizaciones.
 - Llamar a la API de GitHub desde el navegador del visitante.

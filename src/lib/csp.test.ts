@@ -63,7 +63,7 @@ describe('cspDirectives', () => {
     expect(get('default-src')).toBe("default-src 'self'");
   });
 
-  test('los marcos permitidos son Pol OS, Turnstile, el reproductor de YouTube sin cookies y los proyectos incrustables', () => {
+  test('los marcos permitidos son el propio sitio, Turnstile, el reproductor de YouTube sin cookies y los proyectos incrustables', () => {
     expect(get('frame-src')).toBe("frame-src 'self' https://challenges.cloudflare.com https://www.youtube-nocookie.com https://recetario.example.com");
     expect(get('frame-src')).not.toContain('panel.test');
   });

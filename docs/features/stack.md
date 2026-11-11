@@ -18,7 +18,7 @@ de **ficha técnica**, como "Información del sistema" de macOS, que no tiene na
 Solo el stack de desarrollo, sin herramientas no técnicas. En el escritorio, en el menú, en móvil y en la
 Terminal (`open stack`) pasa a llamarse Stack, con un icono de chip.
 
-Los datos **se actualizan solos cada día**: una tarea de GitHub Actions analiza los repositorios de Pol,
+Los datos **se actualizan solos cada día**: una tarea de GitHub Actions analiza los repositorios de Agus,
 regenera los datos y, si hay cambios, los publica directamente (la fusión en `main` despliega la web).
 
 ## Decisiones tomadas
@@ -38,11 +38,11 @@ regenera los datos y, si hay cambios, los publica directamente (la fusión en `m
   públicos; el script se niega a escribir si nombra uno privado.
 - **Privacidad:** de los repositorios privados solo se publican **recuentos**, nunca sus nombres. Un test lo
   comprueba sobre el archivo generado.
-- **Tarea diaria** (`.github/workflows/actualizar-datos.yml`, a las 06:00 UTC y también a mano). Por decisión de
-  Pol **publica directamente** si hay cambios: hace commit en `main`. Antes de publicar ejecuta los tests de
+- **Tarea diaria** (`.github/workflows/actualizar-datos.yml`, a las 06:00 UTC y también a mano). Por decisión
+  explícita, **publica directamente** si hay cambios: hace commit en `main`. Antes de publicar ejecuta los tests de
   contenido; si fallan, no publica. Aprovecha para refrescar también los datos de GitHub de los proyectos
   (`scripts/actualizar-proyectos.mjs`).
-- **Un token de GitHub de solo lectura** para poder contar también los repositorios privados. Lo crea Pol
+- **Un token de GitHub de solo lectura** para poder contar también los repositorios privados. Lo crea Agus
   (*fine-grained*, permiso de lectura de contenido y metadatos de sus repositorios) y lo guarda como secreto del
   repositorio (`STACK_GITHUB_TOKEN`). Nunca pasa por el chat ni por el código. Sin él, la tarea cuenta solo los
   públicos.
@@ -74,7 +74,7 @@ Qué comprueba cada test, según el criterio del PRD:
   Unity Catalog y Delta Live Tables sin import; los archivos enormes no inflan un lenguaje; "construyendo desde".
 - **Contenido (`stack-content.test.ts`):** el archivo generado es válido, no contiene ningún nombre de
   repositorio privado y no tiene herramientas fuera del catálogo.
-- **Tarea diaria y script:** `no verificable por interfaz: se ejecuta en GitHub con un token de Pol y lee la API
+- **Tarea diaria y script:** `no verificable por interfaz: se ejecuta en GitHub con un token de Agus y lee la API
   de GitHub`. Se comprueba lanzando el script en local una vez (salida en el PR) y, tras la fusión, lanzando la
   tarea a mano desde la pestaña Actions y comprobando que su commit llega a `main`.
 
@@ -90,18 +90,16 @@ Qué comprueba cada test, según el criterio del PRD:
 - **"Claude Code desde 2023" era falso.** El año que se calculaba era el de creación del repositorio, y un repo de 2023 puede
   haber recibido un `CLAUDE.md` en 2026. El catálogo lleva ahora el año de lanzamiento (`introduced`) y el año mostrado nunca
   es anterior; un test lo cubre.
-- **Los recuentos grandes vienen de los repositorios que nacieron de un generador** (React, Tailwind, shadcn/ui, Radix,
-  TanStack, Zod y ESLint salen en 70 a 117 repositorios, casi todos de plantilla). No lo escondo: la ventana lo dice en una
-  nota, que Pol puede quitar o reformular.
-- **Sin token, la tarea publicaría números recortados** (36 repositorios en vez de 182). El script se niega a escribir si antes
+- **Los recuentos grandes pueden venir de repositorios que nacieron de un generador** (React, Tailwind, shadcn/ui, Radix,
+  TanStack, Zod y ESLint aparecen en casi todos los que salen de una plantilla). La ventana lo dice en una
+  nota, que se puede quitar o reformular.
+- **Sin token, la tarea publicaría números recortados** (solo los públicos). El script se niega a escribir si antes
   había repositorios privados y ahora no, y la tarea falla en lugar de publicar. También hace que el script de proyectos
   use el token: las IP compartidas de Actions agotan enseguida el límite anónimo.
 - **Un scroll sin foco no pasa la accesibilidad:** la ficha es una región con nombre y `tabindex="0"` para desplazarla con
   el teclado; dentro no hay nada que enfocar.
 - Se renombró la app `tools` por `stack` en el registro, los iconos, los menús, la Terminal (`open stack`, y `herramientas` y
   `tools` siguen funcionando como alias) y los tests.
-- El análisis cuenta 182 repositorios sin forks (36 públicos y 146 privados); el perfil de GitHub de Pol dice 172, porque
-  él midió en otro momento y descontó otros.
 - **Auditoría del 2026-10-25 (repositorios de Agus).** El Stack enseñaba 37 herramientas en 21 repositorios. Fallaba por:
   forks excluidos (se perdían este portfolio y un lakehouse con commits propios); topes de muestreo (8 `.py` y 5 notebooks
   por repositorio, que dejaban fuera XGBoost); un catálogo sin SciPy, Polars, Groq, Gemini, Kotlin, Cursor y otras; un

@@ -50,7 +50,7 @@ const projects = defineCollection({
     colors: z.object({ from: hexColor, to: hexColor }),
     /** Lo que carga el Navegador: una URL https o una ruta local (páginas de demostración). */
     url: z.string().refine(isSafeProjectUrl, 'La url debe ser https:// o una ruta local que empiece por /'),
-    /** false si el sitio no permite cargarse dentro de Pol OS (cabecera frame-ancestors). */
+    /** false si el sitio no permite cargarse dentro del sitio (cabecera frame-ancestors). */
     embeddable: z.boolean(),
     /** Icono propio (por ejemplo, el favicon del proyecto) en /public/projects/. Sin él, sale la inicial. */
     icon: z
@@ -59,7 +59,7 @@ const projects = defineCollection({
       .optional(),
     /** Dónde aparece: dentro de la carpeta Proyectos (lo normal) o como icono propio en el escritorio (los que viven solo en GitHub). */
     placement: z.enum(['folder', 'desktop']).default('folder'),
-    /** Si el detalle ofrece abrir «Cómo está hecho», el documento que explica cómo funciona Pol OS (S-10). */
+    /** Si el detalle ofrece abrir «Cómo está hecho», el documento que explica cómo funciona el sitio (S-10). */
     howto: z.boolean().default(false),
     order: z.number().int(),
     /** Contenido de ejemplo, pendiente de sustituir por el real. */
@@ -134,7 +134,7 @@ const summary = z
   .min(1)
   .max(SUMMARY_LIMITS.sections);
 
-/** Un archivo por sección de Favoritos: el top 10 de Pol, con su contenido y sus portadas (S-03). */
+/** Un archivo por sección de Favoritos: el top 10 del dueño, con su contenido y sus portadas (S-03). */
 const favorites = defineCollection({
   loader: glob({ pattern: '*.json', base: './src/content/favorites' }),
   schema: z.discriminatedUnion('kind', [

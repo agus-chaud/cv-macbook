@@ -78,40 +78,40 @@ describe('languageShares', () => {
 
 describe('primaryAction', () => {
   test('un sitio incrustable se abre en el Navegador', () => {
-    expect(primaryAction({ embeddable: true, url: 'https://afloat.polmarza.workers.dev' })).toEqual({
+    expect(primaryAction({ embeddable: true, url: 'https://demo.ejemplo.workers.dev' })).toEqual({
       kind: 'browser',
       label: 'Abrir en el Navegador',
     });
   });
 
   test('uno que no se deja incrustar abre una pestaña nueva, nunca una ventana en blanco', () => {
-    expect(primaryAction({ embeddable: false, url: 'https://www.yoleo.io' })).toEqual({
+    expect(primaryAction({ embeddable: false, url: 'https://www.ejemplo.com' })).toEqual({
       kind: 'external',
       label: 'Visitar sitio',
-      href: 'https://www.yoleo.io',
+      href: 'https://www.ejemplo.com',
     });
   });
 
   test('si su dirección es de GitHub, el texto lo dice', () => {
-    const a = primaryAction({ embeddable: false, url: 'https://github.com/polmarza/project-template' });
+    const a = primaryAction({ embeddable: false, url: 'https://github.com/tu-usuario/mi-proyecto' });
     expect(a).toMatchObject({ kind: 'external', label: 'Ver en GitHub' });
   });
 });
 
 describe('repoButton', () => {
   test('un repositorio público da su botón con su dirección', () => {
-    expect(repoButton({ repo: 'tu-usuario/planito', url: 'https://planito-sable.vercel.app' })).toEqual({
+    expect(repoButton({ repo: 'tu-usuario/mi-app', url: 'https://mi-app.vercel.app' })).toEqual({
       label: 'Ver repositorio',
-      href: 'https://github.com/tu-usuario/planito',
+      href: 'https://github.com/tu-usuario/mi-app',
     });
   });
 
   test('sin repositorio no hay botón', () => {
-    expect(repoButton({ url: 'https://www.yoleo.io' })).toBeNull();
+    expect(repoButton({ url: 'https://www.ejemplo.com' })).toBeNull();
   });
 
   test('si el repositorio es la propia dirección del proyecto, no se repite el botón', () => {
-    expect(repoButton({ repo: 'polmarza/project-template', url: 'https://github.com/polmarza/project-template' })).toBeNull();
+    expect(repoButton({ repo: 'tu-usuario/mi-proyecto', url: 'https://github.com/tu-usuario/mi-proyecto' })).toBeNull();
   });
 
   test('repoUrl construye siempre una dirección https de GitHub', () => {

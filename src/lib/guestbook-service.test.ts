@@ -12,7 +12,7 @@ const valid = {
   name: 'Ana Pérez',
   detail: 'Diseñadora | Madrid',
   relation: 'cliente',
-  text: 'Trabajar con Pol fue muy fácil y el resultado superó lo que esperaba.',
+  text: 'Trabajar con Agus fue muy fácil y el resultado superó lo que esperaba.',
   email: 'ana@ejemplo.com',
   links: [{ network: 'linkedin', value: 'ana-perez' }],
   consent: true,
@@ -28,7 +28,7 @@ function setup(overrides: Partial<GuestbookDeps> = {}) {
     keyLimiter: { limit: async ({ key }) => (keys.push(key), { success: true }) },
     verifyTurnstile: async (token) => token === 'ok',
     sendEmail: async (m) => void sent.push(m),
-    config: { to: 'pol@ejemplo.test', from: 'contacto@m.ejemplo.test', siteUrl: SITE, secret: SECRET },
+    config: { to: 'yo@ejemplo.test', from: 'contacto@m.ejemplo.test', siteUrl: SITE, secret: SECRET },
     now: () => NOW,
     log: (e) => logs.push(e),
     ...overrides,
@@ -66,9 +66,9 @@ describe('handleSubmit', () => {
 
   test('el correo de confirmación no lleva nada de lo que escribe el visitante: sale de nuestro dominio hacia un tercero', async () => {
     const { deps, sent } = setup();
-    await handleSubmit(request({ ...valid, name: 'Pol: entra en https://evil.example y pon tu clave', detail: 'Texto del detalle', text: `${valid.text} Visita https://evil.example` }), deps);
+    await handleSubmit(request({ ...valid, name: 'Agus: entra en https://evil.example y pon tu clave', detail: 'Texto del detalle', text: `${valid.text} Visita https://evil.example` }), deps);
     expect(sent[0].text).not.toContain('evil.example');
-    expect(sent[0].text).not.toContain('Pol: entra');
+    expect(sent[0].text).not.toContain('Agus: entra');
     expect(sent[0].text).not.toContain('detalle');
     const urls = sent[0].text.match(/https?:\/\/\S+/g) ?? [];
     expect(urls).toHaveLength(1);
@@ -76,7 +76,7 @@ describe('handleSubmit', () => {
   });
 
   test('la dirección del enlace sale de la configuración, nunca de la petición (ni de una cabecera Host)', async () => {
-    const { deps, sent } = setup({ config: { to: 'pol@ejemplo.test', from: 'c@m.ejemplo.test', siteUrl: 'https://example.com/', secret: SECRET } });
+    const { deps, sent } = setup({ config: { to: 'yo@ejemplo.test', from: 'c@m.ejemplo.test', siteUrl: 'https://example.com/', secret: SECRET } });
     await handleSubmit(request({ ...valid, siteUrl: 'https://evil.example', host: 'evil.example' }), deps);
     expect(sent[0].text).toContain('https://example.com/libro-de-visitas/confirmar#');
     expect(sent[0].text).not.toContain('evil.example');
@@ -203,14 +203,14 @@ describe('handleConfirm', () => {
     return { token: tokenOf(first.sent[0]), at };
   }
 
-  test('un enlace válido manda la reseña a Pol: destino fijo, respuesta a la persona y el archivo ya listo', async () => {
+  test('un enlace válido manda la reseña al dueño: destino fijo, respuesta a la persona y el archivo ya listo', async () => {
     const { token } = await confirmed();
     const { deps, sent } = setup();
     const res = await handleConfirm(request({ token }), deps);
     expect(res).toEqual({ status: 200, body: { ok: true, code: 'confirmed' } });
     expect(sent).toHaveLength(1);
     const mail = sent[0];
-    expect(mail.to).toBe('pol@ejemplo.test');
+    expect(mail.to).toBe('yo@ejemplo.test');
     expect(mail.replyTo).toBe('ana@ejemplo.com');
     expect(mail.subject).toBe(`[${PERSONA.osName} · Libro de visitas] Nueva reseña: Ana Pérez`);
     expect(mail.text).toContain('ana@ejemplo.com');
@@ -232,7 +232,7 @@ describe('handleConfirm', () => {
     const { token } = await confirmed();
     const { deps, sent } = setup();
     await handleConfirm(request({ token, to: 'otro@evil.example', replyTo: 'x@evil.example' }), deps);
-    expect(sent[0].to).toBe('pol@ejemplo.test');
+    expect(sent[0].to).toBe('yo@ejemplo.test');
     expect(sent[0].replyTo).toBe('ana@ejemplo.com');
   });
 
@@ -252,7 +252,7 @@ describe('handleConfirm', () => {
     expect(remove.sent[0].text).not.toContain('Archivo sugerido');
   });
 
-  test('un enlace caducado responde 410 y no manda nada a Pol', async () => {
+  test('un enlace caducado responde 410 y no manda nada al dueño', async () => {
     const { token } = await confirmed();
     const { deps, sent } = setup({ now: () => NOW + 48 * 3600 * 1000 + 1 });
     expect(await handleConfirm(request({ token }), deps)).toEqual({ status: 410, body: { ok: false, code: 'expired' } });
@@ -273,12 +273,12 @@ describe('handleConfirm', () => {
 
   test('un enlace hecho con otra clave no vale', async () => {
     const { token } = await confirmed();
-    const { deps, sent } = setup({ config: { to: 'pol@ejemplo.test', from: 'a@b.test', siteUrl: SITE, secret: 'otra-clave-distinta-0123456789012345' } });
+    const { deps, sent } = setup({ config: { to: 'yo@ejemplo.test', from: 'a@b.test', siteUrl: SITE, secret: 'otra-clave-distinta-0123456789012345' } });
     expect((await handleConfirm(request({ token }), deps)).status).toBe(422);
     expect(sent).toHaveLength(0);
   });
 
-  test('confirmar dos veces seguidas no manda dos correos a Pol', async () => {
+  test('confirmar dos veces seguidas no manda dos correos al dueño', async () => {
     const { token } = await confirmed();
     const seen = new Set<string>();
     const { deps, sent } = setup({ keyLimiter: { limit: async ({ key }) => ({ success: !seen.has(key) && !!seen.add(key) }) } });
@@ -308,6 +308,6 @@ describe('handleConfirm', () => {
     const { token } = await confirmed();
     const { deps, logs } = setup();
     await handleConfirm(request({ token }), deps);
-    expect(JSON.stringify(logs)).not.toMatch(/ana@ejemplo|Pérez|Trabajar con Pol/);
+    expect(JSON.stringify(logs)).not.toMatch(/ana@ejemplo|Pérez|Trabajar con Agus/);
   });
 });

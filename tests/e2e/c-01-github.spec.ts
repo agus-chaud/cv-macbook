@@ -12,7 +12,7 @@ const withRepo = projects.find((p) => p.repo)!;
 /** El archivo real, tal cual lo deja la tarea diaria. */
 const REAL = JSON.parse(readFileSync(new URL('../../src/content/repos.json', import.meta.url), 'utf8')) as ReposFile;
 
-/** Unos repositorios de ejemplo, fijos: los tests no dependen de lo que Pol etiquete. */
+/** Unos repositorios de ejemplo, fijos: los tests no dependen de lo que se etiquete. */
 const SAMPLE: ReposFile = {
   generatedAt: '2026-10-16',
   repos: [

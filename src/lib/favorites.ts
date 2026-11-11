@@ -88,7 +88,7 @@ interface SectionBase<K extends SectionId, I> {
 }
 export type SportsSection = SectionBase<'sports', SportItem>;
 export interface BooksSection extends SectionBase<'books', BookItem> {
-  /** Un enlace final, por ejemplo al perfil de Yoleo. */
+  /** Un enlace final, por ejemplo a un perfil externo. */
   link?: { label: string; url: string };
 }
 export type MoviesSection = SectionBase<'movies', MovieItem>;
