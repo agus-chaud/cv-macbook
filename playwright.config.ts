@@ -12,6 +12,9 @@ const MOBILE_SPECS = /(m-(0[1345689]|10)|s-(0[13489]|10)|c-0[156])-/;
 export default defineConfig({
   testDir: 'tests/e2e',
   fullyParallel: true,
+  // En local, contra el servidor de desarrollo (que compila cada página al pedirla), más de 2 a la vez agota los tiempos de
+  // espera y hace fallar tests al azar. En CI se usan los de Playwright por defecto.
+  workers: process.env.CI ? undefined : Number(process.env.E2E_WORKERS ?? 2),
   forbidOnly: !!process.env.CI,
   reporter: 'list',
   use: {

@@ -71,7 +71,12 @@ test.describe('S-09 Libro de visitas', () => {
   test('las redes de cada reseña son enlaces seguros: https, pestaña nueva y sin que cuenten para buscadores', async ({ page }, testInfo) => {
     const book = await openBook(page, testInfo.project.name);
     const withLinks = entries.filter((e) => e.links.length > 0);
-    expect(withLinks.length).toBeGreaterThan(0);
+    if (withLinks.length === 0) {
+      // Apagado: ninguna reseña trae redes, así que ninguna tarjeta tiene enlaces.
+      await expect(book.getByTestId('guestbook-list')).toBeVisible();
+      await expect(book.locator('li[data-testid^="guestbook-entry-"] a')).toHaveCount(0);
+      return;
+    }
     for (const e of withLinks) {
       const anchors = book.getByTestId(`guestbook-entry-${e.id}`).getByRole('link');
       await expect(anchors).toHaveCount(e.links.length);

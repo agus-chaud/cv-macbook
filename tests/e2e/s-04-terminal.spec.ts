@@ -1,11 +1,14 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 import { LINKS } from '../../src/content/links';
-import { animationsDone, enter, loadProjects, stubExternalSites, stubTurnstile } from './helpers';
+import { animationsDone, enter, loadNotes, loadProjects, stubExternalSites, stubTurnstile } from './helpers';
 import { PERSONA } from '../../src/content/persona';
 import { SHELL_PROMPT } from '../../src/os/terminal/identity';
 
 const projects = loadProjects();
+const notes = loadNotes().map((n) => n.id);
+/** Una inicial que comparten al menos dos notas: así `Tab` tiene varias opciones y las lista. */
+const sharedNotePrefix = notes.map((id) => id[0]).find((c, i, all) => all.indexOf(c) !== i);
 
 /** Abre la Terminal desde el dock: ventana en escritorio, pantalla completa en móvil. */
 async function openTerminal(page: Page, projectName: string) {
@@ -49,7 +52,8 @@ test.describe('S-04 Terminal', () => {
     await openTerminal(page, testInfo.project.name);
     await run(page, 'about');
     await expect(log(page)).toContainText(PERSONA.name);
-    await expect(log(page)).toContainText('example.com/newsletter');
+    // Los enlaces salen de src/content/links.ts, como en el escritorio.
+    for (const l of LINKS) await expect(log(page)).toContainText(l.url.replace(/^https:\/\/(www\.)?/, ''));
 
     await run(page, 'projects');
     for (const p of projects) {
@@ -133,14 +137,17 @@ test.describe('S-04 Terminal', () => {
     await input.fill('proj');
     await input.press('Tab');
     await expect(input).toHaveValue('projects ');
-    await input.fill('open recet');
+    // Un proyecto a medio escribir se completa entero.
+    const project = projects[0].id;
+    await input.fill(`open ${project.slice(0, -2)}`);
     await input.press('Tab');
-    await expect(input).toHaveValue('open recetario ');
-    // "como-" es el principio de varias notas (S-01): hay más de una opción, así que las lista sin completar.
-    await input.fill('open como-');
+    await expect(input).toHaveValue(`open ${project} `);
+    // Una inicial que comparten varias notas (S-01): hay más de una opción, así que las lista sin completar.
+    expect(sharedNotePrefix, 'hacen falta dos notas con la misma inicial').toBeTruthy();
+    await input.fill(`open ${sharedNotePrefix}`);
     await input.press('Tab');
-    await expect(input).toHaveValue('open como-');
-    await expect(log(page)).toContainText('como-anadir-un-proyecto');
+    await expect(input).toHaveValue(`open ${sharedNotePrefix}`);
+    for (const id of notes.filter((n) => n.startsWith(sharedNotePrefix!))) await expect(log(page)).toContainText(id);
 
     // Con varias opciones, Tab las lista sin tocar lo escrito.
     await input.fill('c');

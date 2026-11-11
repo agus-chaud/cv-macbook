@@ -1,9 +1,14 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 import { animationsDone, enter, loadProjects, stubExternalSites, stubTurnstile } from './helpers';
+import { LINKS } from '../../src/content/links';
 
 const projects = loadProjects();
-const embeddable = projects.find((p) => p.embeddable)!;
+// Abrir un proyecto y «Abrir en pestaña nueva» funcionan con cualquiera, se deje incrustar o no.
+const project = projects.find((p) => p.embeddable) ?? projects[0];
+/** Los accesos externos que el contenido tiene, y los opcionales que no usa (deben quedar fuera del menú). */
+const LINK_IDS = LINKS.map((l) => l.id);
+const UNUSED_LINK_IDS = (['newsletter', 'github', 'linkedin', 'whatsapp'] as const).filter((id) => !LINK_IDS.includes(id));
 
 const trigger = (page: Page, id: string) => page.getByTestId(`menu-trigger-${id}`);
 const menu = (page: Page, id: string) => page.getByTestId(`menu-${id}`);
@@ -86,8 +91,8 @@ test.describe('S-05 Menús de la barra de menú', () => {
     });
 
     test('abrir un proyecto muestra su detalle en Proyectos', async ({ page }) => {
-      await (await pick(page, 'archivo', `open-project-${embeddable.id}`)).click();
-      await expect(page.getByTestId('window-projects').getByTestId('project-name')).toHaveText(embeddable.name);
+      await (await pick(page, 'archivo', `open-project-${project.id}`)).click();
+      await expect(page.getByTestId('window-projects').getByTestId('project-name')).toHaveText(project.name);
     });
 
     test('"Ver todos los proyectos" abre la vista general', async ({ page }) => {
@@ -118,9 +123,9 @@ test.describe('S-05 Menús de la barra de menú', () => {
 
       // Con un proyecto en el Navegador: es un enlace a su dirección, en una pestaña nueva
       await page.getByTestId('dock-item-browser').click();
-      await page.getByTestId('window-browser').getByTestId(`browser-fav-${embeddable.id}`).click();
+      await page.getByTestId('window-browser').getByTestId(`browser-fav-${project.id}`).click();
       const link = await pick(page, 'archivo', 'open-external');
-      await expect(link).toHaveAttribute('href', embeddable.url);
+      await expect(link).toHaveAttribute('href', project.url);
       await expect(link).toHaveAttribute('target', '_blank');
       await expect(link).not.toHaveAttribute('aria-disabled', 'true');
     });
@@ -298,12 +303,15 @@ test.describe('S-05 Menús de la barra de menú', () => {
 
     test('los enlaces externos se abren en una pestaña nueva y de forma segura', async ({ page }) => {
       await trigger(page, 'ayuda').click();
-      for (const id of ['newsletter', 'github', 'linkedin', 'whatsapp']) {
+      expect(LINK_IDS.length).toBeGreaterThan(0);
+      for (const id of LINK_IDS) {
         const link = item(page, 'ayuda', `link-${id}`);
         await expect(link).toHaveAttribute('href', /^https:\/\//);
         await expect(link).toHaveAttribute('target', '_blank');
         await expect(link).toHaveAttribute('rel', /noopener/);
       }
+      // Los accesos que no se usan (sin newsletter configurada, sin WhatsApp) no salen en el menú.
+      for (const id of UNUSED_LINK_IDS) await expect(item(page, 'ayuda', `link-${id}`), id).toHaveCount(0);
     });
   });
 
@@ -354,7 +362,8 @@ test.describe('S-05 Menús de la barra de menú', () => {
       await trigger(page, 'ayuda').focus();
       await page.keyboard.press('ArrowDown');
       await page.keyboard.press('End');
-      await expect(item(page, 'ayuda', 'link-whatsapp')).toBeFocused();
+      // La última acción es el último acceso externo que tenga el contenido.
+      await expect(item(page, 'ayuda', `link-${LINK_IDS.at(-1)}`)).toBeFocused();
       await page.keyboard.press('Home');
       await expect(item(page, 'ayuda', 'help-guide')).toBeFocused();
     });

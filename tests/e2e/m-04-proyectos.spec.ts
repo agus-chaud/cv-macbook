@@ -4,7 +4,8 @@ import { enter, inFolder, loadProjects, onDesktop, openProjectDetail, stubExtern
 const projects = loadProjects();
 const folder = inFolder(projects);
 const own = onDesktop(projects);
-const embeddable = folder.find((p) => p.embeddable)!;
+// Los iconos propios y los proyectos incrustables son opcionales: si el contenido no los usa, se comprueba que están apagados.
+const embeddable = folder.find((p) => p.embeddable);
 const blocked = folder.find((p) => !p.embeddable)!;
 
 test.describe('M-04 Proyectos: carpeta e iconos propios', () => {
@@ -13,9 +14,8 @@ test.describe('M-04 Proyectos: carpeta e iconos propios', () => {
     await enter(page);
   });
 
-  test('hay proyectos en la carpeta y alguno con icono propio, y ninguno cae en los dos sitios', async () => {
+  test('hay proyectos en la carpeta, y ninguno cae en los dos sitios', async () => {
     expect(folder.length).toBeGreaterThan(0);
-    expect(own.length).toBeGreaterThan(0);
     expect(folder.length + own.length).toBe(projects.length);
   });
 
@@ -24,6 +24,8 @@ test.describe('M-04 Proyectos: carpeta e iconos propios', () => {
     await expect(page.getByTestId('desktop-icon-projects')).toContainText('Proyectos');
     for (const p of folder) await expect(page.getByTestId(`desktop-icon-project-${p.id}`), p.id).toHaveCount(0);
     for (const p of own) await expect(page.getByTestId(`desktop-icon-project-${p.id}`)).toContainText(p.name);
+    // Sin proyectos con icono propio, el escritorio no tiene ningún icono de proyecto suelto.
+    if (own.length === 0) await expect(page.locator('[data-testid^="desktop-icon-project-"]')).toHaveCount(0);
   });
 
   test('un proyecto con icono propio muestra su imagen, y su imagen carga de verdad', async ({ page }, testInfo) => {
@@ -48,14 +50,19 @@ test.describe('M-04 Proyectos: carpeta e iconos propios', () => {
 
   test('abrir un proyecto de la carpeta enseña su detalle en Proyectos, no en el Navegador', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name.endsWith('movil'), 'Doble clic es de escritorio');
-    await openProjectDetail(page, testInfo.project.name, embeddable);
+    await openProjectDetail(page, testInfo.project.name, folder[0]);
     const win = page.getByTestId('window-projects');
-    await expect(win.getByTestId('project-name')).toHaveText(embeddable.name);
+    await expect(win.getByTestId('project-name')).toHaveText(folder[0].name);
     await expect(page.getByTestId('window-browser')).toHaveCount(0);
   });
 
   test('doble clic en el icono propio abre su detalle en Proyectos, aunque no esté en la carpeta', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name.endsWith('movil'), 'Doble clic es de escritorio');
+    if (own.length === 0) {
+      // Apagado: no hay iconos propios en los que hacer doble clic.
+      await expect(page.locator('[data-testid^="desktop-icon-project-"]')).toHaveCount(0);
+      return;
+    }
     await openProjectDetail(page, testInfo.project.name, own[0]);
     const win = page.getByTestId('window-projects');
     await expect(win.getByTestId('project-name')).toHaveText(own[0].name);
@@ -67,6 +74,17 @@ test.describe('M-04 Proyectos: carpeta e iconos propios', () => {
 
   test('desde el detalle, "Abrir en el Navegador" carga ese proyecto', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name.endsWith('movil'), 'Doble clic es de escritorio');
+    if (!embeddable) {
+      // Apagado: ningún proyecto se deja incrustar, así que ningún detalle ofrece abrirlo en el Navegador.
+      for (const p of folder) {
+        await openProjectDetail(page, testInfo.project.name, p);
+        const win = page.getByTestId('window-projects');
+        await expect(win.getByTestId('project-name')).toHaveText(p.name);
+        await expect(win.getByTestId('project-open-browser'), p.id).toHaveCount(0);
+        await win.getByTestId('projects-back').click();
+      }
+      return;
+    }
     await openProjectDetail(page, testInfo.project.name, embeddable);
     await page.getByTestId('project-open-browser').click();
     const win = page.getByTestId('window-browser');
@@ -79,6 +97,12 @@ test.describe('M-04 Proyectos: carpeta e iconos propios', () => {
     test.skip(testInfo.project.name.endsWith('movil'), 'Doble clic es de escritorio');
     await openProjectDetail(page, testInfo.project.name, folder[0]);
     await expect(page.getByTestId('project-name')).toHaveText(folder[0].name);
+    if (own.length === 0) {
+      // Apagado: sin iconos propios, Proyectos sigue siendo la única ventana de proyectos.
+      await expect(page.locator('[data-testid^="desktop-icon-project-"]')).toHaveCount(0);
+      await expect(page.getByTestId('window-projects')).toHaveCount(1);
+      return;
+    }
     await page.getByTestId(`desktop-icon-project-${own[0].id}`).dblclick();
     await expect(page.getByTestId('window-projects')).toHaveCount(1);
     await expect(page.getByTestId('project-name')).toHaveText(own[0].name);
@@ -102,14 +126,20 @@ test.describe('M-04 Proyectos: carpeta e iconos propios', () => {
     const dialog = page.getByTestId('mobile-folder');
     for (const p of folder) await expect(dialog.getByTestId(`mobile-icon-project-${p.id}`)).toContainText(p.name);
     for (const p of own) await expect(dialog.getByTestId(`mobile-icon-project-${p.id}`)).toHaveCount(0);
-    await page.getByTestId(`mobile-icon-project-${embeddable.id}`).tap();
-    const sheet = page.getByTestId('mobile-sheet');
-    await expect(sheet.getByTestId('project-name')).toHaveText(embeddable.name);
-    await sheet.getByTestId('project-open-browser').tap();
-    await expect(sheet.getByTestId('browser-frame')).toHaveAttribute('src', embeddable.url);
 
-    await page.getByTestId('mobile-back').tap();
-    await openProjectDetail(page, testInfo.project.name, blocked);
+    const first = embeddable ?? blocked;
+    await page.getByTestId(`mobile-icon-project-${first.id}`).tap();
+    const sheet = page.getByTestId('mobile-sheet');
+    await expect(sheet.getByTestId('project-name')).toHaveText(first.name);
+    if (embeddable) {
+      await sheet.getByTestId('project-open-browser').tap();
+      await expect(sheet.getByTestId('browser-frame')).toHaveAttribute('src', embeddable.url);
+      await page.getByTestId('mobile-back').tap();
+      await openProjectDetail(page, testInfo.project.name, blocked);
+    } else {
+      // Apagado: sin proyectos incrustables, el detalle no ofrece el Navegador.
+      await expect(sheet.getByTestId('project-open-browser')).toHaveCount(0);
+    }
     await expect(sheet.getByTestId('project-visit')).toBeVisible();
   });
 });

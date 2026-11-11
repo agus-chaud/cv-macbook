@@ -1,5 +1,8 @@
 import { expect, test } from '@playwright/test';
-import { enter, loadNotes, stubExternalSites } from './helpers';
+import { enter, inFolder, loadNotes, loadProjects, stubExternalSites } from './helpers';
+import { LINKS } from '../../src/content/links';
+
+const whatsapp = LINKS.find((l) => l.id === 'whatsapp');
 
 test.describe('M-03 Modo móvil', () => {
   test.beforeEach(async ({ page }) => enter(page));
@@ -29,9 +32,16 @@ test.describe('M-03 Modo móvil', () => {
 
   test('el acceso a WhatsApp está en el inicio y abre la conversación en una pestaña nueva', async ({ page }) => {
     const link = page.getByTestId('mobile-icon-whatsapp');
+    if (!whatsapp) {
+      // Apagado: sin WhatsApp configurado, la pantalla de inicio no tiene ese acceso.
+      await expect(page.getByTestId('mobile-icon-about')).toBeVisible();
+      await expect(link).toHaveCount(0);
+      return;
+    }
     await expect(link).toBeVisible();
     const href = new URL((await link.getAttribute('href'))!);
-    expect(href.origin + href.pathname).toBe('https://wa.me/34600000000');
+    const expected = new URL(whatsapp.url);
+    expect(href.origin + href.pathname).toBe(expected.origin + expected.pathname);
     await expect(link).toHaveAttribute('target', '_blank');
     await expect(link).toHaveAttribute('rel', /noopener/);
   });
@@ -41,10 +51,11 @@ test.describe('M-03 Modo móvil', () => {
     await page.getByTestId('mobile-icon-folder-projects').tap();
     const folder = page.getByTestId('mobile-folder');
     await expect(folder).toBeVisible();
-    await expect(folder.getByTestId('mobile-icon-project-recetario')).toBeVisible();
-    await folder.getByTestId('mobile-icon-project-recetario').tap();
+    const first = inFolder(loadProjects())[0];
+    await expect(folder.getByTestId(`mobile-icon-project-${first.id}`)).toBeVisible();
+    await folder.getByTestId(`mobile-icon-project-${first.id}`).tap();
     await expect(page.getByTestId('mobile-folder')).toHaveCount(0);
-    await expect(page.getByTestId('mobile-sheet')).toContainText('Recetario');
+    await expect(page.getByTestId('mobile-sheet').getByTestId('project-name')).toHaveText(first.name);
 
     await page.getByTestId('mobile-back').tap();
     await page.getByTestId('mobile-icon-folder-notes').tap();

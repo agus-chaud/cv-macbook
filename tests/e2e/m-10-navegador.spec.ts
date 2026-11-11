@@ -86,7 +86,8 @@ test.describe('M-10 Navegador con favoritos de proyectos', () => {
   });
 
   test('"Abrir en pestaña nueva" abre la URL del proyecto', async ({ page, context }, testInfo) => {
-    const p = embeddable[0];
+    // El botón de la barra existe para cualquier proyecto, se deje incrustar o no.
+    const p = embeddable[0] ?? blocked;
     const browser = await openBrowser(page, testInfo.project.name);
     await browser.getByTestId(`browser-fav-${p.id}`).click();
     const button = browser.getByTestId('browser-open-external');

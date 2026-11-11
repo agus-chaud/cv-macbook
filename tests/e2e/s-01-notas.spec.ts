@@ -6,8 +6,10 @@ import { PERSONA } from '../../src/content/persona';
 
 const notes = loadNotes();
 const first = notes[0];
-const other = notes[3];
-const newsletter = LINKS.find((l) => l.id === 'newsletter')!;
+// Otra nota distinta de la primera: la última, sea cual sea el número de notas.
+const other = notes.at(-1)!;
+// La newsletter es opcional (`PERSONA.newsletter`): sin ella, las notas no invitan a suscribirse.
+const newsletter = LINKS.find((l) => l.id === 'newsletter');
 
 const isMobile = (name: string) => name.endsWith('movil');
 
@@ -72,7 +74,13 @@ test.describe('S-01 Notas', () => {
     await enter(page);
     await openNote(page, testInfo.project.name, other.id);
     const cta = page.getByTestId('note-subscribe');
-    await expect(cta).toContainText(PERSONA.newsletter!.name);
+    if (!newsletter || !PERSONA.newsletter) {
+      // Apagado: la nota se lee entera y termina sin invitación.
+      await expect(page.getByTestId('note-body')).toBeVisible();
+      await expect(cta).toHaveCount(0);
+      return;
+    }
+    await expect(cta).toContainText(PERSONA.newsletter.name);
     const link = cta.getByRole('link');
     await expect(link).toHaveAttribute('href', newsletter.url);
     await expect(link).toHaveAttribute('target', '_blank');

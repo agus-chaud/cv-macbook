@@ -1,6 +1,8 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Locator, type Page } from '@playwright/test';
-import { animationsDone, enter } from './helpers';
+import { animationsDone, enter, inFolder, loadProjects, onDesktop } from './helpers';
+
+const projects = loadProjects();
 
 /** Medir durante la animación de entrada daría una ventana escalada al 94 %. */
 const settled = (locator: Locator) =>
@@ -33,7 +35,9 @@ test.describe('M-02 Escritorio en pantallas anchas', () => {
     for (const app of ['browser', 'mail', 'notes', 'terminal', 'settings']) {
       await expect(page.getByTestId(`dock-item-${app}`)).toBeVisible();
     }
-    for (const id of ['projects', 'project-plantilla', 'about', 'notes', 'favorites', 'guestbook', 'stack', 'howto']) {
+    // Los proyectos con icono propio son opcionales: salen los que tenga el contenido.
+    const own = onDesktop(projects).map((p) => `project-${p.id}`);
+    for (const id of ['projects', ...own, 'about', 'notes', 'favorites', 'guestbook', 'stack', 'howto']) {
       await expect(page.getByTestId(`desktop-icon-${id}`)).toBeVisible();
     }
   });
@@ -54,9 +58,10 @@ test.describe('M-02 Escritorio en pantallas anchas', () => {
   });
 
   test('un proyecto se abre en Proyectos, con su detalle', async ({ page }) => {
+    const first = inFolder(projects)[0];
     await page.getByTestId('desktop-icon-projects').dblclick();
-    await page.getByTestId('projects-card-recetario').click();
-    await expect(page.getByTestId('window-projects')).toContainText('Recetario');
+    await page.getByTestId(`projects-card-${first.id}`).click();
+    await expect(page.getByTestId('window-projects').getByTestId('project-name')).toHaveText(first.name);
   });
 
   test('la ventana se mueve arrastrando la barra de título', async ({ page }) => {

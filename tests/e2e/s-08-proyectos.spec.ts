@@ -4,11 +4,15 @@ import { animationsDone, enter, inFolder, loadProjects, openProjectDetail, stubE
 
 const projects = loadProjects();
 const folderProjects = inFolder(projects);
-const withRepo = projects.find((p) => p.repo && p.github && p.screenshots.length > 0 && p.embeddable)!; // el primero que tenga repositorio, capturas y web incrustable
-const withoutRepo = projects.find((p) => !p.repo)!;
-const embeddable = projects.find((p) => p.embeddable)!;
+// Lo opcional (proyectos incrustables, sin repositorio, con GIF o con varias capturas) se comprueba con lo que tenga el contenido:
+// si una función no se usa, se comprueba que está apagada; si no hay estado apagado que comprobar, el test se salta con su motivo.
+// Con repositorio y una web propia: si la dirección es la de GitHub, el botón del repositorio no se repite (otro test).
+const withRepo = projects.find((p) => p.repo && p.github && !p.url.includes('github.com'))!;
+const withShots = projects.find((p) => p.screenshots.length > 0)!;
+const withoutRepo = projects.find((p) => !p.repo);
+const embeddable = projects.find((p) => p.embeddable);
 const blocked = projects.find((p) => !p.embeddable && !p.url.includes('github.com'))!;
-const gifProject = projects.find((p) => p.screenshots.some((s) => s.src.endsWith('.gif')))!;
+const gifProject = projects.find((p) => p.screenshots.some((s) => s.src.endsWith('.gif')));
 const noShots = projects.find((p) => p.screenshots.length === 0);
 
 const isMobile = (name: string) => name.endsWith('movil');
@@ -49,10 +53,11 @@ test.describe('S-08 Proyectos: vista general y detalle', () => {
 
   test('pulsar una tarjeta abre su detalle, y "Proyectos" vuelve a la vista general', async ({ page }, testInfo) => {
     await openOverview(page, testInfo.project.name);
-    await click(page, `projects-card-${embeddable.id}`, testInfo.project.name);
-    await expect(page.getByTestId('project-name')).toHaveText(embeddable.name);
-    await expect(page.getByTestId('project-detail')).toContainText(embeddable.details[0]);
-    for (const tech of embeddable.stack) await expect(page.getByTestId('project-made-with')).toContainText(tech);
+    const p = folderProjects[0];
+    await click(page, `projects-card-${p.id}`, testInfo.project.name);
+    await expect(page.getByTestId('project-name')).toHaveText(p.name);
+    await expect(page.getByTestId('project-detail')).toContainText(p.details[0]);
+    for (const tech of p.stack) await expect(page.getByTestId('project-made-with')).toContainText(tech);
 
     await click(page, 'projects-back', testInfo.project.name);
     await expect(page.getByTestId('projects')).toBeVisible();
@@ -82,6 +87,13 @@ test.describe('S-08 Proyectos: vista general y detalle', () => {
   });
 
   test('uno incrustable tiene "Abrir en el Navegador", y ese botón carga el proyecto', async ({ page }, testInfo) => {
+    if (!embeddable) {
+      // Apagado: ningún proyecto se deja incrustar, así que el detalle ofrece visitarlo fuera y no el Navegador.
+      await openDetail(page, testInfo.project.name, folderProjects[0].id);
+      await expect(page.getByTestId('project-open-browser')).toHaveCount(0);
+      await expect(page.getByTestId('project-visit')).toBeVisible();
+      return;
+    }
     await openDetail(page, testInfo.project.name, embeddable.id);
     await expect(page.getByTestId('project-visit')).toHaveCount(0);
     await click(page, 'project-open-browser', testInfo.project.name);
@@ -89,7 +101,7 @@ test.describe('S-08 Proyectos: vista general y detalle', () => {
   });
 
   test('las capturas se muestran con su texto alternativo, cargan de verdad y se amplían', async ({ page }, testInfo) => {
-    const p = withRepo;
+    const p = withShots;
     await openDetail(page, testInfo.project.name, p.id);
     const shots = page.locator('[data-testid^="project-shot-"]');
     await expect(shots).toHaveCount(p.screenshots.length);
@@ -106,26 +118,34 @@ test.describe('S-08 Proyectos: vista general y detalle', () => {
     await expect(page.getByTestId('project-lightbox-image')).toHaveAttribute('alt', p.screenshots[0].alt);
     await expect.poll(() => page.getByTestId('project-lightbox-image').evaluate((el) => (el as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
 
-    await click(page, 'project-lightbox-next', testInfo.project.name);
-    await expect(page.getByTestId('project-lightbox-image')).toHaveAttribute('alt', p.screenshots[1].alt);
-    await click(page, 'project-lightbox-prev', testInfo.project.name);
-    await expect(page.getByTestId('project-lightbox-image')).toHaveAttribute('alt', p.screenshots[0].alt);
+    if (p.screenshots.length > 1) {
+      await click(page, 'project-lightbox-next', testInfo.project.name);
+      await expect(page.getByTestId('project-lightbox-image')).toHaveAttribute('alt', p.screenshots[1].alt);
+      await click(page, 'project-lightbox-prev', testInfo.project.name);
+      await expect(page.getByTestId('project-lightbox-image')).toHaveAttribute('alt', p.screenshots[0].alt);
+    } else {
+      // Con una sola captura no hay anterior ni siguiente.
+      await expect(page.getByTestId('project-lightbox-next')).toHaveCount(0);
+      await expect(page.getByTestId('project-lightbox-prev')).toHaveCount(0);
+    }
     await click(page, 'project-lightbox-close', testInfo.project.name);
     await expect(box).toHaveCount(0);
     await expect(first).toBeFocused();
   });
 
   test('Escape cierra la captura ampliada y no la ventana; las flechas pasan de una a otra', async ({ page }, testInfo) => {
-    await openDetail(page, testInfo.project.name, withRepo.id);
+    const p = withShots;
+    await openDetail(page, testInfo.project.name, p.id);
     await page.getByTestId('project-shot-0').focus();
     await page.keyboard.press('Enter');
     await expect(page.getByTestId('project-lightbox')).toBeVisible();
     await expect(page.getByTestId('project-lightbox-close')).toBeFocused();
 
+    // Con varias capturas las flechas pasan a la siguiente; con una sola, se quedan en la misma.
     await page.keyboard.press('ArrowRight');
-    await expect(page.getByTestId('project-lightbox-image')).toHaveAttribute('alt', withRepo.screenshots[1].alt);
+    await expect(page.getByTestId('project-lightbox-image')).toHaveAttribute('alt', p.screenshots[1 % p.screenshots.length].alt);
     await page.keyboard.press('ArrowLeft');
-    await expect(page.getByTestId('project-lightbox-image')).toHaveAttribute('alt', withRepo.screenshots[0].alt);
+    await expect(page.getByTestId('project-lightbox-image')).toHaveAttribute('alt', p.screenshots[0].alt);
 
     await page.keyboard.press('Escape');
     await expect(page.getByTestId('project-lightbox')).toHaveCount(0);
@@ -135,6 +155,8 @@ test.describe('S-08 Proyectos: vista general y detalle', () => {
   });
 
   test('un GIF se anima y, con movimiento reducido, se ve su imagen fija', async ({ page }, testInfo) => {
+    test.skip(!gifProject, 'Ningún proyecto tiene capturas en GIF');
+    if (!gifProject) return;
     await openDetail(page, testInfo.project.name, gifProject.id);
     const i = gifProject.screenshots.findIndex((s) => s.src.endsWith('.gif'));
     const s = gifProject.screenshots[i];
@@ -157,6 +179,8 @@ test.describe('S-08 Proyectos: vista general y detalle', () => {
 
   test.describe('casos negativos', () => {
     test('un proyecto sin repositorio no enseña lenguajes ni botón de repositorio, solo lo que tiene', async ({ page }, testInfo) => {
+      test.skip(!withoutRepo, 'Todos los proyectos tienen repositorio');
+      if (!withoutRepo) return;
       await openDetail(page, testInfo.project.name, withoutRepo.id);
       await expect(page.getByTestId('project-languages')).toHaveCount(0);
       await expect(page.getByTestId('project-topics')).toHaveCount(0);
@@ -196,7 +220,7 @@ test.describe('S-08 Proyectos: vista general y detalle', () => {
   });
 
   test('la vista general y el detalle no tienen errores de accesibilidad en claro ni en oscuro', async ({ page }, testInfo) => {
-    await openDetail(page, testInfo.project.name, withRepo.id);
+    await openDetail(page, testInfo.project.name, withShots.id);
     await click(page, 'project-shot-0', testInfo.project.name);
     for (const theme of ['light', 'dark'] as const) {
       await page.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme);
