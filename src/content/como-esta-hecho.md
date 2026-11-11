@@ -15,7 +15,7 @@ Las piezas que lo sostienen:
 
 {{tecnologias}}
 
-El código se escribió con Claude Code, un agente de código, siguiendo un método: antes de escribir nada, el agente lee la documentación del proyecto y se acuerda qué se construye. Ese método está en otra plantilla abierta, [project-template](https://github.com/polmarza/project-template).
+El código se escribió con Claude Code, un agente de código, siguiendo un método: antes de escribir nada, el agente lee la documentación del proyecto y se acuerda qué se construye.
 
 ## Cómo funciona por dentro
 

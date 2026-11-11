@@ -1,7 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 import { LINKS } from '../../src/content/links';
-import { animationsDone, enter, loadNotes, loadProjects, openGuestbookOnDesktop, stubExternalSites, stubTurnstile } from './helpers';
+import { animationsDone, enter, loadNotes, loadProjects, openGuestbook, stubExternalSites, stubTurnstile } from './helpers';
 import { PERSONA } from '../../src/content/persona';
 import { SHELL_PROMPT } from '../../src/os/terminal/identity';
 
@@ -196,7 +196,7 @@ test.describe('S-04 Terminal', () => {
 
   test('un texto a medio escribir en el Libro de visitas sigue ahí tras minimizar y recuperar', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name.endsWith('movil'), 'En móvil no hay ventanas que minimizar');
-    await openGuestbookOnDesktop(page);
+    await openGuestbook(page);
     await page.getByTestId('guestbook-write').click();
     await page.getByTestId('guestbook-name').fill('Un borrador que no quiero perder');
     const win = page.getByTestId('window-guestbook');

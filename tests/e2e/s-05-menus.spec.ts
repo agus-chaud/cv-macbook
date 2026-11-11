@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
-import { animationsDone, enter, loadProjects, openGuestbookOnDesktop, stubExternalSites, stubTurnstile } from './helpers';
+import { animationsDone, enter, loadProjects, openGuestbook, stubExternalSites, stubTurnstile } from './helpers';
 import { LINKS } from '../../src/content/links';
 
 const projects = loadProjects();
@@ -150,7 +150,7 @@ test.describe('S-05 Menús de la barra de menú', () => {
     });
 
     test('Cortar y Deshacer actúan sobre un campo de texto sin quitarle el foco', async ({ page }) => {
-      await openGuestbookOnDesktop(page);
+      await openGuestbook(page);
       await page.getByTestId('guestbook-write').click();
       const field = page.getByTestId('guestbook-name');
       await field.click();

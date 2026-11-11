@@ -13,6 +13,8 @@ test.describe('M-03 Modo móvil', () => {
     for (const id of ['folder-projects', 'about', 'folder-notes', 'stack']) {
       await expect(page.getByTestId(`mobile-icon-${id}`)).toBeVisible();
     }
+    // El Libro de visitas no tiene icono: se abre desde la Terminal.
+    await expect(page.getByTestId('mobile-icon-guestbook')).toHaveCount(0);
     await expect(page.getByTestId('mobile-dock-mail')).toBeVisible();
   });
 

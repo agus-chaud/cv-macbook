@@ -16,11 +16,12 @@ export async function enter(page: Page) {
 }
 
 /**
- * Abre el Libro de visitas en el escritorio como lo haría un visitante. No tiene icono en el escritorio (decisión del
- * 2026-11-11): se abre desde la Terminal con `open guestbook`. En móvil sigue teniendo su icono en la pantalla de inicio.
+ * Abre el Libro de visitas como lo haría un visitante. No tiene icono ni en el escritorio ni en móvil (decisión del
+ * 2026-11-11): se abre desde la Terminal con `open guestbook`.
  */
-export async function openGuestbookOnDesktop(page: Page) {
-  await page.getByTestId('dock-item-terminal').click();
+export async function openGuestbook(page: Page, projectName = 'escritorio') {
+  if (projectName.endsWith('movil')) await page.getByTestId('mobile-dock-terminal').tap();
+  else await page.getByTestId('dock-item-terminal').click();
   const input = page.getByTestId('terminal-input');
   await input.fill('open guestbook');
   await input.press('Enter');

@@ -1,14 +1,13 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Locator, type Page } from '@playwright/test';
-import { animationsDone, enter, loadGuestbook, openGuestbookOnDesktop, stubGuestbookApi, stubTurnstile } from './helpers';
+import { animationsDone, enter, loadGuestbook, openGuestbook, stubGuestbookApi, stubTurnstile } from './helpers';
 
 const entries = loadGuestbook();
 const isMobile = (name: string) => name.endsWith('movil');
 
-/** Abre el libro como lo haría un visitante: desde la Terminal en el escritorio (no tiene icono) o con su icono en móvil. */
+/** Abre el libro como lo haría un visitante: desde la Terminal, porque no tiene icono ni en el escritorio ni en móvil. */
 async function openBook(page: Page, projectName: string) {
-  if (isMobile(projectName)) await page.getByTestId('mobile-icon-guestbook').tap();
-  else await openGuestbookOnDesktop(page);
+  await openGuestbook(page, projectName);
   const book = page.getByTestId('guestbook');
   await expect(book).toBeVisible();
   return book;

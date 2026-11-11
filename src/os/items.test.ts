@@ -24,7 +24,9 @@ describe('iconos del escritorio', () => {
     expect(desktopItems([project])).toHaveLength(8);
   });
 
-  test('en móvil el Libro de visitas sigue en la pantalla de inicio', () => {
-    expect(ids(mobileItems([project], []))).toContain('guestbook');
+  test('en móvil tampoco tiene icono el Libro de visitas, y el resto sigue en la pantalla de inicio', () => {
+    const order = ids(mobileItems([project], []));
+    expect(order).not.toContain('guestbook');
+    for (const id of ['folder-projects', 'about', 'folder-notes', 'favorites', 'stack', 'howto', 'linkedin', 'github']) expect(order, id).toContain(id);
   });
 });

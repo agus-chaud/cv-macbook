@@ -110,7 +110,6 @@ const noteItem = (n: NoteData): Item => ({
 });
 
 const aboutItem: Item = { id: 'about', label: 'Mi CV.pdf', icon: { kind: 'art', art: 'pdf' }, open: { app: 'about' } };
-const guestbookItem: Item = { id: 'guestbook', label: 'Libro de visitas', icon: tileIcon('guestbook'), open: { app: 'guestbook' } };
 const favoritesItem: Item = { id: 'favorites', label: 'Favoritos', icon: tileIcon('favorites'), open: { app: 'favorites' } };
 const howtoItem: Item = { id: 'howto', label: 'Cómo está hecho', icon: tileIcon('blueprint'), open: { app: 'howto' } };
 const stackItem: Item = { id: 'stack', label: 'Stack', icon: tileIcon('stack'), open: { app: 'stack' } };
@@ -131,7 +130,7 @@ export function desktopItems(projects: ProjectData[]): Item[] {
     aboutItem,
     { id: 'notes', label: 'Notas', icon: { kind: 'art', art: 'folder' }, open: { app: 'notes' } },
     favoritesItem,
-    // El Libro de visitas no tiene icono en el escritorio (decisión del 2026-11-11): se abre desde la Terminal
+    // El Libro de visitas no tiene icono, ni aquí ni en móvil (decisión del 2026-11-11): se abre desde la Terminal
     // (`open guestbook`). LinkedIn ocupa su sitio, así quedan dos columnas de cuatro.
     ...linkItems.filter((l) => l.id === 'linkedin'),
     stackItem,
@@ -153,7 +152,6 @@ export function mobileItems(projects: ProjectData[], notes: NoteData[]): Item[] 
     aboutItem,
     folder('folder-notes', 'Notas', notes.map(noteItem)),
     favoritesItem,
-    guestbookItem,
     stackItem,
     howtoItem,
     ...linkItems,

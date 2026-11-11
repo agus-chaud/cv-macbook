@@ -189,9 +189,9 @@ Icono de 56px y etiqueta. Props: `art`, `label`, `href` (si es acceso directo ex
 **Qué hay en el escritorio:** la carpeta **Proyectos** (que abre la vista general de los proyectos que contiene), los proyectos que
 viven solo en GitHub como icono propio (campo `placement: desktop`; hoy ninguno), Mi CV (antes «Sobre mí»), Notas, Favoritos,
 LinkedIn, Stack, Cómo está hecho y GitHub: dos columnas de cuatro, con como mucho cuatro iconos por columna. El Libro de visitas no
-tiene icono en el escritorio (decisión del 2026-11-11): se abre desde la Terminal con `open guestbook`, y LinkedIn ocupa su sitio.
+tiene icono ni en el escritorio ni en móvil (decisión del 2026-11-11): se abre desde la Terminal con `open guestbook`, y LinkedIn ocupa su sitio.
 Los demás proyectos no tienen icono suelto: viven dentro de la carpeta. En móvil pasa igual: la carpeta Proyectos y, suelto en la
-pantalla de inicio, el de GitHub; ahí el Libro de visitas sí conserva su icono.
+pantalla de inicio, el de GitHub.
 
 ### Ventana (`Window`)
 Barra de título con semáforos, título centrado, cuerpo con scroll propio y tirador de tamaño.
