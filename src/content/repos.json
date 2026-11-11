@@ -1,4 +1,49 @@
 {
-  "generatedAt": "2026-10-01",
-  "repos": []
+  "generatedAt": "2026-11-11",
+  "repos": [
+    {
+      "name": "Lead_Scoring",
+      "url": "https://github.com/agus-chaud/Lead_Scoring",
+      "description": null,
+      "homepage": null,
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "forks": 0,
+      "pushedAt": "2026-10-24T15:27:22Z",
+      "archived": false
+    },
+    {
+      "name": "scoring-crediticio",
+      "url": "https://github.com/agus-chaud/scoring-crediticio",
+      "description": "Credit risk scoring engine",
+      "homepage": null,
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "forks": 0,
+      "pushedAt": "2026-10-22T19:19:18Z",
+      "archived": false
+    },
+    {
+      "name": "marketing-mix-modelling",
+      "url": "https://github.com/agus-chaud/marketing-mix-modelling",
+      "description": null,
+      "homepage": null,
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "forks": 0,
+      "pushedAt": "2026-10-20T13:36:14Z",
+      "archived": false
+    },
+    {
+      "name": "RAG-libro-agentes",
+      "url": "https://github.com/agus-chaud/RAG-libro-agentes",
+      "description": null,
+      "homepage": null,
+      "language": "Python",
+      "stars": 0,
+      "forks": 0,
+      "pushedAt": "2026-05-21T16:20:07Z",
+      "archived": false
+    }
+  ]
 }

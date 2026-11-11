@@ -50,7 +50,9 @@
         "bytes": 249
       }
     ],
-    "topics": [],
+    "topics": [
+      "showcase"
+    ],
     "license": null
   }
 }

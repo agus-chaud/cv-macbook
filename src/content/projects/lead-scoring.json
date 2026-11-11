@@ -40,7 +40,9 @@
         "bytes": 176904
       }
     ],
-    "topics": [],
+    "topics": [
+      "showcase"
+    ],
     "license": null
   }
 }
