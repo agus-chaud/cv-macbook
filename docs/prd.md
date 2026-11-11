@@ -218,6 +218,11 @@ desde LinkedIn en el teléfono.
   *Negativo:* dado un enlace de confirmación caducado o manipulado, entonces no se envía nada a Agus y se
   explica el motivo; y dada una reseña con HTML, con una dirección que no es de una red admitida o con
   más texto del permitido, entonces se rechaza o se muestra solo como texto.
+- **[S-11] CV en inglés** — Dado un visitante con Mi CV abierto, cuando elige EN en el selector de idioma, entonces
+  el documento se ve en inglés y Descargar PDF baja la versión en inglés, generada a partir del mismo texto. Por
+  defecto se ve en español. Los detalles están en `docs/features/cv-en-ingles.md`.
+  *Negativo:* dado que el PDF en inglés no está disponible, entonces el texto en inglés sigue visible y el botón de
+  descarga no aparece en inglés.
 
 ### COULD
 - **[C-01] Repositorios de GitHub** — Dado un visitante, cuando abre GitHub en el escritorio, entonces ve

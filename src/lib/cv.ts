@@ -7,6 +7,33 @@
 
 export const CV_PDF_PATH = '/cv.pdf';
 
+/** Idiomas del CV (S-11): de cada uno salen el documento de la ventana y su PDF. */
+export const CV_VERSIONS = {
+  es: {
+    markdown: 'src/content/sobre-mi.md',
+    pdf: CV_PDF_PATH,
+    hash: 'src/content/sobre-mi.pdf.sha256',
+    greeting: 'Hola, soy',
+    docTitle: 'Currículum',
+    footer: 'Este documento se genera a partir del texto de Sobre mí.',
+  },
+  en: {
+    markdown: 'src/content/sobre-mi.en.md',
+    pdf: '/cv-en.pdf',
+    hash: 'src/content/sobre-mi.en.pdf.sha256',
+    greeting: "Hi, I'm",
+    docTitle: 'Résumé',
+    footer: 'This document is generated from the About me text.',
+  },
+} as const;
+export type CvLang = keyof typeof CV_VERSIONS;
+
+/** El nombre con que se descarga el PDF: el inglés lleva `-EN`, para no pisar al español en la carpeta de descargas. */
+export function pdfFileName(base: string, lang: CvLang): string {
+  const name = base.replace(/\.pdf$/i, '');
+  return lang === 'es' ? `${name}.pdf` : `${name}-${lang.toUpperCase()}.pdf`;
+}
+
 /** Sin PDF no hay botón (el negativo de M-06). */
 export const pdfHref = (exists: boolean, href: string = CV_PDF_PATH): string | null => (exists ? href : null);
 

@@ -5,9 +5,19 @@ import { join } from 'node:path';
 import { animationsDone, enter } from './helpers';
 import { PERSONA } from '../../src/content/persona';
 
-const markdown = readFileSync(join(process.cwd(), 'src/content/sobre-mi.md'), 'utf8');
+const read = (file: string) => readFileSync(join(process.cwd(), 'src/content', file), 'utf8').replace(/\r\n/g, '\n');
+const markdown = read('sobre-mi.md');
+const english = read('sobre-mi.en.md');
 const tagline = /^tagline: (.+)$/m.exec(markdown)![1];
 const headings = [...markdown.matchAll(/^## (.+)$/gm)].map((m) => m[1]);
+const taglineEn = /^tagline: (.+)$/m.exec(english)![1];
+const headingsEn = [...english.matchAll(/^## (.+)$/gm)].map((m) => m[1]);
+/** Los enlaces del CV a apps del escritorio (`[texto](#abrir-…)`), con el testid de la ventana que abren. */
+const APP_TESTIDS: Record<string, string> = { 'abrir-proyectos': 'projects', 'abrir-correo': 'mail', 'abrir-stack': 'stack', 'abrir-visitas': 'guestbook' };
+const appLinks = [...markdown.matchAll(/\[(?:\*\*)?([^\]*]+)(?:\*\*)?\]\(#(abrir-[a-z]+)\)/g)].map(([, text, key]) => ({ text, testid: APP_TESTIDS[key] }));
+const linkedin = /\]\((https:\/\/www\.linkedin\.com\/[^)]+)\)/.exec(markdown)?.[1];
+/** El único correo que el CV publica, a pedido de su dueño (la misma regla que `src/lib/cv.test.ts`). */
+const CONTACT_EMAIL = 'aguschaud@gmail.com';
 
 const isMobile = (name: string) => name.endsWith('movil');
 
@@ -43,16 +53,15 @@ test.describe('M-06 Sobre mí como documento', () => {
     expect((await res.body()).subarray(0, 5).toString()).toBe('%PDF-');
   });
 
-  test('el enlace a Proyectos abre la app Proyectos y el de Correo abre Correo', async ({ page }, testInfo) => {
-    await openAbout(page, testInfo.project.name);
-    await page.getByTestId('about-body').getByRole('link', { name: 'Proyectos' }).click();
-    await expect(page.getByTestId('projects')).toBeVisible();
-
-    // En móvil la app abierta tapa la pantalla de inicio: hay que volver antes de reabrir Sobre mí.
-    if (isMobile(testInfo.project.name)) await page.getByTestId('mobile-back').tap();
-    await openAbout(page, testInfo.project.name);
-    await page.getByTestId('about-body').getByRole('link', { name: 'Correo' }).click();
-    await expect(page.getByTestId('mail')).toBeVisible();
+  test('cada enlace del texto a una app del escritorio abre esa app', async ({ page }, testInfo) => {
+    expect(appLinks.length).toBeGreaterThan(0);
+    for (const [i, { text, testid }] of appLinks.entries()) {
+      // En móvil la app abierta tapa la pantalla de inicio: hay que volver antes de reabrir Sobre mí.
+      if (i > 0 && isMobile(testInfo.project.name)) await page.getByTestId('mobile-back').tap();
+      await openAbout(page, testInfo.project.name);
+      await page.getByTestId('about-body').getByRole('link', { name: text }).click();
+      await expect(page.getByTestId(testid), text).toBeVisible();
+    }
   });
 
   test('los enlaces externos se abren en una pestaña nueva y sin dar acceso al sitio', async ({ page }, testInfo) => {
@@ -63,18 +72,64 @@ test.describe('M-06 Sobre mí como documento', () => {
       await expect(link).toHaveAttribute('target', '_blank');
       await expect(link).toHaveAttribute('rel', /noopener/);
     }
-    await expect(page.getByTestId('about-body').getByRole('link', { name: 'LinkedIn' })).toHaveAttribute('href', 'https://www.linkedin.com/in/tu-perfil/');
+    expect(linkedin, 'el CV enlaza a LinkedIn').toBeDefined();
+    await expect(page.getByTestId('about-body').getByRole('link', { name: 'LinkedIn' })).toHaveAttribute('href', linkedin!);
   });
 
   test.describe('casos negativos', () => {
-    test('el documento no contiene ninguna dirección de correo ni lo que se acordó no publicar', async ({ page }, testInfo) => {
+    test('el documento no contiene más correo que el de contacto ni lo que se acordó no publicar', async ({ page }, testInfo) => {
       await openAbout(page, testInfo.project.name);
       const text = (await page.getByTestId('about').innerText()).replace(/\s+/g, ' ');
-      expect(text).not.toMatch(/[\w.+-]+@[\w-]+\.[\w.-]+/);
+      const emails = [...text.matchAll(/[\w.+-]+@[\w-]+\.[\w.-]+/g)].map((m) => m[0]);
+      expect(new Set(emails)).toEqual(new Set([CONTACT_EMAIL]));
       for (const excluded of ['Lucía Ejemplo', 'Marcos Ejemplo']) {
         expect(text, excluded).not.toContain(excluded);
       }
-      await expect(page.locator('a[href^="mailto:"]')).toHaveCount(0);
+      for (const href of await page.locator('a[href^="mailto:"]').evaluateAll((els) => els.map((el) => el.getAttribute('href')))) {
+        expect(href).toBe(`mailto:${CONTACT_EMAIL}`);
+      }
+    });
+  });
+
+  test.describe('S-11 CV en inglés', () => {
+    test('abre en español; EN pasa el documento a inglés y ES lo devuelve', async ({ page }, testInfo) => {
+      await openAbout(page, testInfo.project.name);
+      await expect(page.getByTestId('about-lang-es')).toHaveAttribute('aria-pressed', 'true');
+      await expect(page.getByTestId('about-sheet')).toHaveAttribute('lang', 'es');
+
+      await page.getByTestId('about-lang-en').click();
+      await expect(page.getByTestId('about-lang-en')).toHaveAttribute('aria-pressed', 'true');
+      await expect(page.getByTestId('about-sheet')).toHaveAttribute('lang', 'en');
+      await expect(page.getByTestId('about-title')).toHaveText(`Hi, I'm ${PERSONA.firstName}`);
+      await expect(page.getByTestId('about-tagline')).toHaveText(taglineEn);
+      await expect(page.getByTestId('about-body').locator('h2')).toHaveText(headingsEn);
+
+      await page.getByTestId('about-lang-es').click();
+      await expect(page.getByTestId('about-title')).toHaveText(`Hola, soy ${PERSONA.firstName}`);
+      await expect(page.getByTestId('about-body').locator('h2')).toHaveText(headings);
+    });
+
+    test('en inglés, Descargar PDF baja el PDF en inglés, que se sirve como PDF', async ({ page }, testInfo) => {
+      await openAbout(page, testInfo.project.name);
+      await page.getByTestId('about-lang-en').click();
+      const button = page.getByTestId('about-download');
+      await expect(button).toHaveAttribute('href', '/cv-en.pdf');
+      await expect(button).toHaveAttribute('download', /-EN\.pdf$/);
+      const res = await page.request.get('/cv-en.pdf');
+      expect(res.status()).toBe(200);
+      expect(res.headers()['content-type']).toContain('application/pdf');
+      expect((await res.body()).subarray(0, 5).toString()).toBe('%PDF-');
+
+      await page.getByTestId('about-lang-es').click();
+      await expect(button).toHaveAttribute('href', '/cv.pdf');
+    });
+
+    test('el documento en inglés no tiene errores de accesibilidad', async ({ page }, testInfo) => {
+      await openAbout(page, testInfo.project.name);
+      await page.getByTestId('about-lang-en').click();
+      await animationsDone(page);
+      const results = await new AxeBuilder({ page }).analyze();
+      expect(results.violations).toEqual([]);
     });
   });
 

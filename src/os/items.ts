@@ -6,14 +6,19 @@ import { LINKS } from '../content/links';
 import type { AppId, OpenTarget } from './apps/registry';
 import { glyphIcon, tileIcon, type IconSpec } from './icons';
 
-/** El documento Sobre mí (M-06): el texto ya convertido a HTML al compilar, la foto y, si existe, el PDF. */
-export interface AboutData {
+/** Una versión del documento Sobre mí: el texto ya convertido a HTML al compilar y, si existe, su PDF. */
+export interface AboutVersion {
   html: string;
   tagline: string;
   hook: string;
-  photo: { src: string; width: number; height: number };
   /** Dirección del PDF; null si no hay y entonces no se enseña el botón. */
   pdf: string | null;
+}
+
+/** El documento Sobre mí (M-06): en español, con la foto, y su versión en inglés (S-11). */
+export interface AboutData extends AboutVersion {
+  photo: { src: string; width: number; height: number };
+  en: AboutVersion;
 }
 
 export interface ProjectData {

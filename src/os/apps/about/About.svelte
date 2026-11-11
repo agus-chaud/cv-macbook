@@ -1,11 +1,15 @@
 <script lang="ts">
   import { PERSONA } from '../../../content/persona';
-  import { appLinkTarget } from '../../../lib/cv';
+  import { CV_VERSIONS, appLinkTarget, pdfFileName, type CvLang } from '../../../lib/cv';
   import { UI_SVG } from '../../icons';
   import type { AboutData } from '../../items';
   import { dispatch } from '../../stores/os-actions';
 
   let { about }: { about: AboutData } = $props();
+
+  // Español por defecto; el selector cambia solo el documento, no el resto de la ventana (S-11).
+  let lang = $state<CvLang>('es');
+  const doc = $derived(lang === 'en' ? about.en : about);
 
   // Los enlaces `#abrir-…` del texto abren una app del escritorio; el resto son enlaces normales.
   function onclick(e: MouseEvent) {
@@ -20,16 +24,22 @@
 <div class="about" data-testid="about">
   <div class="bar">
     <span class="file">Mi CV.pdf</span>
-    {#if about.pdf}
-      <a class="download" href={about.pdf} download={PERSONA.cvFileName} data-testid="about-download">
-        <span aria-hidden="true">{@html UI_SVG.download}</span> Descargar PDF
-      </a>
-    {/if}
+    <div class="actions">
+      <div class="lang" role="group" aria-label="Idioma del CV">
+        <button type="button" lang="es" aria-pressed={lang === 'es'} data-testid="about-lang-es" onclick={() => (lang = 'es')}>ES</button>
+        <button type="button" lang="en" aria-pressed={lang === 'en'} data-testid="about-lang-en" onclick={() => (lang = 'en')}>EN</button>
+      </div>
+      {#if doc.pdf}
+        <a class="download" href={doc.pdf} download={pdfFileName(PERSONA.cvFileName, lang)} data-testid="about-download">
+          <span aria-hidden="true">{@html UI_SVG.download}</span> Descargar PDF
+        </a>
+      {/if}
+    </div>
   </div>
 
   <div class="desk">
     <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions -->
-    <article class="sheet" {onclick}>
+    <article class="sheet" {lang} {onclick} data-testid="about-sheet">
       <header>
         <img
           class="photo"
@@ -40,14 +50,14 @@
           data-testid="about-photo"
         />
         <div>
-          <h1 data-testid="about-title">Hola, soy {PERSONA.firstName}</h1>
-          <p class="tagline" data-testid="about-tagline">{about.tagline}</p>
+          <h1 data-testid="about-title">{CV_VERSIONS[lang].greeting} {PERSONA.firstName}</h1>
+          <p class="tagline" data-testid="about-tagline">{doc.tagline}</p>
         </div>
       </header>
-      <p class="hook">{about.hook}</p>
+      <p class="hook">{doc.hook}</p>
       <div class="prose" data-testid="about-body">
         <!-- El texto sale de src/content/sobre-mi.md, del propio repositorio: nunca de un visitante. -->
-        {@html about.html}
+        {@html doc.html}
       </div>
     </article>
   </div>
@@ -73,6 +83,36 @@
   }
   .file {
     font-weight: 600;
+  }
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  /* Selector de idioma (S-11): el mismo control segmentado que el nivel de las damas. */
+  .lang {
+    display: inline-flex;
+    padding: 2px;
+    border-radius: var(--r-control);
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .lang button {
+    min-width: 32px;
+    height: 22px;
+    padding: 0 8px;
+    border-radius: calc(var(--r-control) - 2px);
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--fg);
+  }
+  .lang button[aria-pressed='true'] {
+    color: var(--accent-fg);
+    background: var(--accent-solid);
+  }
+  .lang button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
   }
   .download {
     display: inline-flex;

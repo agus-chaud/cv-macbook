@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, test } from 'vitest';
-import { appLinkTarget, externalLinks, pdfHref, splitFrontmatter, withoutAppLinks } from './cv';
+import { CV_VERSIONS, appLinkTarget, externalLinks, pdfFileName, pdfHref, splitFrontmatter, withoutAppLinks } from './cv';
 import { cvHash } from './cv-hash';
 
 const root = process.cwd();
@@ -69,6 +69,64 @@ describe('PDF', () => {
   test('sin PDF no hay botón de descarga', () => {
     expect(pdfHref(false)).toBeNull();
     expect(pdfHref(true)).toBe('/cv.pdf');
+  });
+});
+
+describe('CV en inglés (S-11)', () => {
+  const english = readFileSync(join(root, 'src/content/sobre-mi.en.md'), 'utf8');
+  const { data, body } = splitFrontmatter(english);
+  const headings = (text: string) => [...text.matchAll(/^## (.+?)\r?$/gm)].map((m) => m[1]);
+
+  test('tiene la línea de presentación y el gancho', () => {
+    expect(data.tagline).toBe('Data Scientist, Data Engineer and AI Engineer.');
+    expect(data.hook).toMatch(/^Applied AI lecturer and thesis advisor at ITBA\./);
+  });
+
+  test('tiene las mismas secciones que el español, en el mismo orden', () => {
+    expect(headings(body)).toEqual(['About me', 'Experience', 'Projects', 'Skills', 'Education', 'References', 'Details']);
+    expect(headings(body).length).toBe(headings(splitFrontmatter(markdown).body).length);
+  });
+
+  test('cada sección tiene tantos puntos como en español', () => {
+    const bullets = (text: string) => text.split(/^## /m).slice(1).map((section) => (section.match(/^- /gm) ?? []).length);
+    expect(bullets(body)).toEqual(bullets(splitFrontmatter(markdown).body));
+  });
+
+  test('cumple las mismas guardas: solo el correo de contacto, sin teléfonos ni marcas de revisión', () => {
+    const emails = [...english.matchAll(/[\w.+-]+@[\w-]+\.[\w.-]+/g)].map((m) => m[0]);
+    expect(new Set(emails)).toEqual(new Set([CONTACT_EMAIL]));
+    expect(english).not.toMatch(/\+?\d[\d\s-]{7,}\d/);
+    expect(english).not.toMatch(/CONFIRMAR|\[¿\?\]|TODO|inconformista/i);
+  });
+
+  test('los únicos enlaces son https, a una app del escritorio o al correo de contacto', () => {
+    for (const [, href] of body.matchAll(/\]\(([^)]+)\)/g)) {
+      expect(/^https:\/\//.test(href) || appLinkTarget(href) !== null || href === `mailto:${CONTACT_EMAIL}`, href).toBe(true);
+    }
+  });
+
+  test('su PDF se generó con el texto actual (si cambias sobre-mi.en.md, ejecuta scripts/generar-cv.mjs)', () => {
+    const stored = readFileSync(join(root, 'src/content/sobre-mi.en.pdf.sha256'), 'utf8').trim();
+    expect(stored).toBe(cvHash(english));
+  });
+
+  test('su PDF existe y es un PDF de verdad', () => {
+    const file = join(root, `public${CV_VERSIONS.en.pdf}`);
+    expect(existsSync(file)).toBe(true);
+    expect(readFileSync(file).subarray(0, 5).toString()).toBe('%PDF-');
+  });
+
+  test('cada idioma tiene su PDF, y el nombre de descarga del inglés lleva -EN', () => {
+    expect(CV_VERSIONS.es.pdf).toBe('/cv.pdf');
+    expect(CV_VERSIONS.en.pdf).toBe('/cv-en.pdf');
+    expect(pdfFileName('Agustin-Chaud-CV.pdf', 'es')).toBe('Agustin-Chaud-CV.pdf');
+    expect(pdfFileName('Agustin-Chaud-CV.pdf', 'en')).toBe('Agustin-Chaud-CV-EN.pdf');
+    expect(pdfFileName('cv', 'en')).toBe('cv-EN.pdf');
+  });
+
+  test('sin PDF en inglés no hay botón de descarga en inglés', () => {
+    expect(pdfHref(false, CV_VERSIONS.en.pdf)).toBeNull();
+    expect(pdfHref(true, CV_VERSIONS.en.pdf)).toBe('/cv-en.pdf');
   });
 });
 

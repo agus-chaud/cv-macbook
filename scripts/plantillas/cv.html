@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="es">
+<html lang="{{IDIOMA}}">
 <head>
 <meta charset="utf-8">
-<title>{{NOMBRE}} — Currículum</title>
+<title>{{NOMBRE}} — {{TITULO}}</title>
 <style>
   @page { size: A4; margin: 18mm 20mm; }
   * { box-sizing: border-box; }
@@ -24,12 +24,12 @@
   <header>
     <img src="{{FOTO}}" alt="">
     <div>
-      <h1>Hola, soy {{NOMBRE_CORTO}}</h1>
+      <h1>{{SALUDO}} {{NOMBRE_CORTO}}</h1>
       <p class="tagline">{{TAGLINE}}</p>
     </div>
   </header>
   <p class="hook">{{HOOK}}</p>
   {{CUERPO}}
-  <footer>{{NOMBRE}} · {{DOMINIO}} · Este documento se genera a partir del texto de Sobre mí.</footer>
+  <footer>{{NOMBRE}} · {{DOMINIO}} · {{PIE}}</footer>
 </body>
 </html>

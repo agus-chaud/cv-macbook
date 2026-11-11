@@ -17,6 +17,7 @@ const projects = readdirSync(projectsDir)
 // Sobre mí (M-06): si hay PDF en public/, el documento enseña el botón de descarga. Se decide aquí, en Node: las páginas
 // se ejecutan dentro del emulador de Cloudflare, donde `existsSync` no ve los archivos del disco.
 const cvPdfExists = existsSync(new URL('./public/cv.pdf', import.meta.url));
+const cvEnPdfExists = existsSync(new URL('./public/cv-en.pdf', import.meta.url));
 
 const OS_SHARED = [
   'src/os/icons.ts',
@@ -43,7 +44,7 @@ export default defineConfig({
   devToolbar: { enabled: false },
   integrations: [svelte()],
   vite: {
-    define: { __CV_PDF_EXISTS__: JSON.stringify(cvPdfExists) },
+    define: { __CV_PDF_EXISTS__: JSON.stringify(cvPdfExists), __CV_EN_PDF_EXISTS__: JSON.stringify(cvEnPdfExists) },
     build: {
       rollupOptions: {
         output: {
