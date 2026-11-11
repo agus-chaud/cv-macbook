@@ -2,6 +2,16 @@
  * Lógica pura de la app Proyectos (S-08): qué botón principal lleva un proyecto, a dónde apunta su repositorio
  * y cómo se reparten sus lenguajes. Los componentes solo pintan lo que esto decide.
  */
+import { SHOWCASE_TOPIC } from '../../../lib/repos';
+
+/** Las etiquetas del repositorio que ve el visitante: `showcase` solo sirve para elegir qué sale en la ventana GitHub (C-01). */
+export const visibleTopics = (topics: readonly string[]): string[] => topics.filter((t) => t !== SHOWCASE_TOPIC);
+
+/** Un resultado clave del proyecto: una cifra corta y qué mide. */
+export interface Highlight {
+  value: string;
+  label: string;
+}
 
 export interface LanguageBytes {
   name: string;
@@ -83,6 +93,7 @@ export interface DetailSections {
   topics: boolean;
   license: boolean;
   screenshots: boolean;
+  highlights: boolean;
 }
 
 /** Qué apartados del detalle se enseñan: solo los que tienen contenido, nunca uno vacío ni un botón roto. */
@@ -91,9 +102,10 @@ export function detailSections(p: {
   stack: readonly string[];
   screenshots: readonly unknown[];
   github?: { languages: readonly LanguageBytes[]; topics: readonly string[]; license: string | null };
+  highlights?: readonly Highlight[];
 }): DetailSections {
   const languages = languageShares(p.github?.languages ?? []).length > 0;
-  const topics = (p.github?.topics.length ?? 0) > 0;
+  const topics = visibleTopics(p.github?.topics ?? []).length > 0;
   const license = !!p.github?.license;
   return {
     what: p.details.length > 0,
@@ -102,6 +114,7 @@ export function detailSections(p: {
     topics,
     license,
     screenshots: p.screenshots.length > 0,
+    highlights: (p.highlights?.length ?? 0) > 0,
   };
 }
 

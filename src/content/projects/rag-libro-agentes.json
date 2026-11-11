@@ -7,6 +7,16 @@
     "Backend en Python con LangChain y FastAPI: índice FAISS con embeddings locales, retrieval de 4 fragmentos y respuesta en streaming (SSE) que primero manda las páginas fuente y después los tokens. El frontend es un chat en Next.js.",
     "Enfoque eval-first: 10 preguntas con criterios PASS/FAIL y tests automatizados. Los LLM van en cadena (Groq, OpenRouter y un modo offline con un LLM simulado). Línea base actual: 7 de 10 con llama-3.1-8b-instant."
   ],
+  "highlights": [
+    {
+      "value": "7/10",
+      "label": "evals aprobadas con llama-3.1-8b"
+    },
+    {
+      "value": "3",
+      "label": "proveedores de LLM en cadena"
+    }
+  ],
   "stack": [
     "Python",
     "LangChain",
@@ -51,6 +61,12 @@
       }
     ],
     "topics": [
+      "faiss",
+      "fastapi",
+      "langchain",
+      "llm",
+      "nextjs",
+      "rag",
       "showcase"
     ],
     "license": null

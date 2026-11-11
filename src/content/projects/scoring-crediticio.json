@@ -7,6 +7,16 @@
     "Integra un modelo de clasificación (probabilidad de default) con dos de regresión (exposición y severidad) para estimar la pérdida esperada de cada préstamo. Tiene API REST con FastAPI, dashboard en Streamlit y deploy online en Render.",
     "Un LLM (API de Anthropic) explica a usuarios no técnicos cómo se llega a la predicción, con guardrails que bloquean métricas inventadas, evals de regresión y un fallback que registra la causa del fallo."
   ],
+  "highlights": [
+    {
+      "value": "3",
+      "label": "modelos combinados: PD, EAD y LGD"
+    },
+    {
+      "value": "5/5",
+      "label": "evals de regresión del explicador"
+    }
+  ],
   "stack": [
     "Python",
     "scikit-learn",
@@ -14,6 +24,7 @@
     "Streamlit",
     "Plotly",
     "Render",
+    "Anthropic API",
     "Claude Code"
   ],
   "repo": "agus-chaud/scoring-crediticio",
@@ -36,7 +47,13 @@
       }
     ],
     "topics": [
-      "showcase"
+      "credit-scoring",
+      "fastapi",
+      "llm",
+      "machine-learning",
+      "scikit-learn",
+      "showcase",
+      "streamlit"
     ],
     "license": null
   }

@@ -4,7 +4,7 @@
   import { projectIcon, type ProjectData } from '../../items';
   import AppIcon from '../../shell/AppIcon.svelte';
   import { dispatch } from '../../stores/os-actions';
-  import { detailSections, languageShares, primaryAction, repoButton } from './projects-view';
+  import { detailSections, languageShares, primaryAction, repoButton, visibleTopics } from './projects-view';
 
   interface Props {
     project: ProjectData;
@@ -17,7 +17,7 @@
   const action = $derived(primaryAction(project));
   const repo = $derived(repoButton(project));
   const shares = $derived(languageShares(project.github?.languages ?? []));
-  const topics = $derived(project.github?.topics ?? []);
+  const topics = $derived(visibleTopics(project.github?.topics ?? []));
   const license = $derived(project.github?.license ?? null);
   const show = $derived(detailSections(project));
 
@@ -105,6 +105,17 @@
         </a>
       {/if}
     </div>
+
+    {#if show.highlights}
+      <section aria-labelledby="pd-results" data-testid="project-highlights">
+        <h3 id="pd-results">Resultados</h3>
+        <ul class="highlights">
+          {#each project.highlights as h (h.label)}
+            <li class="highlight"><strong class="value">{h.value}</strong><span class="label">{h.label}</span></li>
+          {/each}
+        </ul>
+      </section>
+    {/if}
 
     {#if show.what}
       <section aria-labelledby="pd-what">
@@ -322,6 +333,33 @@
   }
   .topics .chip {
     background: var(--hover);
+  }
+  /* Resultados clave: la cifra grande y, debajo, qué mide. */
+  .highlights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .highlight {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 12px;
+    border-radius: var(--r-control);
+    background: var(--accent-soft);
+  }
+  .value {
+    font-size: calc(22px * var(--text-scale));
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  /* --fg y no --muted: sobre --accent-soft, el gris no llega a 4,5:1 en el tema oscuro. */
+  .label {
+    font-size: calc(13px * var(--text-scale));
+    color: var(--fg);
   }
   .langs {
     margin: 0 0 12px;

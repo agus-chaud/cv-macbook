@@ -7,6 +7,12 @@
     "Un escritorio con ventanas, dock, Terminal y apps: cada parte del trabajo de su autor es algo que se abre.",
     "Está hecho con Astro, Svelte y Cloudflare, y se publica a partir de una plantilla abierta. En «Cómo está hecho» se explica por dentro."
   ],
+  "highlights": [
+    {
+      "value": "ES/EN",
+      "label": "CV en dos idiomas, cada uno con su PDF"
+    }
+  ],
   "stack": [
     "Astro",
     "Svelte",
@@ -36,30 +42,35 @@
     "languages": [
       {
         "name": "TypeScript",
-        "bytes": 742408
+        "bytes": 763095
       },
       {
         "name": "Svelte",
-        "bytes": 227327
+        "bytes": 229045
       },
       {
         "name": "JavaScript",
-        "bytes": 39426
+        "bytes": 40607
       },
       {
         "name": "Astro",
-        "bytes": 22034
+        "bytes": 22375
       },
       {
         "name": "CSS",
-        "bytes": 21857
+        "bytes": 21839
       },
       {
         "name": "HTML",
-        "bytes": 5033
+        "bytes": 4991
       }
     ],
-    "topics": [],
+    "topics": [
+      "astro",
+      "cloudflare-workers",
+      "portfolio",
+      "svelte"
+    ],
     "license": "MIT"
   }
 }

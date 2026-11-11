@@ -7,6 +7,12 @@
     "Arquitectura Medallion sobre Delta Lake: de pedidos crudos a métricas de negocio. Usa Change Data Feed para procesar solo lo que cambió y bajar tiempos de ejecución y costos de cómputo.",
     "Entrega KPIs diarios (revenue, ticket promedio, clientes únicos) para las áreas de negocio."
   ],
+  "highlights": [
+    {
+      "value": "3",
+      "label": "KPIs diarios: revenue, ticket y clientes"
+    }
+  ],
   "stack": [
     "Databricks",
     "PySpark",
@@ -29,7 +35,13 @@
         "bytes": 14264
       }
     ],
-    "topics": [],
+    "topics": [
+      "databricks",
+      "delta-lake",
+      "etl",
+      "medallion-architecture",
+      "pyspark"
+    ],
     "license": null
   }
 }

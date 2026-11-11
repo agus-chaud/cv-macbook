@@ -7,6 +7,20 @@
     "Marketing Mix Model con PyMC-Marketing sobre 104 semanas de un neobanco alemán simulado, con los datos preparados en DuckDB y dbt (31 tests). Como el dataset trae su generador, cada estimación se pre-registró antes de abrir la verdad.",
     "El modelo base quedó más cerca de la verdad que el calibrado (error medio por canal 45% contra 59%): el experimento go-dark sobrestimó a Google Brand 3,6 veces. Reasignar el mismo presupuesto suma 227 altas por semana; el modelo prometía 646."
   ],
+  "highlights": [
+    {
+      "value": "45 %",
+      "label": "error medio por canal del modelo base"
+    },
+    {
+      "value": "+227",
+      "label": "altas por semana reasignando el presupuesto"
+    },
+    {
+      "value": "31",
+      "label": "tests de datos en dbt"
+    }
+  ],
   "stack": [
     "Python",
     "PyMC-Marketing",
@@ -35,6 +49,11 @@
       }
     ],
     "topics": [
+      "bayesian",
+      "dbt",
+      "duckdb",
+      "marketing-mix-modeling",
+      "pymc",
       "showcase"
     ],
     "license": null

@@ -37,6 +37,7 @@ export interface ProjectFile {
   description: string;
   summary: string;
   details: string[];
+  highlights?: { value: string; label: string }[];
   stack: string[];
   screenshots: { src: string; alt: string; still?: string }[];
   repo?: string;

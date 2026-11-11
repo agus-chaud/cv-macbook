@@ -39,6 +39,11 @@ const projects = defineCollection({
     summary: z.string().min(1),
     /** Qué es, en párrafos de texto (nunca HTML). */
     details: z.array(z.string().min(1)).default([]),
+    /** Hasta tres resultados clave, a la vista en el detalle: una cifra corta y qué mide. Solo cifras que ya cuenta el proyecto. */
+    highlights: z
+      .array(z.object({ value: z.string().min(1).max(12), label: z.string().min(1).max(60) }))
+      .max(3)
+      .default([]),
     stack: z.array(z.string()),
     screenshots: z.array(shot).default([]),
     /** `usuario/nombre` de su repositorio PÚBLICO. Los privados no se ponen aquí. */

@@ -86,6 +86,21 @@ test.describe('S-08 Proyectos: vista general y detalle', () => {
     await expect(repo).toHaveAttribute('rel', /noopener/);
   });
 
+  test('el detalle enseña los resultados clave del proyecto, y ninguna etiqueta dice «showcase»', async ({ page }, testInfo) => {
+    const p = projects.find((x) => (x.highlights ?? []).length > 0 && (x.github?.topics ?? []).includes('showcase'))!;
+    await openDetail(page, testInfo.project.name, p.id);
+    const results = page.getByTestId('project-highlights');
+    await expect(results.getByRole('heading', { name: 'Resultados' })).toBeVisible();
+    await expect(results.locator('li')).toHaveCount(p.highlights!.length);
+    for (const h of p.highlights!) {
+      await expect(results).toContainText(h.value);
+      await expect(results).toContainText(h.label);
+    }
+    const topics = page.getByTestId('project-topics');
+    await expect(topics).toBeVisible();
+    await expect(topics.locator('li', { hasText: /^showcase$/ })).toHaveCount(0);
+  });
+
   test('uno incrustable tiene "Abrir en el Navegador", y ese botón carga el proyecto', async ({ page }, testInfo) => {
     if (!embeddable) {
       // Apagado: ningún proyecto se deja incrustar, así que el detalle ofrece visitarlo fuera y no el Navegador.

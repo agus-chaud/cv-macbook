@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { OTHERS, detailSections, languageShares, primaryAction, repoButton, repoUrl } from './projects-view';
+import { OTHERS, detailSections, languageShares, primaryAction, repoButton, repoUrl, visibleTopics } from './projects-view';
 
 const sum = (xs: { share: number }[]) => xs.reduce((s, x) => s + x.share, 0);
 
@@ -128,7 +128,7 @@ describe('detailSections', () => {
   };
 
   test('un proyecto completo enseña todos los apartados', () => {
-    expect(detailSections(full)).toEqual({ what: true, madeWith: true, languages: true, topics: true, license: true, screenshots: true });
+    expect(detailSections(full)).toEqual({ what: true, madeWith: true, languages: true, topics: true, license: true, screenshots: true, highlights: false });
   });
 
   test('un proyecto sin capturas ni repositorio no enseña esos apartados', () => {
@@ -142,7 +142,7 @@ describe('detailSections', () => {
 
   test('sin tecnologías ni datos de GitHub, "Stack" tampoco aparece', () => {
     const s = detailSections({ details: [], stack: [], screenshots: [] });
-    expect(s).toEqual({ what: false, madeWith: false, languages: false, topics: false, license: false, screenshots: false });
+    expect(s).toEqual({ what: false, madeWith: false, languages: false, topics: false, license: false, screenshots: false, highlights: false });
   });
 
   test('con solo la licencia (sin tecnologías ni lenguajes) "Stack" aparece por ella', () => {
@@ -154,6 +154,25 @@ describe('detailSections', () => {
 
   test('lenguajes con bytes a cero no cuentan como lenguajes', () => {
     expect(detailSections({ details: [], stack: [], screenshots: [], github: { languages: [{ name: 'X', bytes: 0 }], topics: [], license: null } }).languages).toBe(false);
+  });
+
+  test('la etiqueta interna «showcase» no cuenta como etiqueta: si es la única, no hay apartado de etiquetas', () => {
+    const s = detailSections({ details: [], stack: [], screenshots: [], github: { languages: [], topics: ['showcase'], license: null } });
+    expect(s.topics).toBe(false);
+    expect(s.madeWith).toBe(false);
+  });
+
+  test('resultados: solo se enseñan si el proyecto los tiene', () => {
+    expect(detailSections({ details: [], stack: [], screenshots: [] }).highlights).toBe(false);
+    expect(detailSections({ details: [], stack: [], screenshots: [], highlights: [{ value: '45 %', label: 'error' }] }).highlights).toBe(true);
+  });
+});
+
+describe('visibleTopics', () => {
+  test('quita «showcase», que solo sirve para elegir qué sale en la ventana GitHub, y deja el resto en su orden', () => {
+    expect(visibleTopics(['rag', 'showcase', 'fastapi'])).toEqual(['rag', 'fastapi']);
+    expect(visibleTopics(['showcase'])).toEqual([]);
+    expect(visibleTopics([])).toEqual([]);
   });
 });
 

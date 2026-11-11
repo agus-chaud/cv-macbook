@@ -28,6 +28,8 @@ export interface ProjectData {
   description: string;
   summary: string;
   details: string[];
+  /** Resultados clave: una cifra corta y qué mide. */
+  highlights: { value: string; label: string }[];
   stack: string[];
   screenshots: { src: string; alt: string; still?: string }[];
   repo?: string;

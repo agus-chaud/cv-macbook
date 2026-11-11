@@ -7,6 +7,12 @@
     "Modelo de regresión logística para que marketing y ventas prioricen mejor dónde invertir presupuesto y tiempo. Trabajo punta a punta, pensado para que lo entiendan usuarios no técnicos.",
     "Está expuesto a través de un MCP para que pueda usarse desde sistemas externos, y suma un agente LangGraph que automatiza el contacto a los leads, con guardrails, evals y 79 tests."
   ],
+  "highlights": [
+    {
+      "value": "79",
+      "label": "tests automatizados"
+    }
+  ],
   "stack": [
     "Python",
     "pandas",
@@ -41,6 +47,12 @@
       }
     ],
     "topics": [
+      "fastapi",
+      "langgraph",
+      "lead-scoring",
+      "machine-learning",
+      "mcp",
+      "scikit-learn",
       "showcase"
     ],
     "license": null
