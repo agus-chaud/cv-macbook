@@ -10,8 +10,8 @@
   Al volver del detalle se mantiene el rol elegido. Funciona con teclado y en móvil.
 - Cuatro proyectos nuevos: Pipeline e-commerce con DLT, Lakehouse NYC Taxi y Gobierno con Unity Catalog (Data
   Engineering) y Test A/B de marketing (Data Science). Sus lenguajes y etiquetas salen de `scripts/actualizar-proyectos.mjs`.
-- Roles de los actuales: Marketing Mix Model en los dos; Scoring crediticio y Triage de leads en Data Science. ETL en
-  Databricks, RAG del libro y Agus OS quedan sin rol: solo salen en «Todos».
+- Roles de los actuales: ETL en Databricks en Data Engineering; Marketing Mix Model, Scoring crediticio y Triage de leads
+  en Data Science. RAG del libro y Agus OS quedan sin rol: solo salen en «Todos».
 
 ## Qué se modificó
 - `src/content.config.ts` (campo `roles`), `src/os/items.ts`, `src/pages/index.astro`,

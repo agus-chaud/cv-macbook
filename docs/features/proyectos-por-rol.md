@@ -21,12 +21,14 @@ Entran cuatro proyectos nuevos a la carpeta, y tres de los actuales reciben su r
 | Pipeline e-commerce con Lakeflow (DLT) — `agus-chaud/Ecommerce-Data-Pipeline-con-DLT` | ✓ | | ✓ |
 | Lakehouse NYC Taxi con Airflow — `agus-chaud/student-lakehouse` | ✓ | | ✓ |
 | Gobierno de datos con Unity Catalog — `agus-chaud/Governance-en-Databricks` | ✓ | | ✓ |
-| Marketing Mix Model | ✓ | ✓ | |
+| ETL en Databricks | ✓ | | |
+| Marketing Mix Model | | ✓ | |
 | Scoring crediticio | | ✓ | |
 | Triage de leads | | ✓ | |
 | Test A/B de marketing — `agus-chaud/A-B-Testing-Marketing` | | ✓ | ✓ |
 
-ETL en Databricks, RAG del libro de agentes y Agus OS siguen en la carpeta, sin rol: solo salen en «Todos».
+RAG del libro de agentes y Agus OS siguen en la carpeta, sin rol: solo salen en «Todos». *(Cambio del 2026-11-14, pedido
+por Agus: ETL en Databricks entra en Data Engineering y Marketing Mix Model sale de ese rol, para no pasar de 4.)*
 
 ## Decisiones tomadas
 
@@ -77,7 +79,7 @@ Qué comprueba cada test, según el criterio del PRD:
     «Data Science».
   - Abrir un proyecto con un rol elegido y volver con «‹ Proyectos» mantiene ese rol y esas tarjetas.
   - El selector se maneja con teclado (Tab y Enter o Espacio).
-  - *Negativo:* un proyecto sin rol (ETL en Databricks) no aparece en ninguno de los dos roles, pero sí en «Todos».
+  - *Negativo:* un proyecto sin rol (RAG del libro de agentes) no aparece en ninguno de los dos roles, pero sí en «Todos».
 - `tests/e2e/s-08-proyectos.spec.ts` no se toca: con «Todos» por defecto, su vista general sigue igual.
 
 ## Fuera de esta feature

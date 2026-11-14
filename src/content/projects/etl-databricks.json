@@ -27,6 +27,9 @@
   },
   "url": "https://github.com/agus-chaud/ETL-Databricks",
   "embeddable": false,
+  "roles": [
+    "de"
+  ],
   "order": 5,
   "github": {
     "languages": [
