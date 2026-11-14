@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-11-06",
+  "generatedAt": "2026-11-14",
   "repos": {
-    "total": 25,
-    "public": 21,
+    "total": 26,
+    "public": 22,
     "private": 4,
     "since": "2024-09"
   },
@@ -11,7 +11,7 @@
       "id": "python",
       "name": "Python",
       "category": "lenguajes",
-      "repos": 20,
+      "repos": 21,
       "since": 2026
     },
     {
@@ -46,7 +46,7 @@
       "id": "jupyter",
       "name": "Jupyter",
       "category": "ml",
-      "repos": 15,
+      "repos": 16,
       "since": 2026
     },
     {
@@ -228,7 +228,7 @@
       "id": "databricks",
       "name": "Databricks",
       "category": "datos",
-      "repos": 3,
+      "repos": 4,
       "since": 2026
     },
     {
@@ -248,6 +248,13 @@
     {
       "id": "pyspark",
       "name": "PySpark",
+      "category": "datos",
+      "repos": 2,
+      "since": 2026
+    },
+    {
+      "id": "unity-catalog",
+      "name": "Unity Catalog",
       "category": "datos",
       "repos": 2,
       "since": 2026
@@ -323,17 +330,10 @@
       "since": 2026
     },
     {
-      "id": "unity-catalog",
-      "name": "Unity Catalog",
-      "category": "datos",
-      "repos": 1,
-      "since": 2026
-    },
-    {
       "id": "claude-code",
       "name": "Claude Code",
       "category": "ia",
-      "repos": 23,
+      "repos": 24,
       "since": 2026
     },
     {
