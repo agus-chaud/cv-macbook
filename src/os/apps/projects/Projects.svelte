@@ -4,6 +4,7 @@
   import AppIcon from '../../shell/AppIcon.svelte';
   import { dispatch } from '../../stores/os-actions';
   import ProjectDetail from './ProjectDetail.svelte';
+  import { projectsForRole, roleFilters, type RoleFilter } from './projects-view';
 
   interface Props {
     projects: ProjectData[];
@@ -30,6 +31,12 @@
   });
 
   const project = $derived(find(selected));
+
+  // Selector por rol (S-13): estado de la ventana, así que se mantiene al ir al detalle y volver.
+  let role = $state<RoleFilter>('all');
+  const folder = $derived(inFolder(projects));
+  const filters = $derived(roleFilters(folder));
+  const visible = $derived(projectsForRole(folder, role));
 </script>
 
 {#if project}
@@ -40,9 +47,20 @@
   />
 {:else}
   <div class="overview" data-testid="projects">
-    <h2>Proyectos</h2>
+    <div class="head">
+      <h2>Proyectos</h2>
+      {#if filters.length > 1}
+        <div class="roles" role="group" aria-label="Rol">
+          {#each filters as f (f.id)}
+            <button type="button" aria-pressed={role === f.id} data-testid={`projects-role-${f.id}`} onclick={() => (role = f.id)}>
+              {f.label}
+            </button>
+          {/each}
+        </div>
+      {/if}
+    </div>
     <ul class="grid">
-      {#each inFolder(projects) as p (p.id)}
+      {#each visible as p (p.id)}
         <li>
           <button class="card" data-testid={`projects-card-${p.id}`} onclick={() => (selected = p.id)}>
             <span class="icon" aria-hidden="true"><AppIcon icon={projectIcon(p)} /></span>
@@ -65,9 +83,42 @@
     background: var(--win-bg);
     color: var(--fg);
   }
-  h2 {
+  .head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 16px;
     margin: 0 0 14px;
+  }
+  h2 {
+    margin: 0;
     font-size: calc(20px * var(--text-scale));
+  }
+  /* Selector por rol (S-13): el mismo control segmentado que el idioma del CV y el nivel de las damas. */
+  .roles {
+    display: inline-flex;
+    flex-wrap: wrap;
+    padding: 2px;
+    border-radius: var(--r-control);
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .roles button {
+    min-height: 28px;
+    padding: 0 10px;
+    border-radius: calc(var(--r-control) - 2px);
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--fg);
+  }
+  .roles button[aria-pressed='true'] {
+    color: var(--accent-fg);
+    background: var(--accent-solid);
+  }
+  .roles button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
   }
   .grid {
     display: grid;

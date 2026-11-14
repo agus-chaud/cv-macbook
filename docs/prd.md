@@ -228,6 +228,11 @@ desde LinkedIn en el teléfono.
   detalles están en `docs/features/stack-proyectos.md`.
   *Negativo:* dada una herramienta que ningún proyecto de Proyectos usa, entonces dice en cuántos repositorios se usa y
   no enlaza a nada; y nunca se nombra un repositorio privado ni uno que no esté en Proyectos.
+- **[S-13] Proyectos por rol** — Dado un visitante en la vista general de Proyectos, cuando elige «Data Engineering»
+  o «Data Science» en el selector, entonces ve solo los 3 o 4 proyectos que Agus eligió para ese rol (un proyecto puede
+  estar en los dos), en su orden; y cuando elige «Todos», vuelve a ver todos los de la carpeta. Al volver del detalle de
+  un proyecto se mantiene el rol elegido. Los detalles están en `docs/features/proyectos-por-rol.md`.
+  *Negativo:* dado un proyecto sin rol asignado, entonces solo aparece en «Todos»; y nunca se enseña un rol vacío.
 
 ### COULD
 - **[C-01] Repositorios de GitHub** — Dado un visitante, cuando abre GitHub en el escritorio, entonces ve

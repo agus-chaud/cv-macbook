@@ -1,0 +1,63 @@
+{
+  "name": "Lakehouse NYC Taxi",
+  "domain": "github.com/agus-chaud/student-lakehouse",
+  "description": "Un lakehouse local que limpia los viajes de taxi de Nueva York y los resume en tablas de negocio.",
+  "summary": "Pipeline Bronze → Silver → Gold orquestado con Airflow, sobre MinIO y PostgreSQL.",
+  "details": [
+    "Toma los viajes de taxi de Nueva York de enero de 2024, los guarda crudos en MinIO (API S3), los limpia y termina con 6 tablas Gold en MinIO y PostgreSQL: demanda por hora, zonas, propinas, resumen diario, ingresos por forma de pago y rutas.",
+    "Un DAG de Airflow en tres tareas (Bronze, Silver y Gold) con reintentos. Cada capa guarda su resultado en S3 y la siguiente lo lee de ahí, así que una capa se puede volver a ejecutar sin repetir las anteriores.",
+    "Lee el Parquet por grupos de filas para acotar la memoria, y compara la misma transformación en pandas y en Polars: Polars tarda cerca de un 25 % menos en Silver y usa unos 800 MB de pico en vez de 1.150 MB."
+  ],
+  "highlights": [
+    {
+      "value": "2,7 M",
+      "label": "viajes limpios; 240.464 descartados"
+    },
+    {
+      "value": "6",
+      "label": "tablas Gold"
+    },
+    {
+      "value": "−25 %",
+      "label": "tiempo de Silver con Polars"
+    }
+  ],
+  "stack": [
+    "Python",
+    "pandas",
+    "Polars",
+    "PyArrow",
+    "Airflow",
+    "PostgreSQL",
+    "S3 (boto3)"
+  ],
+  "repo": "agus-chaud/student-lakehouse",
+  "colors": {
+    "from": "#facc15",
+    "to": "#ca8a04"
+  },
+  "url": "https://github.com/agus-chaud/student-lakehouse",
+  "embeddable": false,
+  "roles": [
+    "de"
+  ],
+  "order": 8,
+  "github": {
+    "languages": [
+      {
+        "name": "Python",
+        "bytes": 106523
+      },
+      {
+        "name": "Jupyter Notebook",
+        "bytes": 102941
+      },
+      {
+        "name": "Shell",
+        "bytes": 101
+      }
+    ],
+    "topics": [],
+    "license": null
+  }
+}

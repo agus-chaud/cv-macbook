@@ -3,7 +3,7 @@ import { defineConfig } from '@playwright/test';
 // Otro puerto si el 4321 lo usa otro proyecto: `E2E_PORT=4323 pnpm test:e2e`.
 const PORT = Number(process.env.E2E_PORT ?? 4321);
 /** Lo que se prueba en el móvil: los requisitos que tienen versión móvil. */
-const MOBILE_SPECS = /(m-(0[1345689]|10)|s-(0[13489]|10)|c-0[156])-/;
+const MOBILE_SPECS = /(m-(0[1345689]|10)|s-(0[13489]|1[03])|c-0[156])-/;
 
 // Siempre contra localhost (límite 1 de CLAUDE.md). Los proyectos `escritorio` y `movil` usan el Google Chrome instalado
 // en la máquina (channel 'chrome'); `pnpm test:e2e` corre solo esos. Los de otros motores (`safari`, `safari-movil` y

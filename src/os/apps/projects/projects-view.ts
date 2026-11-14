@@ -118,3 +118,23 @@ export function detailSections(p: {
   };
 }
 
+
+/** Los roles a los que Agus se postula (S-13): Data Engineering y Data Science. */
+export type Role = 'de' | 'ds';
+export type RoleFilter = Role | 'all';
+
+const ROLE_FILTERS: readonly { id: RoleFilter; label: string }[] = [
+  { id: 'all', label: 'Todos' },
+  { id: 'de', label: 'Data Engineering' },
+  { id: 'ds', label: 'Data Science' },
+];
+
+/** Los proyectos de un rol, en el orden en que llegan; «Todos» los devuelve todos. */
+export function projectsForRole<T extends { roles?: readonly Role[] }>(projects: readonly T[], filter: RoleFilter): T[] {
+  return filter === 'all' ? [...projects] : projects.filter((p) => p.roles?.includes(filter));
+}
+
+/** Las opciones del selector: «Todos» siempre, y cada rol solo si tiene algún proyecto (nunca un rol vacío). */
+export function roleFilters(projects: readonly { roles?: readonly Role[] }[]): { id: RoleFilter; label: string }[] {
+  return ROLE_FILTERS.filter((f) => f.id === 'all' || projects.some((p) => p.roles?.includes(f.id as Role)));
+}

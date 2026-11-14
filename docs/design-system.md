@@ -290,7 +290,10 @@ iniciales en la misma casilla, nunca un hueco. El texto sale de `src/content/com
 a la derecha), el índice con enlaces normales y se desplaza con normalidad. Se lee sin JavaScript.
 
 ### Proyectos (`Projects`, `ProjectDetail`)
-**Vista general:** una cuadrícula de tarjetas con el icono (52px), el nombre y una frase del proyecto. **Detalle**,
+**Vista general:** una cuadrícula de tarjetas con el icono (52px), el nombre y una frase del proyecto. Junto al título,
+un **selector por rol** (S-13): el control segmentado del idioma del CV y del nivel de las damas, con «Todos», «Data
+Engineering» y «Data Science» (botones con `aria-pressed`, 28 px de alto, el elegido en `--accent-solid`). Empieza en
+«Todos», y si la ventana es estrecha baja bajo el título. **Detalle**,
 con "‹ Proyectos" para volver: cabecera con icono grande (76px), nombre y dirección; botón principal ("Abrir en el
 Navegador" si el sitio se deja incrustar; si no, "Visitar sitio ↗" o "Ver en GitHub ↗" en una pestaña nueva) y, si
 el repositorio es público y distinto de esa dirección, "Ver repositorio ↗". Después, solo los apartados que tienen

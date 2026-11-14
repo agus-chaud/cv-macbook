@@ -44,6 +44,8 @@ export interface ProjectFile {
   github?: { languages: { name: string; bytes: number }[]; topics: string[]; license: string | null };
   icon?: string;
   placement: 'folder' | 'desktop';
+  /** Roles del selector de Proyectos (S-13); sin roles, solo sale en «Todos». */
+  roles: ('de' | 'ds')[];
   domain: string;
   url: string;
   embeddable: boolean;
@@ -56,7 +58,7 @@ export function loadProjects(): ProjectFile[] {
   return readdirSync(dir)
     .filter((f) => f.endsWith('.json'))
     // Los valores por defecto del esquema (`default([])`) no existen al leer el JSON en crudo.
-    .map((f) => ({ id: f.replace(/\.json$/, ''), details: [], screenshots: [], placement: 'folder', ...JSON.parse(readFileSync(join(dir, f), 'utf8')) }))
+    .map((f) => ({ id: f.replace(/\.json$/, ''), details: [], screenshots: [], placement: 'folder', roles: [], ...JSON.parse(readFileSync(join(dir, f), 'utf8')) }))
     .sort((a, b) => a.order - b.order);
 }
 

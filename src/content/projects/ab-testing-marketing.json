@@ -1,0 +1,52 @@
+{
+  "name": "Test A/B de marketing",
+  "domain": "github.com/agus-chaud/A-B-Testing-Marketing",
+  "description": "Un test A/B que mide si los anuncios convierten más que los avisos de servicio público.",
+  "summary": "¿Los anuncios convierten más? Test A/B con z-test, lift y estacionalidad.",
+  "details": [
+    "Compara la conversión de unos 588.000 usuarios expuestos a anuncios contra un grupo de control con avisos de servicio público. Antes del test revisa nulos, duplicados y que ningún usuario esté en los dos grupos.",
+    "Un z-test de dos proporciones (unilateral, α = 0,05) da un lift relativo del 43 %, por encima del efecto mínimo buscado del 10 %: la recomendación es usar anuncios.",
+    "Con chi-cuadrado mira también el día y la hora: el lunes convierte bastante más que el sábado, y de ahí sale cuándo conviene concentrar las campañas."
+  ],
+  "highlights": [
+    {
+      "value": "+43 %",
+      "label": "lift de conversión de los anuncios"
+    },
+    {
+      "value": "588 k",
+      "label": "usuarios en el experimento"
+    }
+  ],
+  "stack": [
+    "Python",
+    "pandas",
+    "SciPy",
+    "Jupyter"
+  ],
+  "repo": "agus-chaud/A-B-Testing-Marketing",
+  "colors": {
+    "from": "#fb7185",
+    "to": "#be123c"
+  },
+  "url": "https://github.com/agus-chaud/A-B-Testing-Marketing",
+  "embeddable": false,
+  "roles": [
+    "ds"
+  ],
+  "order": 10,
+  "github": {
+    "languages": [
+      {
+        "name": "Jupyter Notebook",
+        "bytes": 207563
+      },
+      {
+        "name": "Python",
+        "bytes": 192
+      }
+    ],
+    "topics": [],
+    "license": null
+  }
+}

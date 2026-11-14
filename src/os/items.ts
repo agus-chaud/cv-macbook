@@ -43,6 +43,8 @@ export interface ProjectData {
   placement: 'folder' | 'desktop';
   /** El detalle ofrece abrir «Cómo está hecho». */
   howto: boolean;
+  /** Roles del selector de Proyectos (S-13); vacío, solo sale en «Todos». */
+  roles: ('de' | 'ds')[];
   example: boolean;
 }
 

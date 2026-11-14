@@ -66,6 +66,11 @@ const projects = defineCollection({
     placement: z.enum(['folder', 'desktop']).default('folder'),
     /** Si el detalle ofrece abrir «Cómo está hecho», el documento que explica cómo funciona el sitio (S-10). */
     howto: z.boolean().default(false),
+    /** Roles para los que Agus elige este proyecto en el selector de Proyectos (S-13): `de` y/o `ds`. Sin roles, solo sale en «Todos». */
+    roles: z
+      .array(z.enum(['de', 'ds']))
+      .refine((r) => new Set(r).size === r.length, 'Roles repetidos')
+      .default([]),
     order: z.number().int(),
     /** Contenido de ejemplo, pendiente de sustituir por el real. */
     example: z.boolean().default(false),

@@ -21,4 +21,10 @@ Descripción breve de la mejora y por qué aportaría valor.
 
 ---
 
-_Todavía no hay ideas apuntadas._
+### [MEJORA-01] Preseleccionar el rol de Proyectos desde un enlace
+**Área:** UX
+**Prioridad estimada:** Media
+**Origen:** Ficha `docs/features/proyectos-por-rol.md` (S-13), 2026-11-14
+
+Un enlace como `?rol=de` que abra Agus OS con Proyectos ya filtrado por Data Engineering (o Data Science). Serviría para
+poner en cada CV el enlace de su rol, y que quien lo abra llegue directo a los 3 o 4 proyectos que le interesan.

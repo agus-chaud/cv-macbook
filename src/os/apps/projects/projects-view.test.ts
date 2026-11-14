@@ -1,5 +1,16 @@
 import { describe, expect, test } from 'vitest';
-import { OTHERS, detailSections, languageShares, primaryAction, repoButton, repoUrl, visibleTopics } from './projects-view';
+import {
+  OTHERS,
+  detailSections,
+  languageShares,
+  primaryAction,
+  projectsForRole,
+  repoButton,
+  repoUrl,
+  roleFilters,
+  visibleTopics,
+  type Role,
+} from './projects-view';
 
 const sum = (xs: { share: number }[]) => xs.reduce((s, x) => s + x.share, 0);
 
@@ -176,3 +187,39 @@ describe('visibleTopics', () => {
   });
 });
 
+
+describe('projectsForRole (S-13)', () => {
+  const p = (id: string, roles?: Role[]) => ({ id, roles });
+  const all = [p('a', ['de']), p('b', ['ds']), p('c', ['de', 'ds']), p('d'), p('e', ['de'])];
+
+  test('«Todos» devuelve todos los proyectos, en el orden en que llegan', () => {
+    expect(projectsForRole(all, 'all').map((x) => x.id)).toEqual(['a', 'b', 'c', 'd', 'e']);
+  });
+
+  test('un rol devuelve solo sus proyectos, sin cambiar el orden', () => {
+    expect(projectsForRole(all, 'de').map((x) => x.id)).toEqual(['a', 'c', 'e']);
+    expect(projectsForRole(all, 'ds').map((x) => x.id)).toEqual(['b', 'c']);
+  });
+
+  test('un proyecto con los dos roles sale en los dos; uno sin rol solo en «Todos»', () => {
+    expect(projectsForRole(all, 'de').map((x) => x.id)).toContain('c');
+    expect(projectsForRole(all, 'ds').map((x) => x.id)).toContain('c');
+    expect(projectsForRole(all, 'de').map((x) => x.id)).not.toContain('d');
+    expect(projectsForRole(all, 'ds').map((x) => x.id)).not.toContain('d');
+  });
+});
+
+describe('roleFilters (S-13)', () => {
+  test('ofrece Todos, Data Engineering y Data Science, en ese orden', () => {
+    expect(roleFilters([{ roles: ['de'] }, { roles: ['ds'] }])).toEqual([
+      { id: 'all', label: 'Todos' },
+      { id: 'de', label: 'Data Engineering' },
+      { id: 'ds', label: 'Data Science' },
+    ]);
+  });
+
+  test('un rol sin proyectos no se ofrece; «Todos» siempre', () => {
+    expect(roleFilters([{ roles: ['ds'] }, {}]).map((f) => f.id)).toEqual(['all', 'ds']);
+    expect(roleFilters([]).map((f) => f.id)).toEqual(['all']);
+  });
+});

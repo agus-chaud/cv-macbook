@@ -36,6 +36,10 @@
   },
   "url": "https://github.com/agus-chaud/marketing-mix-modelling",
   "embeddable": false,
+  "roles": [
+    "de",
+    "ds"
+  ],
   "order": 3,
   "github": {
     "languages": [

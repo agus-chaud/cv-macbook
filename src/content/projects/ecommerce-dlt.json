@@ -1,0 +1,46 @@
+{
+  "name": "Pipeline e-commerce con DLT",
+  "domain": "github.com/agus-chaud/Ecommerce-Data-Pipeline-con-DLT",
+  "description": "Un pipeline declarativo en Databricks que ingiere ventas y cambios de clientes y los deja listos para analizar.",
+  "summary": "Medallion con Lakeflow (DLT): Auto Loader, reglas de calidad y CDC de clientes.",
+  "details": [
+    "Pipeline Bronze, Silver y Gold con Lakeflow Declarative Pipelines (DLT) en Databricks, todo dentro de Unity Catalog. Las órdenes y los cambios de clientes entran de forma incremental con Auto Loader; los productos, en batch.",
+    "Las reglas de calidad (expectations) descartan órdenes sin ID o con montos no positivos, y esas órdenes van a una tabla de cuarentena en vez de perderse.",
+    "Los cambios de clientes se aplican con apply_changes como SCD tipo 1, incluidas las bajas. La capa Gold entrega ventas diarias y una vista Customer 360."
+  ],
+  "highlights": [
+    {
+      "value": "3",
+      "label": "capas: Bronze, Silver y Gold"
+    }
+  ],
+  "stack": [
+    "Databricks",
+    "PySpark",
+    "Delta Live Tables",
+    "Delta Lake",
+    "Unity Catalog",
+    "Python"
+  ],
+  "repo": "agus-chaud/Ecommerce-Data-Pipeline-con-DLT",
+  "colors": {
+    "from": "#38bdf8",
+    "to": "#1d4ed8"
+  },
+  "url": "https://github.com/agus-chaud/Ecommerce-Data-Pipeline-con-DLT",
+  "embeddable": false,
+  "roles": [
+    "de"
+  ],
+  "order": 7,
+  "github": {
+    "languages": [
+      {
+        "name": "Python",
+        "bytes": 7561
+      }
+    ],
+    "topics": [],
+    "license": null
+  }
+}

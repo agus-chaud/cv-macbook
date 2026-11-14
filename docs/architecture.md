@@ -566,3 +566,12 @@ la web lo sirve como `/repos.json` y la ventana lo pide al abrirse. La lista se 
 **Consecuencias:** la web nunca llama a GitHub (la CSP no cambia). El commit automático solo se hace si cambian los repositorios (la fecha no cuenta). La
 ventana se carga bajo demanda con su hoja de estilos enlazada al abrirla, como las damas.
 
+
+### 2026-11-14 — Proyectos por rol: el rol en el JSON y un filtro puro (S-13)
+**Contexto:** Agus se postula a Data Engineer y a Data Scientist; quien entra por un rol quiere ver 3 o 4 proyectos, no
+la carpeta entera.
+**Decisión:** Cada proyecto lleva un campo opcional `roles` (`de` y/o `ds`, sin repetidos, validado al compilar). La
+vista general de Proyectos filtra con `projectsForRole` y ofrece los roles que tienen proyectos con `roleFilters`, las
+dos en `src/os/apps/projects/projects-view.ts`. El rol elegido es estado de la ventana: no va a `localStorage` ni a la
+dirección. Un test de contenido exige de 3 a 4 proyectos por rol.
+**Por qué:** un proyecto puede estar en los dos roles sin duplicarse, y la regla de «no abrumar» queda escrita en un test.

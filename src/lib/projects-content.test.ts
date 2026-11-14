@@ -23,6 +23,8 @@ const projects = readdirSync(dir)
   repo?: string;
   github?: { languages: { name: string; bytes: number }[]; topics: string[]; license: string | null };
   screenshots?: { src: string; alt: string; still?: string }[];
+  roles?: string[];
+  placement?: string;
 }[];
 
 describe('proyectos de src/content/projects', () => {
@@ -93,6 +95,23 @@ describe('proyectos de src/content/projects', () => {
     for (const p of projects.filter((x) => new URL(x.url, 'https://x.test').hostname === 'github.com')) {
       expect(p.embeddable, p.id).toBe(false);
     }
+  });
+});
+
+describe('proyectos por rol (S-13)', () => {
+  const folder = projects.filter((p) => (p.placement ?? 'folder') === 'folder');
+
+  test('los roles son solo de y ds, sin repetidos', () => {
+    for (const p of projects.filter((x) => x.roles)) {
+      for (const r of p.roles!) expect(['de', 'ds'], `${p.id}: rol ${r}`).toContain(r);
+      expect(new Set(p.roles).size, `${p.id}: roles repetidos`).toBe(p.roles!.length);
+    }
+  });
+
+  test.each(['de', 'ds'])('el rol %s tiene entre 3 y 4 proyectos de la carpeta, para no abrumar', (role) => {
+    const n = folder.filter((p) => p.roles?.includes(role)).length;
+    expect(n).toBeGreaterThanOrEqual(3);
+    expect(n).toBeLessThanOrEqual(4);
   });
 });
 

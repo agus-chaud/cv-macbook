@@ -1,0 +1,47 @@
+{
+  "name": "Gobierno con Unity Catalog",
+  "domain": "github.com/agus-chaud/Governance-en-Databricks",
+  "description": "La estructura de Unity Catalog de una empresa ficticia: ambientes, permisos mínimos, datos sensibles y un partner externo.",
+  "summary": "Unity Catalog con tres ambientes, permisos mínimos, tags de PII y Delta Sharing.",
+  "details": [
+    "Configura Unity Catalog para una empresa ficticia con tres equipos (Sales, Marketing y HR) y tres catálogos (dev, staging y prod), cada uno con su estructura Medallion.",
+    "Cada grupo ve solo lo que necesita: los permisos se dan en los tres niveles (catálogo, schema y tabla) y las tablas de HR con datos personales llevan permisos explícitos y los tags pii y sensitivity.",
+    "Un partner externo recibe solo la tabla de métricas de ingresos por Delta Sharing, sin copiar datos ni abrir el metastore. Una celda final audita permisos, tags y el estado del share."
+  ],
+  "highlights": [
+    {
+      "value": "3",
+      "label": "catálogos: dev, staging y prod"
+    },
+    {
+      "value": "5",
+      "label": "grupos con permisos mínimos"
+    }
+  ],
+  "stack": [
+    "Databricks",
+    "Unity Catalog",
+    "SQL"
+  ],
+  "repo": "agus-chaud/Governance-en-Databricks",
+  "colors": {
+    "from": "#a78bfa",
+    "to": "#6d28d9"
+  },
+  "url": "https://github.com/agus-chaud/Governance-en-Databricks",
+  "embeddable": false,
+  "roles": [
+    "de"
+  ],
+  "order": 9,
+  "github": {
+    "languages": [
+      {
+        "name": "Jupyter Notebook",
+        "bytes": 15700
+      }
+    ],
+    "topics": [],
+    "license": null
+  }
+}
