@@ -12,469 +12,654 @@
       "name": "Python",
       "category": "lenguajes",
       "repos": 21,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "etl-databricks",
+        "lead-scoring",
+        "marketing-mix-modelling",
+        "rag-libro-agentes",
+        "scoring-crediticio"
+      ]
     },
     {
       "id": "typescript",
       "name": "TypeScript",
       "category": "lenguajes",
       "repos": 3,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "este-portfolio",
+        "rag-libro-agentes"
+      ]
     },
     {
       "id": "html-css",
       "name": "HTML y CSS",
       "category": "lenguajes",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": []
     },
     {
       "id": "javascript",
       "name": "JavaScript",
       "category": "lenguajes",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": []
     },
     {
       "id": "kotlin",
       "name": "Kotlin",
       "category": "lenguajes",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": []
     },
     {
       "id": "jupyter",
       "name": "Jupyter",
       "category": "ml",
       "repos": 16,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "etl-databricks",
+        "lead-scoring",
+        "marketing-mix-modelling",
+        "rag-libro-agentes",
+        "scoring-crediticio"
+      ]
     },
     {
       "id": "pandas",
       "name": "pandas",
       "category": "ml",
       "repos": 15,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "lead-scoring",
+        "marketing-mix-modelling",
+        "scoring-crediticio"
+      ]
     },
     {
       "id": "numpy",
       "name": "NumPy",
       "category": "ml",
       "repos": 14,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "lead-scoring",
+        "marketing-mix-modelling",
+        "rag-libro-agentes",
+        "scoring-crediticio"
+      ]
     },
     {
       "id": "matplotlib",
       "name": "Matplotlib",
       "category": "ml",
       "repos": 12,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "lead-scoring",
+        "marketing-mix-modelling",
+        "scoring-crediticio"
+      ]
     },
     {
       "id": "seaborn",
       "name": "seaborn",
       "category": "ml",
       "repos": 10,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "lead-scoring",
+        "marketing-mix-modelling",
+        "scoring-crediticio"
+      ]
     },
     {
       "id": "scipy",
       "name": "SciPy",
       "category": "ml",
       "repos": 8,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "lead-scoring",
+        "marketing-mix-modelling",
+        "scoring-crediticio"
+      ]
     },
     {
       "id": "scikit-learn",
       "name": "scikit-learn",
       "category": "ml",
       "repos": 7,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "lead-scoring",
+        "scoring-crediticio"
+      ]
     },
     {
       "id": "xgboost",
       "name": "XGBoost",
       "category": "ml",
       "repos": 3,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "lead-scoring"
+      ]
     },
     {
       "id": "folium",
       "name": "Folium",
       "category": "ml",
       "repos": 2,
-      "since": 2026
+      "since": 2026,
+      "projects": []
     },
     {
       "id": "geopandas",
       "name": "GeoPandas",
       "category": "ml",
       "repos": 2,
-      "since": 2026
+      "since": 2026,
+      "projects": []
     },
     {
       "id": "imbalanced-learn",
       "name": "imbalanced-learn",
       "category": "ml",
       "repos": 2,
-      "since": 2026
+      "since": 2026,
+      "projects": []
     },
     {
       "id": "lightgbm",
       "name": "LightGBM",
       "category": "ml",
       "repos": 2,
-      "since": 2026
+      "since": 2026,
+      "projects": []
     },
     {
       "id": "plotly",
       "name": "Plotly",
       "category": "ml",
       "repos": 2,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "scoring-crediticio"
+      ]
     },
     {
       "id": "anylogic",
       "name": "AnyLogic",
       "category": "ml",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": []
     },
     {
       "id": "pymc",
       "name": "PyMC",
       "category": "ml",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "marketing-mix-modelling"
+      ]
     },
     {
       "id": "nextjs",
       "name": "Next.js",
       "category": "interfaz",
       "repos": 2,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "rag-libro-agentes"
+      ]
     },
     {
       "id": "react",
       "name": "React",
       "category": "interfaz",
       "repos": 2,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "rag-libro-agentes"
+      ]
     },
     {
       "id": "streamlit",
       "name": "Streamlit",
       "category": "interfaz",
       "repos": 2,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "scoring-crediticio"
+      ]
     },
     {
       "id": "astro",
       "name": "Astro",
       "category": "interfaz",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "este-portfolio"
+      ]
     },
     {
       "id": "chartjs",
       "name": "Chart.js",
       "category": "interfaz",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": []
     },
     {
       "id": "svelte",
       "name": "Svelte",
       "category": "interfaz",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "este-portfolio"
+      ]
     },
     {
       "id": "tailwind",
       "name": "Tailwind CSS",
       "category": "interfaz",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "rag-libro-agentes"
+      ]
     },
     {
       "id": "android",
       "name": "Android",
       "category": "escritorio",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": []
     },
     {
       "id": "jetpack-compose",
       "name": "Jetpack Compose",
       "category": "escritorio",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": []
     },
     {
       "id": "wear-os",
       "name": "Wear OS",
       "category": "escritorio",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": []
     },
     {
       "id": "fastapi",
       "name": "FastAPI",
       "category": "datos",
       "repos": 5,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "lead-scoring",
+        "rag-libro-agentes",
+        "scoring-crediticio"
+      ]
     },
     {
       "id": "databricks",
       "name": "Databricks",
       "category": "datos",
       "repos": 4,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "etl-databricks"
+      ]
     },
     {
       "id": "pyarrow",
       "name": "PyArrow",
       "category": "datos",
       "repos": 3,
-      "since": 2026
+      "since": 2026,
+      "projects": []
     },
     {
       "id": "sqlalchemy",
       "name": "SQLAlchemy",
       "category": "datos",
       "repos": 3,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "scoring-crediticio"
+      ]
     },
     {
       "id": "pyspark",
       "name": "PySpark",
       "category": "datos",
       "repos": 2,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "etl-databricks"
+      ]
     },
     {
       "id": "unity-catalog",
       "name": "Unity Catalog",
       "category": "datos",
       "repos": 2,
-      "since": 2026
+      "since": 2026,
+      "projects": []
     },
     {
       "id": "airflow",
       "name": "Airflow",
       "category": "datos",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": []
     },
     {
       "id": "cloudflare",
       "name": "Cloudflare Workers",
       "category": "datos",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "este-portfolio"
+      ]
     },
     {
       "id": "dbt",
       "name": "dbt",
       "category": "datos",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "marketing-mix-modelling"
+      ]
     },
     {
       "id": "delta-lake",
       "name": "Delta Lake",
       "category": "datos",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "etl-databricks"
+      ]
     },
     {
       "id": "delta-live-tables",
       "name": "Delta Live Tables",
       "category": "datos",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": []
     },
     {
       "id": "duckdb",
       "name": "DuckDB",
       "category": "datos",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "marketing-mix-modelling"
+      ]
     },
     {
       "id": "polars",
       "name": "Polars",
       "category": "datos",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": []
     },
     {
       "id": "postgres",
       "name": "PostgreSQL",
       "category": "datos",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": []
     },
     {
       "id": "s3",
       "name": "S3 (boto3)",
       "category": "datos",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": []
     },
     {
       "id": "supabase",
       "name": "Supabase",
       "category": "datos",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": []
     },
     {
       "id": "claude-code",
       "name": "Claude Code",
       "category": "ia",
       "repos": 24,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "este-portfolio",
+        "etl-databricks",
+        "lead-scoring",
+        "marketing-mix-modelling",
+        "rag-libro-agentes",
+        "scoring-crediticio"
+      ]
     },
     {
       "id": "cursor",
       "name": "Cursor",
       "category": "ia",
       "repos": 6,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "rag-libro-agentes"
+      ]
     },
     {
       "id": "openai",
       "name": "SDK de OpenAI",
       "category": "ia",
       "repos": 2,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "lead-scoring",
+        "rag-libro-agentes"
+      ]
     },
     {
       "id": "faiss",
       "name": "FAISS",
       "category": "ia",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "rag-libro-agentes"
+      ]
     },
     {
       "id": "groq",
       "name": "Groq",
       "category": "ia",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "rag-libro-agentes"
+      ]
     },
     {
       "id": "huggingface",
       "name": "Hugging Face",
       "category": "ia",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "rag-libro-agentes"
+      ]
     },
     {
       "id": "langchain",
       "name": "LangChain",
       "category": "ia",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "rag-libro-agentes"
+      ]
     },
     {
       "id": "langgraph",
       "name": "LangGraph",
       "category": "ia",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "lead-scoring"
+      ]
     },
     {
       "id": "mcp",
       "name": "MCP",
       "category": "ia",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "lead-scoring"
+      ]
     },
     {
       "id": "anthropic",
       "name": "SDK de Anthropic",
       "category": "ia",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "lead-scoring"
+      ]
     },
     {
       "id": "gemini",
       "name": "SDK de Gemini",
       "category": "ia",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "lead-scoring"
+      ]
     },
     {
       "id": "github-actions",
       "name": "GitHub Actions",
       "category": "publicacion",
       "repos": 4,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "este-portfolio"
+      ]
     },
     {
       "id": "docker",
       "name": "Docker",
       "category": "publicacion",
       "repos": 2,
-      "since": 2026
+      "since": 2026,
+      "projects": []
     },
     {
       "id": "pnpm",
       "name": "pnpm",
       "category": "publicacion",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "este-portfolio"
+      ]
     },
     {
       "id": "render",
       "name": "Render",
       "category": "publicacion",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "scoring-crediticio"
+      ]
     },
     {
       "id": "vercel",
       "name": "Vercel",
       "category": "publicacion",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": []
     },
     {
       "id": "playwright",
       "name": "Playwright",
       "category": "calidad",
       "repos": 3,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "este-portfolio"
+      ]
     },
     {
       "id": "pytest",
       "name": "pytest",
       "category": "calidad",
       "repos": 3,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "lead-scoring",
+        "rag-libro-agentes"
+      ]
     },
     {
       "id": "ruff",
       "name": "ruff",
       "category": "calidad",
       "repos": 2,
-      "since": 2026
+      "since": 2026,
+      "projects": []
     },
     {
       "id": "eslint",
       "name": "ESLint",
       "category": "calidad",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "rag-libro-agentes"
+      ]
     },
     {
       "id": "vitest",
       "name": "Vitest",
       "category": "calidad",
       "repos": 1,
-      "since": 2026
+      "since": 2026,
+      "projects": [
+        "este-portfolio"
+      ]
     }
   ]
 }

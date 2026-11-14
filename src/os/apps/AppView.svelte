@@ -32,7 +32,7 @@
   {/await}
 {:else if target.app === 'stack'}
   {#await import('./stack/Stack.svelte') then { default: Stack }}
-    <Stack />
+    <Stack {projects} />
   {/await}
 {:else if target.app === 'projects'}
   {#await import('./projects/Projects.svelte') then { default: Projects }}

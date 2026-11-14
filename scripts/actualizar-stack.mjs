@@ -19,7 +19,7 @@
  *   node scripts/actualizar-stack.mjs           # actualiza el archivo si hay cambios
  *   node scripts/actualizar-stack.mjs --dry     # solo enseña el resultado
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { buildTools, evidenceOf, gradleDeps, isSkillOrTemplate, pythonDeps, sameData, withoutLargeFiles } from '../src/lib/stack.ts';
 import { TOOLS } from '../src/lib/stack-catalog.ts';
 import { PERSONA } from '../src/content/persona.ts';
@@ -83,6 +83,17 @@ if (STACK_DECLARADO.exceptRepos.some((n) => privados.has(n.toLowerCase()))) {
   process.exit(1);
 }
 const exceptuados = new Set(STACK_DECLARADO.exceptRepos.map((n) => n.toLowerCase()));
+
+// Los proyectos de la app Proyectos, por su repositorio (S-12): de cada herramienta se publica qué proyectos la usan.
+// Solo repositorios públicos, que el sitio ya enseña; los demás repositorios solo suman a los recuentos.
+const carpetaProyectos = new URL('../src/content/projects/', import.meta.url);
+const proyectosPorRepo = new Map(
+  readdirSync(carpetaProyectos)
+    .filter((f) => f.endsWith('.json'))
+    .map((f) => [JSON.parse(readFileSync(new URL(f, carpetaProyectos), 'utf8')).repo?.toLowerCase(), f.replace(/\.json$/, '')])
+    .filter(([repo]) => repo),
+);
+const proyectoDe = (repo) => (repo.private ? undefined : proyectosPorRepo.get(repo.full_name.toLowerCase()));
 
 const decodificar = (c) => Buffer.from(c.content, 'base64').toString('utf8');
 
@@ -161,6 +172,7 @@ async function analizar(repo) {
     deps: [...origenes.keys()],
     files,
     declared: exceptuados.has(repo.name.toLowerCase()) ? [] : STACK_DECLARADO.tools,
+    projectId: proyectoDe(repo),
   };
   // Si el repositorio solo tuvo actividad el año en que se creó, todas sus evidencias son de ese año y no hace falta preguntar.
   if (new Date(repo.pushed_at).getFullYear() > hechos.createdYear) {
@@ -211,9 +223,13 @@ const datos = {
   tools: buildTools(hechos),
 };
 
-// Red de seguridad: ningún nombre de repositorio puede llegar al archivo.
+// Red de seguridad: ningún nombre de repositorio puede llegar al archivo, salvo los públicos que ya están en Proyectos (S-12:
+// su id de proyecto puede coincidir con el nombre del repositorio).
 const texto = `${JSON.stringify(datos, null, 2)}\n`;
-const filtrados = repos.map((r) => r.name).filter((n) => n.length > 3 && texto.toLowerCase().includes(n.toLowerCase()));
+const filtrados = repos
+  .filter((r) => !proyectoDe(r))
+  .map((r) => r.name)
+  .filter((n) => n.length > 3 && texto.toLowerCase().includes(n.toLowerCase()));
 if (filtrados.length > 0) {
   console.error(`El resultado contiene ${filtrados.length} nombre(s) de repositorio; no se escribe nada.`);
   process.exit(1);

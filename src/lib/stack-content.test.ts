@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, test } from 'vitest';
 import { CATEGORIES, TOOLS } from './stack-catalog';
@@ -15,7 +15,7 @@ describe('src/content/stack.json', () => {
     expect(data.generatedAt).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     expect(Object.keys(data.repos).sort()).toEqual(['private', 'public', 'since', 'total']);
     expect(data.repos.since).toMatch(/^\d{4}-(0[1-9]|1[0-2])$/);
-    for (const t of data.tools) expect(Object.keys(t).sort(), t.id).toEqual(['category', 'id', 'name', 'repos', 'since']);
+    for (const t of data.tools) expect(Object.keys(t).sort(), t.id).toEqual(['category', 'id', 'name', 'projects', 'repos', 'since']);
   });
 
   test('los recuentos de repositorios cuadran', () => {
@@ -43,6 +43,16 @@ describe('src/content/stack.json', () => {
       expect(t.since, t.id).toBeGreaterThanOrEqual(TOOLS.find((d) => d.id === t.id)!.introduced ?? 2022);
       expect(t.since, t.id).toBeLessThanOrEqual(thisYear);
     }
+  });
+
+  test('S-12: cada proyecto de una herramienta existe en la app Proyectos, y no hay más proyectos que repositorios', () => {
+    const ids = new Set(readdirSync(join(process.cwd(), 'src/content/projects')).map((f) => f.replace(/\.json$/, '')));
+    for (const t of data.tools) {
+      for (const p of t.projects) expect(ids.has(p), `${t.id} → ${p}`).toBe(true);
+      expect(t.projects.length, t.id).toBeLessThanOrEqual(t.repos);
+    }
+    // Al menos una herramienta tiene proyectos: si no, el script dejó de asociarlos.
+    expect(data.tools.some((t) => t.projects.length > 0)).toBe(true);
   });
 
   test('no revela el nombre de ningún repositorio, público ni privado', () => {

@@ -98,9 +98,9 @@ desde LinkedIn en el teléfono.
   por categoría y, al final, el detalle por herramienta con en cuántos de sus repositorios aparece y desde qué
   año la usa; y una explicación de cómo se obtienen esos datos. Esos datos se actualizan solos cada día a partir de sus
   repositorios de GitHub. Los detalles están en `docs/features/stack.md` y `docs/features/stack-graficos.md`.
-  *Negativo:* nada de la ventana es clicable, lleva a otra parte, cambia de vista ni sugiere que las herramientas se
-  puedan usar desde Agus OS; cada gráfico tiene su equivalente en
-  texto; y ningún dato publicado revela el nombre de un repositorio privado.
+  *Negativo:* las cifras, el año a año y el reparto por categoría no son clicables ni sugieren que las herramientas
+  se puedan usar desde Agus OS (desde el 2026-11-14, cada herramienta del detalle sí despliega sus proyectos: S-12);
+  cada gráfico tiene su equivalente en texto; y ningún dato publicado revela el nombre de un repositorio privado.
   *(Reescrito el 2026-10-10: antes era "Herramientas", una lista que parecía de utilidades que se podían usar.)*
 - **[M-06] Sobre mí como documento (CV)** — Dado un visitante, cuando hace doble clic en el icono de
   documento "Mi CV" (antes "Sobre mí"), entonces se abre una ventana con la presentación y el currículum de Agus con
@@ -222,6 +222,12 @@ desde LinkedIn en el teléfono.
   defecto se ve en español. Los detalles están en `docs/features/cv-en-ingles.md`.
   *Negativo:* dado que el PDF en inglés no está disponible, entonces el texto en inglés sigue visible y el botón de
   descarga no aparece en inglés.
+- **[S-12] Stack: en qué proyectos se usa cada herramienta** — Dado un visitante en el detalle por herramienta del
+  Stack, cuando pulsa una herramienta, entonces ve debajo los proyectos de la app Proyectos que la usan, cada uno con un
+  enlace que abre su detalle. Qué proyecto usa qué herramienta lo calcula la misma tarea que hace los recuentos. Los
+  detalles están en `docs/features/stack-proyectos.md`.
+  *Negativo:* dada una herramienta que ningún proyecto de Proyectos usa, entonces dice en cuántos repositorios se usa y
+  no enlaza a nada; y nunca se nombra un repositorio privado ni uno que no esté en Proyectos.
 
 ### COULD
 - **[C-01] Repositorios de GitHub** — Dado un visitante, cuando abre GitHub en el escritorio, entonces ve

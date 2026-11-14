@@ -16,6 +16,8 @@ export interface RepoFacts {
   files: string[];
   /** Ids de herramientas que el autor declara haber usado aunque el código no lo delate (Claude Code). */
   declared?: string[];
+  /** El id del proyecto de la app Proyectos que corresponde a este repositorio, si lo hay (S-12). Nunca el nombre del repositorio. */
+  projectId?: string;
   /**
    * Año del primer commit que trajo cada evidencia: la clave es una dependencia de `deps` o una ruta de `files`. Lo que
    * no esté aquí toma el año de creación del repositorio.
@@ -31,6 +33,8 @@ export interface StackTool {
   repos: number;
   /** Año del primer repositorio en que aparece. */
   since: number;
+  /** Ids de los proyectos de la app Proyectos que la usan, en orden alfabético (S-12). */
+  projects: string[];
 }
 
 export interface StackData {
@@ -260,6 +264,7 @@ export function buildTools(repos: readonly RepoFacts[], catalog: readonly ToolDe
       repos: using.length,
       // El año de la primera evidencia, pero nunca antes de que la herramienta existiera.
       since: Math.max(tool.introduced ?? 0, Math.min(...using.map((u) => yearInRepo(u.repo, u.evidence)))),
+      projects: unique(using.flatMap((u) => (u.repo.projectId ? [u.repo.projectId] : []))).sort(),
     });
   }
   return tools.sort(

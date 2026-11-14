@@ -7,7 +7,7 @@
 ## Qué se construye
 
 "Herramientas" pasa a llamarse **Stack** y deja de parecer un cajón de utilidades. Es una ventana con aspecto
-de **ficha técnica**, como "Información del sistema" de macOS, que no tiene nada clicable:
+de **ficha técnica**, como "Información del sistema" de macOS, que no tiene nada clicable (desde el 2026-11-14, las herramientas del detalle despliegan sus proyectos: ver `docs/features/stack-proyectos.md`):
 
 - Arriba, un resumen: cuántos repositorios se han analizado y cuántas herramientas aparecen.
 - Debajo, las herramientas de desarrollo **agrupadas por categoría** (Lenguajes, Interfaz, Escritorio, Datos y

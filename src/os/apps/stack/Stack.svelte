@@ -3,6 +3,15 @@
   import { CATEGORIES } from '../../../lib/stack-catalog';
   import { barPercent, buildingSince, groupByCategory, summary, type StackData } from '../../../lib/stack';
   import { cumulativeByYear, donutArcs, linePoints } from '../../../lib/stack-charts';
+  import type { ProjectData } from '../../items';
+  import { dispatch } from '../../stores/os-actions';
+
+  let { projects = [] }: { projects?: ProjectData[] } = $props();
+
+  // S-12: cada herramienta del detalle despliega los proyectos de Proyectos que la usan. Una abierta a la vez.
+  let openTool = $state<string | null>(null);
+  const projectName = (id: string) => projects.find((p) => p.id === id)?.name ?? id;
+  const toggle = (id: string) => (openTool = openTool === id ? null : id);
 
   // Los datos salen de src/content/stack.json, que actualiza cada día una tarea de GitHub Actions (M-05).
   const stack = data as StackData;
@@ -29,7 +38,8 @@
   const areaPath = `${linePath} L${points.at(-1)?.x.toFixed(2) ?? 0} 100 L${points[0]?.x.toFixed(2) ?? 0} 100 Z`;
 </script>
 
-<!-- Una ficha técnica con gráficos: solo se lee. No hay nada que pulsar: ni enlaces, ni botones, ni campos, ni pestañas. -->
+<!-- Una ficha técnica con gráficos: las cifras, el año a año y el reparto solo se leen. Lo único que se pulsa son las herramientas del
+     detalle, que despliegan en qué proyectos se usan (S-12). -->
 <!-- La región se puede enfocar con el teclado para desplazarla con las flechas. -->
 <div class="stack" data-testid="stack" role="region" aria-label="Stack: herramientas que uso" tabindex="0">
   <header>
@@ -106,15 +116,46 @@
   <!-- El detalle por herramienta, siempre visible -->
   <section aria-labelledby="stack-detail-title" data-testid="stack-detail">
     <h3 id="stack-detail-title">Detalle por herramienta</h3>
+    <p class="hint" data-testid="stack-detail-hint">Tocá una herramienta para ver en qué proyectos la usé.</p>
     {#each groups as group (group.id)}
       <div class="group" aria-labelledby={`stack-${group.id}`} role="group" data-testid={`stack-group-${group.id}`}>
         <h4 id={`stack-${group.id}`} style:background={color(group.id)}>{group.label}</h4>
         <ul class="rows">
           {#each group.tools as tool (tool.id)}
             <li data-testid={`stack-tool-${tool.id}`}>
-              <span class="name">{tool.name}</span>
-              <span class="bar" aria-hidden="true"><i style:width={`${barPercent(tool.repos, max)}%`} style:background={color(tool.category)}></i></span>
-              <span class="meta"><span data-testid="stack-count">{tool.repos}</span> · desde <span data-testid="stack-since">{tool.since}</span></span>
+              <button
+                type="button"
+                class="row"
+                aria-expanded={openTool === tool.id}
+                aria-controls={`stack-uses-${tool.id}`}
+                data-testid={`stack-toggle-${tool.id}`}
+                onclick={() => toggle(tool.id)}
+              >
+                <span class="name">{tool.name}</span>
+                <span class="bar" aria-hidden="true"><i style:width={`${barPercent(tool.repos, max)}%`} style:background={color(tool.category)}></i></span>
+                <span class="meta"><span data-testid="stack-count">{tool.repos}</span> · desde <span data-testid="stack-since">{tool.since}</span></span>
+              </button>
+              {#if openTool === tool.id}
+                <div class="uses" id={`stack-uses-${tool.id}`} data-testid={`stack-uses-${tool.id}`}>
+                  {#if tool.projects.length > 0}
+                    <span class="uses-label">En Proyectos:</span>
+                    <ul>
+                      {#each tool.projects as id (id)}
+                        <li>
+                          <button
+                            type="button"
+                            class="project-link"
+                            data-testid={`stack-project-${tool.id}-${id}`}
+                            onclick={() => dispatch({ type: 'open', target: { app: 'projects', arg: id } })}>{projectName(id)}</button
+                          >
+                        </li>
+                      {/each}
+                    </ul>
+                  {:else}
+                    <span class="uses-label">Se usa en {repos(tool.repos)} que no están en Proyectos.</span>
+                  {/if}
+                </div>
+              {/if}
             </li>
           {/each}
         </ul>
@@ -344,12 +385,59 @@
     padding: 0;
     list-style: none;
   }
-  .rows li {
+  /* S-12: la fila entera es un botón que despliega los proyectos de la herramienta. */
+  .row {
     display: grid;
     grid-template-columns: minmax(110px, 170px) 1fr minmax(110px, auto);
     align-items: center;
     gap: 12px;
-    padding: 4px 0;
+    width: 100%;
+    padding: 4px 6px;
+    margin: 0 -6px;
+    border-radius: var(--r-control);
+    text-align: left;
+    color: inherit;
+    cursor: pointer;
+  }
+  .row:hover,
+  .row[aria-expanded='true'] {
+    background: var(--hover);
+  }
+  .row:focus-visible,
+  .project-link:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .uses {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 10px;
+    padding: 4px 0 10px;
+    font-size: calc(13px * var(--text-scale));
+  }
+  .uses ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .uses-label {
+    color: var(--muted);
+  }
+  /* --fg y no --accent-text: sobre --accent-soft, el azul no llega a 4,5:1 en el tema oscuro. */
+  .project-link {
+    padding: 2px 10px;
+    border-radius: 99px;
+    color: var(--fg);
+    background: var(--accent-soft);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .project-link:hover {
+    text-decoration: underline;
   }
   .name {
     font-weight: 500;
@@ -389,7 +477,7 @@
     .stat {
       padding: 10px 10px;
     }
-    .rows li {
+    .row {
       grid-template-columns: 1fr auto;
       grid-template-areas: 'name meta' 'bar bar';
       gap: 4px 12px;

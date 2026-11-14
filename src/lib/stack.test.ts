@@ -262,6 +262,22 @@ describe('buildTools', () => {
     expect(t.find((x) => x.id === 'claude-code')!.since).toBe(2025);
   });
 
+  test('S-12: cada herramienta lleva los proyectos de Proyectos que la usan, y un repositorio fuera de Proyectos solo suma al recuento', () => {
+    const t = buildTools([
+      repo({ projectId: 'mmm', deps: ['py:pandas'] }),
+      repo({ deps: ['py:pandas'] }),
+      repo({ projectId: 'lead', deps: ['py:pandas', 'react'] }),
+    ]);
+    const pandas = t.find((x) => x.id === 'pandas')!;
+    expect(pandas.repos).toBe(3);
+    expect(pandas.projects).toEqual(['lead', 'mmm']);
+    expect(t.find((x) => x.id === 'react')!.projects).toEqual(['lead']);
+  });
+
+  test('S-12: sin proyectos de Proyectos, la lista de una herramienta está vacía', () => {
+    expect(buildTools([repo({ deps: ['react'] })])[0].projects).toEqual([]);
+  });
+
   test('con varias evidencias en un repositorio vale la más antigua', () => {
     const r = repo({ createdYear: 2023, deps: ['react', 'react-dom'], evidenceYears: { react: 2026, 'react-dom': 2024 } });
     expect(buildTools([r]).find((x) => x.id === 'react')!.since).toBe(2024);

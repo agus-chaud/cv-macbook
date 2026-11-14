@@ -230,7 +230,7 @@ con el título "Confirma tu correo", el botón "Confirmar" y un mensaje por cada
 No se indexa.
 
 ### Stack (`Stack`)
-Una **ficha técnica con gráficos**, de 620 × 600: solo se lee (no hay nada clicable), sin pestañas ni cambio de vista, en una sola columna que se desplaza
+Una **ficha técnica con gráficos**, de 620 × 600: solo se lee, salvo las herramientas del detalle, que despliegan en qué proyectos se usan (S-12: botón con `aria-expanded`, proyectos en etiquetas `--accent-soft` con texto `--fg`), sin pestañas ni cambio de vista, en una sola columna que se desplaza
 (región con foco para usar las flechas). De arriba abajo:
 
 1. Título, de dónde salen los datos y **cómo se obtienen** (una tarea de GitHub Actions con un permiso de solo lectura).

@@ -3,12 +3,12 @@ import { expect, test, type Page } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { PERSONA } from '../../src/content/persona';
-import { animationsDone, enter } from './helpers';
+import { animationsDone, enter, loadProjects } from './helpers';
 
 interface Data {
   generatedAt: string;
   repos: { total: number; public: number; private: number; since?: string };
-  tools: { id: string; name: string; category: string; repos: number; since: number }[];
+  tools: { id: string; name: string; category: string; repos: number; since: number; projects: string[] }[];
 }
 const data = JSON.parse(readFileSync(join(process.cwd(), 'src/content/stack.json'), 'utf8')) as Data;
 
@@ -128,6 +128,55 @@ test.describe('M-05 Stack', () => {
     }
   });
 
+  test.describe('S-12 proyectos por herramienta', () => {
+    const tool = data.tools.find((t) => t.projects.length > 1)!;
+    const names = new Map(loadProjects().map((p) => [p.id, p.name]));
+
+    test('pulsar una herramienta despliega sus proyectos, y su enlace abre ese proyecto en Proyectos', async ({ page }, testInfo) => {
+      await openStack(page, testInfo.project.name);
+      await expect(page.getByTestId('stack-detail-hint')).toBeVisible();
+      const toggle = page.getByTestId(`stack-toggle-${tool.id}`);
+      await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+      await toggle.click();
+      await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+      const uses = page.getByTestId(`stack-uses-${tool.id}`);
+      await expect(uses.locator('button')).toHaveCount(tool.projects.length);
+      for (const id of tool.projects) await expect(uses.getByTestId(`stack-project-${tool.id}-${id}`)).toHaveText(names.get(id)!);
+
+      const first = tool.projects[0];
+      await uses.getByTestId(`stack-project-${tool.id}-${first}`).click();
+      await expect(page.getByTestId('project-name')).toHaveText(names.get(first)!);
+    });
+
+    test('con el teclado: Enter y Espacio despliegan y repliegan, y abrir otra herramienta cierra la anterior', async ({ page }, testInfo) => {
+      await openStack(page, testInfo.project.name);
+      const toggle = page.getByTestId(`stack-toggle-${tool.id}`);
+      await toggle.focus();
+      await page.keyboard.press('Enter');
+      await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+      await page.keyboard.press('Space');
+      await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+
+      const other = data.tools.find((t) => t.id !== tool.id)!;
+      await toggle.click();
+      await page.getByTestId(`stack-toggle-${other.id}`).click();
+      await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+      await expect(page.getByTestId(`stack-uses-${tool.id}`)).toHaveCount(0);
+      await expect(page.getByTestId(`stack-uses-${other.id}`)).toBeVisible();
+    });
+
+    test('con una herramienta desplegada no hay errores de accesibilidad', async ({ page }, testInfo) => {
+      await openStack(page, testInfo.project.name);
+      await page.getByTestId(`stack-toggle-${tool.id}`).click();
+      for (const theme of ['light', 'dark'] as const) {
+        await page.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme);
+        await animationsDone(page);
+        const results = await new AxeBuilder({ page }).analyze();
+        expect(results.violations, `tema ${theme}`).toEqual([]);
+      }
+    });
+  });
+
   test('no hay cambio de vista: todo está en una sola columna y no se desborda a los lados, ni con el texto más grande', async ({ page }, testInfo) => {
     await openStack(page, testInfo.project.name);
     const overflow = () => page.getByTestId('stack').evaluate((el) => el.scrollWidth - el.clientWidth);
@@ -147,9 +196,22 @@ test.describe('M-05 Stack', () => {
   });
 
   test.describe('casos negativos', () => {
-    test('la ventana no tiene nada clicable: ni enlaces, ni botones, ni campos, ni pestañas, ni desplegables', async ({ page }, testInfo) => {
+    test('las cifras, el año a año y el reparto no tienen nada clicable; en el detalle, solo las herramientas', async ({ page }, testInfo) => {
       await openStack(page, testInfo.project.name);
-      await expect(page.getByTestId('stack').locator('a, button, input, select, textarea, summary, details, [tabindex], [role="button"], [role="link"], [role="tab"], [role="tablist"]')).toHaveCount(0);
+      const interactive = 'a, button, input, select, textarea, summary, details, [tabindex], [role="button"], [role="link"], [role="tab"], [role="tablist"]';
+      for (const id of ['stack-stats', 'stack-years', 'stack-donut']) await expect(page.getByTestId(id).locator(interactive), id).toHaveCount(0);
+      // S-12: con todo cerrado, los únicos elementos que se pulsan son los botones de las herramientas.
+      await expect(page.getByTestId('stack').locator(interactive)).toHaveCount(data.tools.length);
+      await expect(page.locator('[data-testid^="stack-toggle-"]')).toHaveCount(data.tools.length);
+    });
+
+    test('S-12: una herramienta que ningún proyecto de Proyectos usa dice en cuántos repositorios se usa y no enlaza a nada', async ({ page }, testInfo) => {
+      const lonely = data.tools.find((t) => t.projects.length === 0)!;
+      await openStack(page, testInfo.project.name);
+      await page.getByTestId(`stack-toggle-${lonely.id}`).click();
+      const uses = page.getByTestId(`stack-uses-${lonely.id}`);
+      await expect(uses).toContainText(`Se usa en ${lonely.repos} ${lonely.repos === 1 ? 'repositorio' : 'repositorios'} que no están en Proyectos`);
+      await expect(uses.locator('button, a')).toHaveCount(0);
     });
 
     test('avisa de que los recuentos incluyen proyectos que nacieron de un generador', async ({ page }, testInfo) => {
