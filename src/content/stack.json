@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-14",
+  "generatedAt": "2026-11-15",
   "repos": {
     "total": 26,
     "public": 22,
@@ -14,11 +14,15 @@
       "repos": 21,
       "since": 2026,
       "projects": [
+        "ab-testing-marketing",
+        "ecommerce-dlt",
         "etl-databricks",
+        "governance-databricks",
         "lead-scoring",
         "marketing-mix-modelling",
         "rag-libro-agentes",
-        "scoring-crediticio"
+        "scoring-crediticio",
+        "student-lakehouse"
       ]
     },
     {
@@ -63,11 +67,14 @@
       "repos": 16,
       "since": 2026,
       "projects": [
+        "ab-testing-marketing",
         "etl-databricks",
+        "governance-databricks",
         "lead-scoring",
         "marketing-mix-modelling",
         "rag-libro-agentes",
-        "scoring-crediticio"
+        "scoring-crediticio",
+        "student-lakehouse"
       ]
     },
     {
@@ -77,9 +84,11 @@
       "repos": 15,
       "since": 2026,
       "projects": [
+        "ab-testing-marketing",
         "lead-scoring",
         "marketing-mix-modelling",
-        "scoring-crediticio"
+        "scoring-crediticio",
+        "student-lakehouse"
       ]
     },
     {
@@ -89,6 +98,7 @@
       "repos": 14,
       "since": 2026,
       "projects": [
+        "ab-testing-marketing",
         "lead-scoring",
         "marketing-mix-modelling",
         "rag-libro-agentes",
@@ -102,6 +112,7 @@
       "repos": 12,
       "since": 2026,
       "projects": [
+        "ab-testing-marketing",
         "lead-scoring",
         "marketing-mix-modelling",
         "scoring-crediticio"
@@ -114,6 +125,7 @@
       "repos": 10,
       "since": 2026,
       "projects": [
+        "ab-testing-marketing",
         "lead-scoring",
         "marketing-mix-modelling",
         "scoring-crediticio"
@@ -126,6 +138,7 @@
       "repos": 8,
       "since": 2026,
       "projects": [
+        "ab-testing-marketing",
         "lead-scoring",
         "marketing-mix-modelling",
         "scoring-crediticio"
@@ -323,7 +336,9 @@
       "repos": 4,
       "since": 2026,
       "projects": [
-        "etl-databricks"
+        "ecommerce-dlt",
+        "etl-databricks",
+        "governance-databricks"
       ]
     },
     {
@@ -332,7 +347,9 @@
       "category": "datos",
       "repos": 3,
       "since": 2026,
-      "projects": []
+      "projects": [
+        "student-lakehouse"
+      ]
     },
     {
       "id": "sqlalchemy",
@@ -341,7 +358,8 @@
       "repos": 3,
       "since": 2026,
       "projects": [
-        "scoring-crediticio"
+        "scoring-crediticio",
+        "student-lakehouse"
       ]
     },
     {
@@ -351,6 +369,7 @@
       "repos": 2,
       "since": 2026,
       "projects": [
+        "ecommerce-dlt",
         "etl-databricks"
       ]
     },
@@ -360,7 +379,9 @@
       "category": "datos",
       "repos": 2,
       "since": 2026,
-      "projects": []
+      "projects": [
+        "governance-databricks"
+      ]
     },
     {
       "id": "airflow",
@@ -368,7 +389,9 @@
       "category": "datos",
       "repos": 1,
       "since": 2026,
-      "projects": []
+      "projects": [
+        "student-lakehouse"
+      ]
     },
     {
       "id": "cloudflare",
@@ -406,7 +429,9 @@
       "category": "datos",
       "repos": 1,
       "since": 2026,
-      "projects": []
+      "projects": [
+        "ecommerce-dlt"
+      ]
     },
     {
       "id": "duckdb",
@@ -424,7 +449,9 @@
       "category": "datos",
       "repos": 1,
       "since": 2026,
-      "projects": []
+      "projects": [
+        "student-lakehouse"
+      ]
     },
     {
       "id": "postgres",
@@ -432,7 +459,9 @@
       "category": "datos",
       "repos": 1,
       "since": 2026,
-      "projects": []
+      "projects": [
+        "student-lakehouse"
+      ]
     },
     {
       "id": "s3",
@@ -440,7 +469,9 @@
       "category": "datos",
       "repos": 1,
       "since": 2026,
-      "projects": []
+      "projects": [
+        "student-lakehouse"
+      ]
     },
     {
       "id": "supabase",
@@ -457,12 +488,16 @@
       "repos": 24,
       "since": 2026,
       "projects": [
+        "ab-testing-marketing",
+        "ecommerce-dlt",
         "este-portfolio",
         "etl-databricks",
+        "governance-databricks",
         "lead-scoring",
         "marketing-mix-modelling",
         "rag-libro-agentes",
-        "scoring-crediticio"
+        "scoring-crediticio",
+        "student-lakehouse"
       ]
     },
     {
@@ -472,6 +507,7 @@
       "repos": 6,
       "since": 2026,
       "projects": [
+        "ab-testing-marketing",
         "rag-libro-agentes"
       ]
     },
@@ -582,7 +618,9 @@
       "category": "publicacion",
       "repos": 2,
       "since": 2026,
-      "projects": []
+      "projects": [
+        "student-lakehouse"
+      ]
     },
     {
       "id": "pnpm",
