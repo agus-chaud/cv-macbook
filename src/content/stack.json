@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-15",
+  "generatedAt": "2026-11-16",
   "repos": {
     "total": 26,
     "public": 22,
@@ -226,6 +226,14 @@
       ]
     },
     {
+      "id": "statsmodels",
+      "name": "statsmodels",
+      "category": "ml",
+      "repos": 1,
+      "since": 2026,
+      "projects": []
+    },
+    {
       "id": "nextjs",
       "name": "Next.js",
       "category": "interfaz",
@@ -345,7 +353,7 @@
       "id": "pyarrow",
       "name": "PyArrow",
       "category": "datos",
-      "repos": 3,
+      "repos": 4,
       "since": 2026,
       "projects": [
         "student-lakehouse"
