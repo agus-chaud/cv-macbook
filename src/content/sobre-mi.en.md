@@ -19,7 +19,7 @@ I enjoy understanding what is happening and why, what could happen next, and wha
 - **Credit scoring engine.** Estimates the expected loss of each loan by combining a default classifier with two regressions (exposure and severity). It has a REST API, a dashboard and an online deployment, and uses an LLM to explain each prediction, with guardrails that block made-up metrics.
 - **Bayesian Marketing Mix Model.** How many sign-ups does each marketing channel bring, and where is money best invested? A Bayesian Marketing Mix Model answers that, validated with a lift test and closed with a budget optimization. The data is prepared in SQL with DuckDB and dbt, with quality tests.
 - **RAG over the agents book.** Lets you ask questions about the book «30 Agents Every AI Engineer Must Build»: it answers citing the page so you can verify it, using sentence-transformers embeddings and a FAISS index. FastAPI backend, Next.js frontend.
-- **ETL pipeline on Databricks.** A Medallion architecture with Delta Lake and Change Data Feed, with daily sales KPIs for the business.
+- **Medallion architecture on Databricks, with digital advertising data.** A Bronze → Silver → Gold pipeline over ~160,000 synthetic AdTech impressions: incremental ingestion with COPY INTO, idempotent cleaning with MERGE and 8 Gold tables that answer business questions (ROAS, CPA, funnel). 95% of campaigns have no conversions and account for 92.5% of spend.
 
 You can find them in more detail in the [**Proyectos**](#abrir-proyectos) app on this desktop.
 

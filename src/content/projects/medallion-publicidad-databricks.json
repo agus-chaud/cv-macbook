@@ -1,0 +1,57 @@
+{
+  "name": "Medallion architecture en Databricks, con datos de publicidad digital",
+  "domain": "github.com/agus-chaud/utn-databricks",
+  "description": "Un pipeline Bronze → Silver → Gold en Databricks sobre datos sintéticos de publicidad digital, con tablas Gold que responden preguntas de negocio.",
+  "summary": "Pipeline Bronze → Silver → Gold sobre datos de AdTech, con COPY INTO, MERGE y 8 tablas Gold.",
+  "details": [
+    "Pipeline Bronze → Silver → Gold sobre datos sintéticos de AdTech (6 entidades, ~160.000 impresiones en 32 días). Ingesta incremental con COPY INTO, limpieza idempotente con MERGE y 8 tablas Gold que responden preguntas de negocio (ROAS, CPA, embudo). Las tres capas están completas.",
+    "Los ids de eventos se reinician en cada archivo (150.000 ids distintos para 160.000 eventos): deduplicar por id habría borrado 10.000 eventos, así que se usa un event_key (hash xxhash64 de todos los campos).",
+    "Integridad en cascada impresiones → clics → conversiones y atribución por impresión más cercana en el tiempo, resuelta una sola vez en tablas puente.",
+    "El pipeline cierra de punta a punta: CTR 1,99% y CVR 8,04%, los valores con los que se diseñó el generador.",
+    "Hallazgo de negocio: el 95% de las campañas (1.903 de 2.000) no tiene conversiones y concentra el 92,5% del gasto."
+  ],
+  "highlights": [
+    {
+      "value": "1,99%",
+      "label": "CTR, el valor con el que se diseñó el generador"
+    },
+    {
+      "value": "8,04%",
+      "label": "CVR, el valor con el que se diseñó el generador"
+    },
+    {
+      "value": "95%",
+      "label": "de las campañas sin conversiones: 92,5% del gasto"
+    }
+  ],
+  "stack": [
+    "Databricks",
+    "Unity Catalog",
+    "Delta Lake",
+    "SQL",
+    "PySpark",
+    "COPY INTO",
+    "Volumes"
+  ],
+  "repo": "agus-chaud/utn-databricks",
+  "colors": {
+    "from": "#34d399",
+    "to": "#047857"
+  },
+  "url": "https://github.com/agus-chaud/utn-databricks",
+  "embeddable": false,
+  "roles": [
+    "de"
+  ],
+  "order": 5,
+  "github": {
+    "languages": [
+      {
+        "name": "Jupyter Notebook",
+        "bytes": 42168
+      }
+    ],
+    "topics": [],
+    "license": null
+  }
+}

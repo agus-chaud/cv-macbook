@@ -19,7 +19,7 @@ Disfruto entender qué está pasando y por qué, qué puede llegar a pasar en el
 - **Motor de scoring crediticio.** Estima la pérdida esperada de cada préstamo combinando un clasificador de default con dos regresiones (exposición y severidad). Tiene API REST, dashboard y deploy online, y usa un LLM para explicar cada predicción con guardrails que bloquean métricas inventadas.
 - **Marketing Mix Model bayesiano.** ¿Cuántas altas trae cada canal de marketing y dónde conviene invertir plata? Eso responde un Marketing Mix Modelling bayesiano, contrastado con un lift test y cerrado con una optimización de presupuesto. Los datos se preparan en SQL con DuckDB y dbt, con tests de calidad.
 - **RAG del libro de agentes.** Permite hacerle preguntas al libro «30 Agents Every AI Engineer Must Build»: responde citando la página para poder verificarlo, trabaja con embeddings con sentence-transformers e índice FAISS. Backend en FastAPI, frontend en Next.js.
-- **Pipeline ETL en Databricks.** Arquitectura Medallion con Delta Lake y Change Data Feed, con KPIs diarios de ventas para el negocio.
+- **Medallion architecture en Databricks, con datos de publicidad digital.** Pipeline Bronze → Silver → Gold sobre ~160.000 impresiones sintéticas de AdTech: ingesta incremental con COPY INTO, limpieza idempotente con MERGE y 8 tablas Gold que responden preguntas de negocio (ROAS, CPA, embudo). El 95% de las campañas no tiene conversiones y concentra el 92,5% del gasto.
 
 Los tenés con más detalle en la app [**Proyectos**](#abrir-proyectos) de este escritorio.
 

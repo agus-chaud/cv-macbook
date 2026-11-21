@@ -16,7 +16,6 @@
       "projects": [
         "ab-testing-marketing",
         "ecommerce-dlt",
-        "etl-databricks",
         "governance-databricks",
         "lead-scoring",
         "marketing-mix-modelling",
@@ -68,7 +67,6 @@
       "since": 2026,
       "projects": [
         "ab-testing-marketing",
-        "etl-databricks",
         "governance-databricks",
         "lead-scoring",
         "marketing-mix-modelling",
@@ -345,7 +343,6 @@
       "since": 2026,
       "projects": [
         "ecommerce-dlt",
-        "etl-databricks",
         "governance-databricks"
       ]
     },
@@ -377,8 +374,7 @@
       "repos": 2,
       "since": 2026,
       "projects": [
-        "ecommerce-dlt",
-        "etl-databricks"
+        "ecommerce-dlt"
       ]
     },
     {
@@ -427,9 +423,7 @@
       "category": "datos",
       "repos": 1,
       "since": 2026,
-      "projects": [
-        "etl-databricks"
-      ]
+      "projects": []
     },
     {
       "id": "delta-live-tables",
@@ -499,7 +493,6 @@
         "ab-testing-marketing",
         "ecommerce-dlt",
         "este-portfolio",
-        "etl-databricks",
         "governance-databricks",
         "lead-scoring",
         "marketing-mix-modelling",

@@ -21,14 +21,15 @@ Entran cuatro proyectos nuevos a la carpeta, y tres de los actuales reciben su r
 | Pipeline e-commerce con Lakeflow (DLT) — `agus-chaud/Ecommerce-Data-Pipeline-con-DLT` | ✓ | | ✓ |
 | Lakehouse NYC Taxi con Airflow — `agus-chaud/student-lakehouse` | ✓ | | ✓ |
 | Gobierno de datos con Unity Catalog — `agus-chaud/Governance-en-Databricks` | ✓ | | ✓ |
-| ETL en Databricks | ✓ | | |
+| Medallion architecture en Databricks, con datos de publicidad digital — `agus-chaud/utn-databricks` | ✓ | | ✓ |
 | Marketing Mix Model | | ✓ | |
 | Scoring crediticio | | ✓ | |
 | Triage de leads | | ✓ | |
 | Test A/B de marketing — `agus-chaud/A-B-Testing-Marketing` | | ✓ | ✓ |
 
 RAG del libro de agentes y Agus OS siguen en la carpeta, sin rol: solo salen en «Todos». *(Cambio del 2026-11-14, pedido
-por Agus: ETL en Databricks entra en Data Engineering y Marketing Mix Model sale de ese rol, para no pasar de 4.)*
+por Agus: ETL en Databricks entra en Data Engineering y Marketing Mix Model sale de ese rol, para no pasar de 4. Cambio del 2026-11-21, pedido por Agus: el
+proyecto de publicidad digital en Databricks reemplaza a ETL en Databricks, que sale del portfolio.)*
 
 ## Decisiones tomadas
 
