@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-16",
+  "generatedAt": "2026-11-22",
   "repos": {
     "total": 26,
     "public": 22,
@@ -19,6 +19,7 @@
         "governance-databricks",
         "lead-scoring",
         "marketing-mix-modelling",
+        "medallion-publicidad-databricks",
         "rag-libro-agentes",
         "scoring-crediticio",
         "student-lakehouse"
@@ -70,6 +71,7 @@
         "governance-databricks",
         "lead-scoring",
         "marketing-mix-modelling",
+        "medallion-publicidad-databricks",
         "rag-libro-agentes",
         "scoring-crediticio",
         "student-lakehouse"
@@ -343,7 +345,8 @@
       "since": 2026,
       "projects": [
         "ecommerce-dlt",
-        "governance-databricks"
+        "governance-databricks",
+        "medallion-publicidad-databricks"
       ]
     },
     {
@@ -384,7 +387,8 @@
       "repos": 2,
       "since": 2026,
       "projects": [
-        "governance-databricks"
+        "governance-databricks",
+        "medallion-publicidad-databricks"
       ]
     },
     {
@@ -496,6 +500,7 @@
         "governance-databricks",
         "lead-scoring",
         "marketing-mix-modelling",
+        "medallion-publicidad-databricks",
         "rag-libro-agentes",
         "scoring-crediticio",
         "student-lakehouse"
