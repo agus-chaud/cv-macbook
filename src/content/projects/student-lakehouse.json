@@ -46,11 +46,15 @@
     "languages": [
       {
         "name": "Python",
-        "bytes": 106523
+        "bytes": 134020
       },
       {
         "name": "Jupyter Notebook",
         "bytes": 102941
+      },
+      {
+        "name": "Dockerfile",
+        "bytes": 357
       },
       {
         "name": "Shell",
